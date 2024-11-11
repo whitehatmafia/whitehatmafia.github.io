@@ -2,7 +2,7 @@
 +++
 title = "About Me"
 date = "2024-11-10"
-author = "Your Name"
+
 +++
 
 I am a cybersecurity professional specializing in [your areas of expertise].

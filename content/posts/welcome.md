@@ -1,7 +1,7 @@
 +++
 title = "Welcome to My Cybersecurity Portfolio"
 date = "2024-11-10"
-author = "Your Name"
+author = "Saul Lemus"
 cover = ""
 tags = ["cybersecurity", "portfolio"]
 description = "Welcome to my terminal-style cybersecurity portfolio."

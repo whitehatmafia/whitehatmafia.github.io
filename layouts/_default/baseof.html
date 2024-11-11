@@ -9,6 +9,43 @@
     {{- end }}
     {{ $style := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
     <link rel="stylesheet" href="{{ $style.Permalink }}">
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: monospace;
+            padding: 20px;
+        }
+        #terminal {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #0f0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        #input-line {
+            display: flex;
+            align-items: center;
+        }
+        #input {
+            background-color: #000;
+            color: #0f0;
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-family: monospace;
+        }
+        header, footer {
+            color: #0f0;
+        }
+        a {
+            color: #0f0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,15 +57,56 @@
     </header>
 
     <main>
+        <div id="terminal"></div>
+        <div id="input-line">
+            <span>$</span>
+            <input type="text" id="input" autofocus>
+        </div>
         {{ block "main" . }}{{ end }}
     </main>
 
-    <footer>
+       <footer>
         <p>&copy; {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
     </footer>
 
     {{ range .Site.Params.custom_js -}}
     <script src="{{ . | relURL }}"></script>
     {{- end }}
+    <script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('input');
+    const commands = {
+        help: 'Available commands: help, about, projects, contact, clear',
+        about: 'I am a cybersecurity enthusiast specializing in [your focus areas].',
+        projects: 'My projects include: 1. [Project 1], 2. [Project 2], 3. [Project 3]',
+        contact: 'Email: your@email.com | GitHub: @whitehatmafia | LinkedIn: [Your LinkedIn]',
+        clear: 'Clearing terminal...'
+    };
+
+    function executeCommand(cmd) {
+        cmd = cmd.toLowerCase().trim();
+        let output = commands[cmd] || `Command not found: ${cmd}`;
+        if (cmd === 'clear') {
+            terminal.innerHTML = '';
+            return;
+        }
+        terminal.innerHTML += `$ ${cmd}<br>${output}<br><br>`;
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    input.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            const cmd = this.value;
+            executeCommand(cmd);
+            this.value = '';
+        }
+    });
+        
+                
+
+        // Initial message
+        terminal.innerHTML = 'Welcome to WhiteHat Mafia Terminal. Type "help" for available commands.<br><br>';
+
+    </script>
 </body>
-</html>
+</html> 
