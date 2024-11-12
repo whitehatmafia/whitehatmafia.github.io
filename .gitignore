@@ -2,3 +2,4 @@ build/
 public/
 resources/
 .hugo_build.lock
+public_backup/
