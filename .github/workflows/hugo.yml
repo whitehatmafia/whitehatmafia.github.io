@@ -3,22 +3,34 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches: ["master"]  # or "main" if that's your default branch
+  pull_request:
+    branches: ["master"]  # or "main" if that's your default branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Add this line
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
+          extended: true
+
       - name: Build
         run: hugo --minify
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'  # or 'refs/heads/main' if that's your default branch
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
