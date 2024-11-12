@@ -2,13 +2,15 @@ name: Deploy Hugo site to Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: ["master"]  # or "main" if that's your default branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Add this line
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
