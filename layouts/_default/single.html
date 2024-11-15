@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="terminal-content">
+    <div class="terminal-header">
+        <span class="text-green-500">$ cat</span>
+        <h1 class="text-green-400 text-2xl inline-block ml-2">{{ .Title }}</h1>
+    </div>
+    
+    <div class="terminal-metadata text-sm text-green-600 mb-4">
+        <span>Created: {{ .Date.Format "2006-01-02" }}</span>
+        {{ if ne .Date .Lastmod }}
+        <span class="ml-4">Updated: {{ .Lastmod.Format "2006-01-02" }}</span>
+        {{ end }}
+    </div>
+
+    <div class="terminal-body text-green-200">
+        {{ .Content }}
+    </div>
+
+    <div class="terminal-footer mt-8 text-green-500">
+        <a href="javascript:history.back()" class="hover:text-green-300">
+            $ cd ..
+        </a>
+    </div>
+</div>
+{{ end }}

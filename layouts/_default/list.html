@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="terminal-content">
+    <h1 class="text-green-500 text-2xl mb-4">{{ .Title }}</h1>
+    <div class="space-y-4">
+        {{ range .Pages }}
+        <div class="terminal-entry">
+            <h2 class="text-green-400 text-xl">
+                <a href="{{ .RelPermalink }}" class="hover:text-green-300">
+                    $ cat {{ .Title }}
+                </a>
+            </h2>
+            <div class="text-green-200 ml-4">
+                {{ .Summary }}
+            </div>
+            <div class="text-sm text-green-600 ml-4">
+                {{ .Date.Format "2006-01-02" }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

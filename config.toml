@@ -3,6 +3,13 @@ languageCode = 'en-us'
 title = 'Offradar Machine - Cybersecurity Portfolio'
 theme = 'terminal'
 
+# Add this outputs section to fix the XML issue
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
 [params]
   # Terminal theme settings
   themeColor = "green"
@@ -16,6 +23,11 @@ theme = 'terminal'
   # Custom CSS and JS
   custom_css = ["css/custom.css"]
   custom_js = ["js/custom.js"]
+
+  # Add these params for better terminal theme integration
+  contentTypeName = "posts"
+  showLanguageSelector = false
+  showLastUpdated = true
 
 [languages]
   [languages.en]
@@ -52,3 +64,8 @@ theme = 'terminal'
 
 [markup.highlight]
   style = "monokai"
+
+# Add permalinks for better URL structure
+[permalinks]
+  posts = "/:filename/"
+  projects = "/projects/:filename/"
