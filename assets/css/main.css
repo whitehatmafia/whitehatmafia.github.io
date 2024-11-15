@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles that work with terminal theme */
+.terminal-animation {
+  @apply transition-all duration-300;
+}
+
+.command-line {
+  @apply font-mono text-green-500;
+}

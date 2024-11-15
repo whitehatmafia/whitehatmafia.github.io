@@ -1,0 +1,11 @@
+# Hugo
+public/
+resources/
+.hugo_build.lock
+
+# Node
+node_modules/
+static/css/style.css
+
+# OS
+.DS_Store

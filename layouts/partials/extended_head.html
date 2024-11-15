@@ -1,0 +1,14 @@
+<!-- Tailwind CSS -->
+{{ $css := resources.Get "css/main.css" | resources.PostCSS }}
+{{ if .Site.IsServer }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{ else }}
+  {{ $css := $css | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ end }}
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- Custom JS -->
+<script defer src="/js/animations.js"></script>

@@ -3,34 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }} | {{ .Site.Title }}</title>
-    {{ range .Site.Params.custom_css -}}
-    <link rel="stylesheet" href="{{ . | relURL }}">
+ <!-- Add Tailwind CSS -->
+    {{ $css := resources.Get "css/main.css" }}
+    {{ $css = $css | resources.PostCSS }}
+    {{ if hugo.IsProduction }}
+        {{ $css = $css | minify | fingerprint }}
+    {{ end }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+    <!-- Add GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    {{ range .Site.Params.custom_js -}}
+    <script src="{{ . | relURL }}"></script>
     {{- end }}
-    {{ $style := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
+    
     <style>
         body {
-            background-color: #000;
+            background: #000;
             color: #0f0;
-            font-family: monospace;
+            margin: 0;
             padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         #terminal {
-            height: 400px;
             overflow-y: auto;
-            border: 1px solid #0f0;
-            padding: 10px;
-            margin-bottom: 20px;
+            flex-grow: 1;
+            font-family: monospace;
         }
         #input-line {
             display: flex;
             align-items: center;
+            gap: 8px;
         }
         #input {
-            background-color: #000;
-            color: #0f0;
+            background: transparent;
             border: none;
+            color: #0f0;
             outline: none;
             flex-grow: 1;
             font-family: monospace;
@@ -38,12 +47,13 @@
         header, footer {
             color: #0f0;
         }
-        a {
+        .terminal-prompt {
+            opacity: 0; /* Will be animated by GSAP */
+        }
+        .menu-item {
             color: #0f0;
             text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
+            opacity: 0; /* Will be animated by GSAP */
         }
     </style>
 </head>
@@ -51,62 +61,100 @@
     <header>
         <nav>
             {{ range .Site.Menus.main }}
-            <a href="{{ .URL }}">{{ .Name }}</a>
+            <a class="menu-item" href="{{ .URL }}">{{ .Name }}</a>
             {{ end }}
         </nav>
     </header>
 
-    <main>
-        <div id="terminal"></div>
-        <div id="input-line">
-            <span>$</span>
-            <input type="text" id="input" autofocus>
+    <main class="post-content">
+        <div class="terminal-prompt">
+            <div id="terminal"></div>
+            <div id="input-line">
+  <span class="cursor">$</span>
+                <input type="text" id="input" autofocus>
+            </div>
         </div>
         {{ block "main" . }}{{ end }}
     </main>
 
-       <footer>
-        <p>&copy; {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
-    </footer>
-
-    {{ range .Site.Params.custom_js -}}
-    <script src="{{ . | relURL }}"></script>
-    {{- end }}
     <script>
-    const terminal = document.getElementById('terminal');
-    const input = document.getElementById('input');
-    const commands = {
-        help: 'Available commands: help, about, projects, contact, clear',
-        about: 'I am a cybersecurity enthusiast specializing in [your focus areas].',
-        projects: 'My projects include: 1. [Project 1], 2. [Project 2], 3. [Project 3]',
-        contact: 'Email: your@email.com | GitHub: @whitehatmafia | LinkedIn: [Your LinkedIn]',
-        clear: 'Clearing terminal...'
-    };
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+        const commands = {
+            help: 'Available commands: help, about, projects, contact, clear',
+            about: 'I am a cybersecurity enthusiast specializing in [your focus areas].',
+            projects: 'My projects include: 1. [Project 1], 2. [Project 2], 3. [Project 3]',
+            contact: 'Email: your@email.com | GitHub: @whitehat'
+        };
 
-    function executeCommand(cmd) {
-        cmd = cmd.toLowerCase().trim();
-        let output = commands[cmd] || `Command not found: ${cmd}`;
-        if (cmd === 'clear') {
-            terminal.innerHTML = '';
-            return;
+        function executeCommand(cmd) {
+            cmd = cmd.toLowerCase().trim();
+            let output = commands[cmd] || `Command not found: ${cmd}`;
+            if (cmd === 'clear') {
+                terminal.innerHTML = '';
+                return;
+            }
+            terminal.innerHTML += `$ ${cmd}<br>${output}<br><br>`;
+            terminal.scrollTop = terminal.scrollHeight;
         }
-        terminal.innerHTML += `$ ${cmd}<br>${output}<br><br>`;
-        terminal.scrollTop = terminal.scrollHeight;
-    }
 
-    input.addEventListener('keyup', function(event) {
-        if (event.key === 'Enter') {
-            const cmd = this.value;
-            executeCommand(cmd);
-            this.value = '';
-        }
-    });
-        
-                
+        input.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                const cmd = this.value;
+                executeCommand(cmd);
+                this.value = '';
+            }
+        });
 
-        // Initial message
+        // Initial welcome message
         terminal.innerHTML = 'Welcome to WhiteHat Mafia Terminal. Type "help" for available commands.<br><br>';
 
+        // GSAP Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate terminal prompt
+            gsap.from('.terminal-prompt', {
+                duration: 0.5,
+                opacity: 0,
+                x: -20,
+                ease: 'power2.out'
+            });
+
+            // Animate menu items
+            gsap.from('.menu-item', {
+                duration: 0.5,
+                opacity: 0,
+                y: 20,
+                stagger: 0.1,
+                delay: 0.5,
+                ease: 'power2.out'
+            })gsap.to('.cursor', {
+                opacity: 0,
+                duration: 0.5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power2.inOut'
+            });
+
+            // Hover effects for menu items
+            document.querySelectorAll('.menu-item').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, {
+                        scale: 1.1,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+
+                link.addEventListener('mouseleave', () => {
+                    gsap.to(link, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+        });
     </script>
 </body>
-</html> 
+</html>;
+
