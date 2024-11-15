@@ -4,7 +4,6 @@ title = "Offradar Machine"
 theme = "terminal"
 
 [params]
-  # basic setup
   titlePosition = "left"
   contentTypeName = "posts"
   themeColor = "green"
@@ -18,11 +17,13 @@ theme = "terminal"
 [languages]
   [languages.en]
     title = "Offradar Machine"
-    subtitle = "Cybersecurity Research & Development"
-    keywords = "cybersecurity, penetration testing, security research"
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
+    
+    [languages.en.params]
+      subtitle = "Cybersecurity Research & Development"
+      readMore = "Read more"
+      readOtherPosts = "Read other posts"
+      menuMore = "Show more"
+      keywords = "cybersecurity, penetration testing, security research"
 
     [languages.en.params.logo]
       logoText = "~/offradar_machine"
