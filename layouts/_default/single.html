@@ -1,25 +1,107 @@
 {{ define "main" }}
-<div class="terminal-content">
+<div class="terminal-content wake-up">
     <div class="terminal-header">
-        <span class="text-green-500">$ cat</span>
-        <h1 class="text-green-400 text-2xl inline-block ml-2">{{ .Title }}</h1>
+        <span class="text-green-500 terminal-text typing">$ cat</span>
+        <h1 class="text-green-400 text-2xl inline-block ml-2 glitch">{{ .Title }}</h1>
     </div>
     
-    <div class="terminal-metadata text-sm text-green-600 mb-4">
-        <span>Created: {{ .Date.Format "2006-01-02" }}</span>
+    <div class="terminal-metadata text-sm text-green-600 mb-4 crt-effect">
+        <span class="interactive">Created: {{ .Date.Format "2006-01-02" }}</span>
         {{ if ne .Date .Lastmod }}
-        <span class="ml-4">Updated: {{ .Lastmod.Format "2006-01-02" }}</span>
+        <span class="ml-4 interactive">Updated: {{ .Lastmod.Format "2006-01-02" }}</span>
+        {{ end }}
+        {{ with .Params.tags }}
+        <div class="tags mt-2">
+            {{ range . }}
+            <span class="interactive">#{{ . }}</span>
+            {{ end }}
+        </div>
         {{ end }}
     </div>
 
-    <div class="terminal-body text-green-200">
+    <div class="terminal-body text-green-200 post-content">
         {{ .Content }}
     </div>
 
     <div class="terminal-footer mt-8 text-green-500">
-        <a href="javascript:history.back()" class="hover:text-green-300">
-            $ cd ..
-        </a>
+        <nav class="post-nav flex justify-between">
+            {{ with .PrevInSection }}
+            <a href="{{ .Permalink }}" class="interactive hover:text-green-300">
+                <span class="terminal-prompt">←</span> $ cd {{ .Title }}
+            </a>
+            {{ end }}
+            
+            <a href="javascript:history.back()" class="interactive hover:text-green-300">
+                $ cd ..
+            </a>
+            
+            {{ with .NextInSection }}
+            <a href="{{ .Permalink }}" class="interactive hover:text-green-300">
+                $ cd {{ .Title }} <span class="terminal-prompt">→</span>
+            </a>
+            {{ end }}
+        </nav>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Add terminal typing effect to code blocks
+    document.querySelectorAll('pre code').forEach(block => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'terminal-wrapper';
+        const toolbar = document.createElement('div');
+        toolbar.className = 'terminal-toolbar';
+        toolbar.innerHTML = `
+            <span class="terminal-btn"></span>
+            <span class="terminal-btn"></span>
+            <span class="terminal-btn"></span>
+        `;
+        
+        const parent = block.parentNode;
+        parent.insertBefore(wrapper, block);
+        wrapper.appendChild(toolbar);
+        wrapper.appendChild(block);
+    });
+
+    // Add copy button to code blocks
+    document.querySelectorAll('pre code').forEach(block => {
+        const button = document.createElement('button');
+        button.className = 'copy-button interactive';
+        button.innerHTML = '$ copy';
+        
+        button.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(block.textContent);
+                button.innerHTML = '$ copied!';
+                setTimeout(() => {
+                    button.innerHTML = '$ copy';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                button.innerHTML = '$ error!';
+            }
+        });
+        
+        block.parentNode.appendChild(button);
+    });
+
+    // Add typing animation to terminal commands
+    document.querySelectorAll('.terminal-text').forEach(element => {
+        const text = element.textContent;
+        element.textContent = '';
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        
+        typeWriter();
+    });
+});
+</script>
 {{ end }}
+

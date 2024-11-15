@@ -1,52 +1,61 @@
 baseURL = "https://whitehatmafia.github.io/"
 languageCode = "en"
-title = "Offradar Machine"
+title = "WhiteHat Mafia"
 theme = "terminal"
 
 [params]
-  titlePosition = "left"
-  contentTypeName = "posts"
+  # Theme colors: "orange" | "blue" | "red" | "green" | "pink"
   themeColor = "green"
+  
+  # Terminal theme options
+  titlePosition = "left"
   showMenuItems = 4
-  fullWidthTheme = false
-  centerTheme = false
-  showLanguageSelector = false
+  fullWidthTheme = true
+  centerTheme = true
   autoCover = true
   showLastUpdated = true
+  
+  # Custom background color
+  backgroundColor = "#1a1b1d"
+  
+  # Custom accent color
+  accentColor = "#00ff00"
 
 [languages]
   [languages.en]
-    title = "Offradar Machine"
+    title = "WhiteHat Mafia"
+    subtitle = "Cybersecurity Research & Development"
     
     [languages.en.params]
-      subtitle = "Cybersecurity Research & Development"
-      readMore = "Read more"
-      readOtherPosts = "Read other posts"
-      menuMore = "Show more"
-      keywords = "cybersecurity, penetration testing, security research"
-
+      keywords = "cybersecurity, penetration testing, ethical hacking, CTF"
+      menuMore = "Show More"
+      readMore = "Read More"
+      readOtherPosts = "Read Other Posts"
+      newerPosts = "Newer Posts"
+      olderPosts = "Older Posts"
+      
     [languages.en.params.logo]
-      logoText = "~/offradar_machine"
+      logoText = "~/whitehat_mafia>"
       logoHomeLink = "/"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
         identifier = "about"
-        name = "about"
+        name = "[About]"
         url = "/about"
         weight = 1
       [[languages.en.menu.main]]
         identifier = "posts"
-        name = "posts"
+        name = "[Posts]"
         url = "/posts"
         weight = 2
       [[languages.en.menu.main]]
         identifier = "projects"
-        name = "projects"
+        name = "[Projects]"
         url = "/projects"
         weight = 3
       [[languages.en.menu.main]]
         identifier = "contact"
-        name = "contact"
+        name = "[Contact]"
         url = "/contact"
         weight = 4
