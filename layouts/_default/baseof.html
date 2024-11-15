@@ -4,75 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ .Title }} | {{ .Site.Title }}</title>
+    {{ $styles := resources.Get "css/main.css" | postCSS }}
+    {{ if .Site.IsServer }}
+      <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    {{ else }}
+      {{ $styles := $styles | minify | fingerprint | resources.PostProcess }}
+      <link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
+    {{ end }}
     {{ range .Site.Params.custom_css -}}
     <link rel="stylesheet" href="{{ . | relURL }}">
     {{- end }}
-    {{ $style := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
-    <style>
-        body {
-            background-color: #000;
-            color: #0f0;
-            font-family: monospace;
-            padding: 20px;
-        }
-        #terminal {
-            height: 400px;
-            overflow-y: auto;
-            border: 1px solid #0f0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        #input-line {
-            display: flex;
-            align-items: center;
-        }
-        #input {
-            background-color: #000;
-            color: #0f0;
-            border: none;
-            outline: none;
-            flex-grow: 1;
-            font-family: monospace;
-        }
-        header, footer {
-            color: #0f0;
-        }
-        a {
-            color: #0f0;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
-<body>
-    <header>
+<body class="bg-black text-green-400 font-mono p-5">
+    <header class="mb-5">
         <nav>
             {{ range .Site.Menus.main }}
-            <a href="{{ .URL }}">{{ .Name }}</a>
+            <a href="{{ .URL }}" class="mr-4 hover:text-white hover:underline">{{ .Name }}</a>
             {{ end }}
         </nav>
     </header>
 
     <main>
-        <div id="terminal"></div>
-        <div id="input-line">
-            <span>$</span>
-            <input type="text" id="input" autofocus>
+        <div id="terminal" class="h-96 overflow-y-auto border border-green-400 p-2.5 mb-5"></div>
+        <div id="input-line" class="flex items-center">
+            <span class="mr-2">$</span>
+            <input type="text" id="input" class="bg-black text-green-400 border-none outline-none flex-grow font-mono" autofocus>
         </div>
         {{ block "main" . }}{{ end }}
     </main>
 
-       <footer>
+    <footer class="mt-5">
         <p>&copy; {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
     </footer>
 
     {{ range .Site.Params.custom_js -}}
     <script src="{{ . | relURL }}"></script>
     {{- end }}
-    <script>
+<script>
     const terminal = document.getElementById('terminal');
     const input = document.getElementById('input');
     const commands = {
@@ -90,7 +58,7 @@
             terminal.innerHTML = '';
             return;
         }
-        terminal.innerHTML += `$ ${cmd}<br>${output}<br><br>`;
+        terminal.innerHTML += `<span class="text-yellow-400">$</span> <span class="text-blue-400">${cmd}</span><br><span class="text-green-400">${output}</span><br><br>`;
         terminal.scrollTop = terminal.scrollHeight;
     }
 
@@ -101,12 +69,9 @@
             this.value = '';
         }
     });
-        
-                
 
-        // Initial message
-        terminal.innerHTML = 'Welcome to WhiteHat Mafia Terminal. Type "help" for available commands.<br><br>';
-
+    // Initial message
+    terminal.innerHTML = '<span class="text-green-400">Welcome to WhiteHat Mafia Terminal. Type "help" for available commands.</span><br><br>';
     </script>
 </body>
-</html> 
+</html>

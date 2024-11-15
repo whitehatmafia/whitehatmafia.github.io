@@ -14,8 +14,8 @@ theme = 'terminal'
   author = "Mafia"
   
   # Custom CSS and JS
-  custom_css = ["css/custom.css"]
-  custom_js = ["js/custom.js"]
+  custom_css = ["css/custom.css", "css/main.css"]
+  custom_js = ["js/custom.js", "js/gsap.in.js"]
 
 [languages]
   [languages.en]
