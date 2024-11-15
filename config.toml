@@ -3,44 +3,29 @@ languageCode = 'en-us'
 title = 'Offradar Machine - Cybersecurity Portfolio'
 theme = 'terminal'
 
-# Add this outputs section to fix the XML issue
-[outputs]
-  home = ["HTML", "RSS"]
-  section = ["HTML"]
-  taxonomy = ["HTML"]
-  term = ["HTML"]
-
 [params]
-  # Terminal theme settings
   themeColor = "green"
   showMenuItems = 4
   fullWidthTheme = false
   centerTheme = true
-  
   description = "A showcase of my cybersecurity projects and skills"
   author = "Mafia"
-  
-  # Custom CSS and JS
   custom_css = ["css/custom.css"]
   custom_js = ["js/custom.js"]
-
-  # Add these params for better terminal theme integration
-  contentTypeName = "posts"
-  showLanguageSelector = false
-  showLastUpdated = true
 
 [languages]
   [languages.en]
     languageName = "English"
     title = "Offradar Machine"
-    subtitle = "A Cybersecurity Portfolio"
-    owner = "Mafia"
-    keywords = "cybersecurity,portfolio,terminal,offradar"
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
-
+    
+    [languages.en.params]
+      subtitle = "A Cybersecurity Portfolio"
+      owner = "Mafia"
+      keywords = "cybersecurity,portfolio,terminal,offradar"
+      menuMore = "Show more"
+      readMore = "Read more"
+      readOtherPosts = "Read other posts"
+      
     [languages.en.params.logo]
       logoText = "Mafia $ _"
       logoHomeLink = "/"
@@ -65,7 +50,8 @@ theme = 'terminal'
 [markup.highlight]
   style = "monokai"
 
-# Add permalinks for better URL structure
-[permalinks]
-  posts = "/:filename/"
-  projects = "/projects/:filename/"
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]

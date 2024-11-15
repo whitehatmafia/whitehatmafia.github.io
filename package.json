@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
