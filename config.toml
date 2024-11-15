@@ -1,57 +1,51 @@
-baseURL = 'https://whitehatmafia.github.io/'
-languageCode = 'en-us'
-title = 'Offradar Machine - Cybersecurity Portfolio'
-theme = 'terminal'
+baseURL = "https://whitehatmafia.github.io/"
+languageCode = "en"
+title = "Offradar Machine"
+theme = "terminal"
 
 [params]
+  # basic setup
+  titlePosition = "left"
+  contentTypeName = "posts"
   themeColor = "green"
   showMenuItems = 4
   fullWidthTheme = false
-  centerTheme = true
-  description = "A showcase of my cybersecurity projects and skills"
-  author = "Mafia"
-  custom_css = ["css/custom.css"]
-  custom_js = ["js/custom.js"]
+  centerTheme = false
+  showLanguageSelector = false
+  autoCover = true
+  showLastUpdated = true
 
 [languages]
   [languages.en]
-    languageName = "English"
     title = "Offradar Machine"
-    
-    [languages.en.params]
-      subtitle = "A Cybersecurity Portfolio"
-      owner = "Mafia"
-      keywords = "cybersecurity,portfolio,terminal,offradar"
-      menuMore = "Show more"
-      readMore = "Read more"
-      readOtherPosts = "Read other posts"
-      
+    subtitle = "Cybersecurity Research & Development"
+    keywords = "cybersecurity, penetration testing, security research"
+    menuMore = "Show more"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
+
     [languages.en.params.logo]
-      logoText = "Mafia $ _"
+      logoText = "~/offradar_machine"
       logoHomeLink = "/"
 
-[menu]
-  [[menu.main]]
-    identifier = "home"
-    name = "Home"
-    url = "/"
-    weight = 1
-  [[menu.main]]
-    identifier = "projects"
-    name = "Projects"
-    url = "/projects/"
-    weight = 2
-  [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = 3
-
-[markup.highlight]
-  style = "monokai"
-
-[outputs]
-  home = ["HTML", "RSS"]
-  section = ["HTML"]
-  taxonomy = ["HTML"]
-  term = ["HTML"]
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "about"
+        url = "/about"
+        weight = 1
+      [[languages.en.menu.main]]
+        identifier = "posts"
+        name = "posts"
+        url = "/posts"
+        weight = 2
+      [[languages.en.menu.main]]
+        identifier = "projects"
+        name = "projects"
+        url = "/projects"
+        weight = 3
+      [[languages.en.menu.main]]
+        identifier = "contact"
+        name = "contact"
+        url = "/contact"
+        weight = 4

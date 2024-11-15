@@ -1,23 +1,15 @@
-+++
-title = "Welcome to My Cybersecurity Portfolio"
-date = "2024-11-10"
-author = "Saul Lemus"
-cover = ""
-tags = ["cybersecurity", "portfolio"]
-description = "Welcome to my terminal-style cybersecurity portfolio."
-showFullContent = false
-+++
+---
+title: "Welcome to My Security Research Blog"
+date: 2024-11-10
+draft: false
+---
 
-Welcome to my cybersecurity portfolio! Here you'll find information about my projects and skills.
+Welcome to my cybersecurity blog where I share:
 
-To navigate, use the following commands:
+- 🔍 Security Research Findings
+- 💻 CTF Writeups
+- 🛠️ Tool Development
+- 📝 Technical Tutorials
+- 🔐 Best Security Practices
 
-- `cd /about` - Learn more about me
-- `cd /projects` - View my cybersecurity projects
-- `ls` - List available sections
-- `cat <filename>` - Read the contents of a file
-- `help` - Display this help message
-
-Feel free to explore and discover more about my work in cybersecurity. If you have any questions or would like to connect, use the `contact` command.
-
-Remember, this is a simulated terminal environment. Enjoy your stay!
+Stay tuned for regular updates on my latest projects and discoveries in the field of cybersecurity.

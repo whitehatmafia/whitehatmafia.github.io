@@ -1,7 +1,14 @@
-+++
-title = "My Projects"
-+++
+---
+title: "Projects"
+date: 2024-11-10
+draft: false
+---
+### Vulnerability Research
+- CVE Discoveries
+- Zero-day Research
+- Bug Bounty Reports
 
-Here you'll find a list of my cybersecurity projects. Each project demonstrates different skills and techniques in the field of information security.
-
-Use `ls` to view the list of projects, and `cat <project-name>` to read about a specific project.
+### CTF Challenges
+- HackTheBox Writeups
+- TryHackMe Solutions
+- Custom CTF Development
