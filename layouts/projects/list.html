@@ -1,0 +1,32 @@
+{{ define "main" }}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {{ range .Pages }}
+    <div class="terminal-card group">
+        <div class="terminal-header">
+            <span class="terminal-prompt">❯</span>
+            <span class="typing-text">{{ .Title }}</span>
+        </div>
+        
+        <div class="mt-4 text-sm opacity-80">
+            {{ .Summary | truncate 120 }}
+        </div>
+        
+        <div class="mt-4 flex items-center justify-between">
+            {{ with .Params.tech }}
+            <div class="flex flex-wrap gap-2">
+                {{ range . }}
+                <span class="px-2 py-1 text-xs border border-terminal-green/50 rounded">
+                    {{ . }}
+                </span>
+                {{ end }}
+            </div>
+            {{ end }}
+            
+            <a href="{{ .RelPermalink }}" class="terminal-button text-sm">
+                View Project
+            </a>
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ end }}

@@ -4,7 +4,7 @@ title = "WhiteHat Mafia"
 theme = "terminal"
 
 [params]
-  # Theme colors: "orange" | "blue" | "red" | "green" | "pink"
+  # Theme colors
   themeColor = "green"
   
   # Terminal theme options
@@ -15,25 +15,30 @@ theme = "terminal"
   autoCover = true
   showLastUpdated = true
   
-  # Custom background color
+  # Custom colors
   backgroundColor = "#1a1b1d"
-  
-  # Custom accent color
   accentColor = "#00ff00"
+  
+  # Social links
+  github = "whitehatmafia"
+  # Add other social media links as needed
+  
+  # Additional custom parameters
+  description = "Cybersecurity Research & Development"
+  keywords = "cybersecurity, penetration testing, ethical hacking, CTF"
+  
+  # Enable syntax highlighting
+  enableSyntaxHighlighting = true
 
-[languages]
-  [languages.en]
-    title = "WhiteHat Mafia"
-    subtitle = "Cybersecurity Research & Development"
-    
-    [languages.en.params]
-      keywords = "cybersecurity, penetration testing, ethical hacking, CTF"
-      menuMore = "Show More"
-      readMore = "Read More"
-      readOtherPosts = "Read Other Posts"
-      newerPosts = "Newer Posts"
-      olderPosts = "Older Posts"
-      
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    style = "monokai"
+
+[languages.en]
+  [languages.en.params]
     [languages.en.params.logo]
       logoText = "~/whitehat_mafia>"
       logoHomeLink = "/"

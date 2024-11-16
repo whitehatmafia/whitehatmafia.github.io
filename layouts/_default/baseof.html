@@ -1,157 +1,214 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.Language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Add Tailwind CSS -->
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    
+    <!-- Original Terminal Theme CSS -->
+    {{ $style := resources.Get "css/terminal.css" | resources.ExecuteAsTemplate "css/terminal.css" . }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    
+    <!-- Tailwind CSS -->
     {{ $css := resources.Get "css/main.css" }}
     {{ $css = $css | resources.PostCSS }}
     {{ if hugo.IsProduction }}
         {{ $css = $css | minify | fingerprint }}
     {{ end }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}">
-    <!-- Add GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    {{ range .Site.Params.custom_js -}}
-    <script src="{{ . | relURL }}"></script>
-    {{- end }}
     
-    <style>
-        body {
-            background: #000;
-            color: #0f0;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        #terminal {
-            overflow-y: auto;
-            flex-grow: 1;
-            font-family: monospace;
-        }
-        #input-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        #input {
-            background: transparent;
-            border: none;
-            color: #0f0;
-            outline: none;
-            flex-grow: 1;
-            font-family: monospace;
-        }
-        header, footer {
-            color: #0f0;
-        }
-        .terminal-prompt {
-            opacity: 0;
-        }
-        .menu-item {
-            color: #0f0;
-            text-decoration: none;
-            opacity: 0;
-        }
-    </style>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            {{ range .Site.Menus.main }}
-            <a class="menu-item" href="{{ .URL }}">{{ .Name }}</a>
-            {{ end }}
-        </nav>
-    </header>
 
-    <main>
-        <div class="terminal-prompt">
-<div id="terminal"></div>
-            <div id="input-line">
-                <span class="cursor">$</span>
-                <input type="text" id="input" autofocus>
+<body class="bg-terminal-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Terminal Header -->
+        <header class="terminal-container mb-8">
+            <div class="terminal-header">
+                <span class="terminal-prompt">{{ .Site.Params.languages.en.params.logo.logoText }}</span>
+                <span class="cursor-blink"></span>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex space-x-4 mt-4">
+                {{ range .Site.Menus.main }}
+                <a href="{{ .URL }}" class="terminal-link">
+                    <span class="terminal-prompt">❯</span> {{ .Name }}
+                </a>
+                {{ end }}
+            </nav>
+        </header>
+
+
+		<!-- Terminal Input Area -->
+        <div id="terminal" class="terminal-container mb-8">
+            <div id="output">
+                <div class="result">Welcome to WhiteHat Mafia Terminal. Type 'help' for available commands.</div>
+            </div>
+            <div id="input-line" class="flex items-center space-x-2 mt-4">
+                <span class="terminal-prompt">❯</span>
+                <input type="text" id="input" 
+                    class="bg-transparent border-none outline-none flex-grow font-mono text-terminal-green"
+                    autofocus>
             </div>
         </div>
-        {{ block "main" . }}{{ end }}
-    </main>
+        <!-- Main Content -->
+        <main class="terminal-container">
+            <div class="terminal-header mb-6">
+                <span class="terminal-prompt">❯</span>
+                <span class="typing-text">{{ .Title }}</span>
+            </div>
+            <div class="terminal-text">
+                {{ block "main" . }}{{ end }}
+            </div>
+        </main>
 
-    <script>
-        // Wait for DOM to load
-        document.addEventListener('DOMContentLoaded', () => {
-            const terminal = document.getElementById('terminal');
+        <!-- Terminal Commands JavaScript -->
+        <script>
             const input = document.getElementById('input');
+            const output = document.getElementById('output');
+            const terminal = document.getElementById('terminal');
+            
             const commands = {
-                help: 'Available commands: help, about, projects, contact, clear',
-                about: 'I am a cybersecurity enthusiast specializing in [your focus areas].',
-                projects: 'My projects include: 1. [Project 1], 2. [Project 2], 3. [Project 3]',
-                contact: 'Email: saulemus@protonmail.com | GitHub: @whitehatmafia'
+                help: () => `Available commands:
+help - Show this help message
+about - About WhiteHat Mafia
+blog - Visit the blog
+projects - View projects
+contact - Contact information
+skills - View technical skills
+social - Social media links
+clear - Clear terminal
+home - Go to homepage`,
+
+                about: () => {
+                    window.location.href = '/about';
+                    return 'Redirecting to About page...';
+                },
+                
+                blog: () => {
+                    window.location.href = '/posts';
+                    return 'Redirecting to Blog...';
+                },
+                
+                projects: () => {
+                    window.location.href = '/projects';
+                    return 'Redirecting to Projects...';
+                },
+                
+                contact: () => {
+                    window.location.href = '/contact';
+                    return 'Redirecting to Contact page...';
+                },
+                kills: () => `
+Technical Skills:
+- Penetration Testing
+- Ethical Hacking
+- Web Security
+- Network Security
+- Malware Analysis
+- CTF Challenges`,
+
+                social: () => `
+Social Links:
+GitHub: github.com/whitehatmafia
+Twitter: @whitehatmafia
+LinkedIn: linkedin.com/in/whitehatmafia`,
+
+                home: () => {
+                    window.location.href = '/';
+                    return 'Redirecting to Homepage...';
+                },
+                
+                clear: () => {
+                    output.innerHTML = '';
+                    return '';
+                }
             };
-
-            function executeCommand(cmd) {
-                cmd = cmd.toLowerCase().trim();
-                let output = commands[cmd] || `Command not found: ${cmd}`;
-                if (cmd === 'clear') {
-                    terminal.innerHTML = '';
-                    return;
-                }
-                terminal.innerHTML += `$ ${cmd}<br>${output}<br><br>`;
-                terminal.scrollTop = terminal.scrollHeight;
-            }
-
-            input.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    const cmd = this.value;
-                    executeCommand(cmd);
-                    this.value = '';
+            
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const command = input.value.toLowerCase().trim();
+                    
+                    // Add command to output
+                    const commandDiv = document.createElement('div');
+                    commandDiv.className = 'command';
+                    commandDiv.textContent = `❯ ${input.value}`;
+                    output.appendChild(commandDiv);
+                    
+                    // Process command
+                    const result = commands[command] 
+                        ? commands[command]() 
+                        : `Command not found: ${command}. Type 'help' for available commands.`;
+                    
+                    // Add result to output
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'result';
+                    resultDiv.textContent = result;
+                    output.appendChild(resultDiv);
+                    
+                    // Clear input and scroll to bottom
+                    input.value = '';
+                    terminal.scrollTop = terminal.scrollHeight;
                 }
             });
-
-            // Initial welcome message
-            terminal.innerHTML = 'Welcome to WhiteHat Mafia Terminal. Type "help" for available commands.<br><br>';
-
-            // GSAP Animations
-            gsap.from('.terminal-prompt', {
-                duration: 0.5,
-                opacity: 0,
-                x: -20,
-                ease: 'power2.out'
+            
+            // Keep focus on input
+            document.addEventListener('click', () => {
+                input.focus();
             });
-
-            gsap.from('.menu-item', {
-                duration: 0.5,
+            
+            // Initialize GSAP animation
+            gsap.from("#terminal", {
+                duration: 1,
                 opacity: 0,
                 y: 20,
-                stagger: 0.1,
-                delay: 0.5,
-                ease: 'power2.out'
+                ease: "power2.out"
             });
-gsap.to('.cursor', {
+        </script>
+
+
+        <!-- Footer -->
+        <footer class="terminal-container mt-8">
+            <div class="terminal-text text-sm">
+                <span class="terminal-prompt">❯</span> © {{ now.Format "2006" }} {{ .Site.Title }}
+                <span class="cursor-blink ml-1"></span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom JavaScript for animations -->
+    <script>
+        // Typing animation for headers
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                }
+            }, speed);
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate header text
+            const typingElement = document.querySelector('.typing-text');
+            if (typingElement) {
+                typeWriter(typingElement, typingElement.textContent);
+            }
+
+            // GSAP animations for containers
+            gsap.from('.terminal-container', {
+                duration: 0.8,
+                y: 20,
                 opacity: 0,
-                duration: 0.5,
-                repeat: -1,
-                yoyo: true,
-                ease: 'power2.inOut'
-            });
-
-            // Add hover effects for menu items
-            document.querySelectorAll('.menu-item').forEach(link => {
-                link.addEventListener('mouseenter', () => {
-                    gsap.to(link, {
-                        scale: 1.1,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                });
-
-                link.addEventListener('mouseleave', () => {
-                    gsap.to(link, {
-                        scale: 1,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                });
+                stagger: 0.2,
+                ease: 'power2.out'
             });
         });
     </script>

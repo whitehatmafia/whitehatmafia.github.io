@@ -1,3 +1,54 @@
+/* assets/css/main.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .terminal-text {
+        @apply font-mono text-terminal-green;
+    }
+    
+    .terminal-container {
+        @apply bg-terminal-bg border border-terminal-green rounded-lg p-4 shadow-lg shadow-terminal-green/20;
+    }
+    
+    .terminal-header {
+        @apply flex items-center space-x-2 mb-4 font-mono text-terminal-green;
+    }
+    
+    .terminal-prompt {
+        @apply text-terminal-green font-bold;
+    }
+    
+    .terminal-card {
+        @apply bg-terminal-bg/50 border border-terminal-green/50 
+               rounded-lg p-4 hover:border-terminal-green 
+               transition-all duration-300 cursor-pointer;
+    }
+    
+    .terminal-link {
+        @apply text-terminal-green hover:underline hover:text-terminal-green/80 
+               transition-all duration-200;
+    }
+    
+    .terminal-code {
+        @apply bg-black/50 rounded p-2 font-mono text-sm;
+    }
+    
+    .terminal-button {
+        @apply px-4 py-2 border border-terminal-green text-terminal-green 
+               hover:bg-terminal-green hover:text-terminal-bg 
+               transition-all duration-200 rounded;
+    }
+}
+
+/* Animation keyframes */
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor-blink {
+    @apply inline-block w-2 h-4 bg-terminal-green;
+    animation: cursor-blink 1s infinite;
+}

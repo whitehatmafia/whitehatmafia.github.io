@@ -1,107 +1,125 @@
 {{ define "main" }}
-<div class="terminal-content wake-up">
-    <div class="terminal-header">
-        <span class="text-green-500 terminal-text typing">$ cat</span>
-        <h1 class="text-green-400 text-2xl inline-block ml-2 glitch">{{ .Title }}</h1>
+<article class="terminal-container">
+    <!-- Post Header -->
+    <div class="terminal-header mb-6">
+        <span class="terminal-prompt">❯</span>
+        <span class="typing-text">{{ .Title }}</span>
     </div>
-    
-    <div class="terminal-metadata text-sm text-green-600 mb-4 crt-effect">
-        <span class="interactive">Created: {{ .Date.Format "2006-01-02" }}</span>
-        {{ if ne .Date .Lastmod }}
-        <span class="ml-4 interactive">Updated: {{ .Lastmod.Format "2006-01-02" }}</span>
-        {{ end }}
+
+    <!-- Post Metadata -->
+    <div class="flex items-center space-x-4 text-sm opacity-70 mb-8">
+        <div>
+            <span class="terminal-prompt">[</span>
+            {{ .Date.Format "2006-01-02" }}
+            <span class="terminal-prompt">]</span>
+        </div>
         {{ with .Params.tags }}
-        <div class="tags mt-2">
+        <div class="flex items-center space-x-2">
+            <span class="terminal-prompt">#</span>
             {{ range . }}
-            <span class="interactive">#{{ . }}</span>
+            <a href="/tags/{{ . | urlize }}" class="terminal-link">{{ . }}</a>
             {{ end }}
         </div>
         {{ end }}
     </div>
 
-    <div class="terminal-body text-green-200 post-content">
+    <!-- Post Content -->
+    <div class="terminal-text prose prose-invert max-w-none">
         {{ .Content }}
     </div>
 
-    <div class="terminal-footer mt-8 text-green-500">
-        <nav class="post-nav flex justify-between">
+    <!-- Post Footer -->
+    <div class="mt-12 pt-6 border-t border-terminal-green/30">
+        <!-- Navigation -->
+        <nav class="flex justify-between">
             {{ with .PrevInSection }}
-            <a href="{{ .Permalink }}" class="interactive hover:text-green-300">
-                <span class="terminal-prompt">←</span> $ cd {{ .Title }}
+            <a href="{{ .RelPermalink }}" class="terminal-link">
+                <span class="terminal-prompt">←</span> {{ .Title }}
             </a>
             {{ end }}
             
-            <a href="javascript:history.back()" class="interactive hover:text-green-300">
-                $ cd ..
-            </a>
-            
             {{ with .NextInSection }}
-            <a href="{{ .Permalink }}" class="interactive hover:text-green-300">
-                $ cd {{ .Title }} <span class="terminal-prompt">→</span>
+            <a href="{{ .RelPermalink }}" class="terminal-link">
+                {{ .Title }} <span class="terminal-prompt">→</span>
             </a>
             {{ end }}
         </nav>
     </div>
+</article>
+
+<!-- Related Posts -->
+{{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ with $related }}
+<div class="mt-12">
+    <h3 class="terminal-text mb-6">
+        <span class="terminal-prompt">❯</span> Related Posts
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {{ range . }}
+        <div class="terminal-card">
+            <div class="terminal-header">
+                <span class="terminal-prompt">❯</span>
+                <span>{{ .Title }}</span>
+            </div>
+            <div class="mt-2 text-sm opacity-70">
+                {{ .Date.Format "2006-01-02" }}
+            </div>
+            <div class="mt-4">
+                <a href="{{ .RelPermalink }}" class="terminal-button text-sm">
+                    Read Post
+                </a>
+            </div>
+        </div>
+        {{ end }}
+    </div>
 </div>
+{{ end }}
+
+<!-- Comments Section (Optional) -->
+<div class="mt-12">
+    <div class="terminal-container">
+        <div class="terminal-header mb-4">
+            <span class="terminal-prompt">❯</span>
+            <span>Comments</span>
+        </div>
+        <!-- Add your preferred comments system here -->
+    </div>
+</div>
+
+<!-- Add custom script for this template -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Add terminal typing effect to code blocks
-    document.querySelectorAll('pre code').forEach(block => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'terminal-wrapper';
-        const toolbar = document.createElement('div');
-        toolbar.className = 'terminal-toolbar';
-        toolbar.innerHTML = `
-            <span class="terminal-btn"></span>
-            <span class="terminal-btn"></span>
-            <span class="terminal-btn"></span>
-        `;
-        
-        const parent = block.parentNode;
-        parent.insertBefore(wrapper, block);
-        wrapper.appendChild(toolbar);
-        wrapper.appendChild(block);
-    });
-
-    // Add copy button to code blocks
-    document.querySelectorAll('pre code').forEach(block => {
-        const button = document.createElement('button');
-        button.className = 'copy-button interactive';
-        button.innerHTML = '$ copy';
-        
-        button.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(block.textContent);
-                button.innerHTML = '$ copied!';
-                setTimeout(() => {
-                    button.innerHTML = '$ copy';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy:', err);
-                button.innerHTML = '$ error!';
-            }
+    // Highlight code blocks if present
+    document.addEventListener('DOMContentLoaded', () => {
+        // Animate all code blocks entrance
+        gsap.from('pre code', {
+            duration: 0.5,
+            opacity: 0,
+            y: 10,
+            stagger: 0.2,
+            ease: 'power2.out'
         });
-        
-        block.parentNode.appendChild(button);
-    });
 
-    // Add typing animation to terminal commands
-    document.querySelectorAll('.terminal-text').forEach(element => {
-        const text = element.textContent;
-        element.textContent = '';
-        let i = 0;
-        
-        function typeWriter() {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
-        }
-        
-        typeWriter();
+        // Add copy button to code blocks
+        document.querySelectorAll('pre code').forEach((block) => {
+            const button = document.createElement('button');
+            button.className = 'terminal-button absolute top-2 right-2 text-xs';
+            button.textContent = 'Copy';
+            
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(block.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'relative';
+            block.parentNode.insertBefore(wrapper, block);
+            wrapper.appendChild(block);
+            wrapper.appendChild(button);
+        });
     });
-});
 </script>
 {{ end }}
 

@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="space-y-8">
+    {{ range .Pages.ByDate.Reverse }}
+    <article class="terminal-card">
+        <div class="terminal-header">
+            <span class="terminal-prompt">❯</span>
+            <span class="typing-text">{{ .Title }}</span>
+        </div>
+        
+        <div class="text-sm opacity-70 mt-2">
+            <span class="terminal-prompt">[</span>
+            {{ .Date.Format "2006-01-02" }}
+            <span class="terminal-prompt">]</span>
+        </div>
+        
+        <div class="mt-4 text-sm opacity-80">
+            {{ .Summary }}
+        </div>
+        
+        <div class="mt-4">
+            <a href="{{ .RelPermalink }}" class="terminal-button text-sm">
+                Read More
+            </a>
+        </div>
+    </article>
+    {{ end }}
+</div>
+{{ end }}
