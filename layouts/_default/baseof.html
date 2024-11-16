@@ -5,209 +5,249 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminal Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        :root {
+            --bg-color: #1a1b26;
+            --text-color: #a9b1d6;
+            --accent-color: #7aa2f7;
+            --error-color: #f7768e;
+            --success-color: #9ece6a;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Fira Code', monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .terminal-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        #terminal {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .output-line {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+
+        #input {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            outline: none;
         }
         
-        .cursor-blink {
-            animation: blink 1s infinite;
-        }
-
-        .terminal-output {
-            opacity: 0;
-            transform: translateY(10px);
-        }
+         .success { color: var(--success-color); }
+        .error { color: var(--error-color); }
+        .directory { color: var(--accent-color); }
+        .file { color: var(--text-color); }
     </style>
 </head>
-<body class="bg-black text-green-500 min-h-screen font-mono">
-    <div class="terminal-container max-w-4xl mx-auto p-4">
-        <div class="header space-y-2 mb-4">
-            <div class="text-xl font-bold">❯ Welcome to WhiteHat Mafia Terminal</div>
-            <div class="text-sm opacity-80">
-                📝 Technical Tutorials
-                <br>🔐 Best Security Practices
-            </div>
+<body>
+    <div class="terminal-container">
+        <div class="header">
+            <h1>Welcome to My Terminal Portfolio</h1>
         </div>
-
-        <div id="terminal" class="bg-gray-900/50 p-4 rounded-lg border border-green-500/20">
-            <div id="output" class="space-y-2 mb-4"></div>
-            <div class="input-line flex items-center space-x-2">
-                <span class="terminal-prompt">❯</span>
-                <input 
-                    type="text" 
-                    id="input"
-                    class="bg-transparent focus:outline-none flex-1 text-green-500"
-                    autofocus
-                    spellcheck="false"
-                >
+        <div id="terminal">
+            <div id="output"></div>
+            <div class="input-line">
+                <span class="prompt">guest@portfolio:~$</span>
+                <input type="text" id="input" autofocus>
             </div>
         </div>
     </div>
 
-    <footer class="fixed bottom-0 w-full p-4 text-center bg-black/50 backdrop-blur">
-        <div class="terminal-text">
-        <span class="terminal-prompt">❯</span> 
-            © 2024 WhiteHat Mafia
-            <span class="cursor-blink">▋</span>
-        </div>
-    </footer>
-
     <script>
         class Terminal {
             constructor() {
-                this.input = document.getElementById('input');
+                this.currentPath = '/';
+                this.fileSystem = {
+                    '/': ['about', 'posts', 'projects', 'contact'],
+                    '/posts': ['welcome'],
+                    '/projects': ['project1'],
+                    '/contact': []
+                };
+                this.content = {
+                    '/about': 'Hi! I\'m a developer passionate about web technologies.',
+                    '/posts/welcome': 'Welcome to my first blog post!',
+                    '/projects/project1': 'This is my awesome project description.',
+                    '/contact': 'Email: example@email.com\nGitHub: github.com/username'
+                };
                 this.output = document.getElementById('output');
-                this.history = [];
-                this.historyIndex = -1;
-                this.initializeEventListeners();
+                this.input = document.getElementById('input');
+                this.setupEventListeners();
+                this.showWelcomeMessage();
             }
 
-            initializeEventListeners() {
-                this.input.addEventListener('keydown', (e) => {
+            setupEventListeners() {
+                this.input.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
-                        this.handleCommand();
-                    } else if (e.key === 'ArrowUp') {
-                        this.navigateHistory('up');
-                        e.preventDefault();
-                    } else if (e.key === 'ArrowDown') {
-                        this.navigateHistory('down');
-                        e.preventDefault();
+                        const command = this.input.value;
+                        this.executeCommand(command);
+                        this.input.value = '';
                     }
                 });
             }
 
-            handleCommand() {
-                const command = this.input.value.trim().toLowerCase();
-                if (command) {
-                    this.history.push(command);
-                    this.historyIndex = this.history.length;
-                    this.addToOutput(`❯ ${command}`);
-                    this.processCommand(command);
-                }
-                this.input.value = '';
+            showWelcomeMessage() {
+                this.addToOutput('Welcome to my terminal portfolio! Type "help" for available commands.');
             }
 
-            processCommand(command) {
-                const commands = {
-                    help: () => {
-                        this.addToOutput('Available commands: help, about, posts, projects, contact, clear');
-                        return null;
-                    },
-                    about: () => {
-                        window.location.href = '/about/';
-                        return 'Navigating to About page...';
-                    },
-                    posts: () => {
-                        window.location.href = '/posts/';
-                        return 'Navigating to Posts page...';
-                    },
-                    projects: () => {
-                        window.location.href = '/projects/';
-                        return 'Navigating to Projects page...';
-                    },
-                    contact: () => {
-                        window.location.href = '/contact/';
-                        return 'Navigating to Contact page...';
-                    },
-                    clear: () => {
-                        this.output.innerHTML = '';
-                        return null;
-                    },
-                    ls: () => {
-                        this.addToOutput('📁 Available sections:\n/about\n/posts\n/projects\n/contact');
-                        return null;
-                    },
-                    pwd: () => {
-                        return `Current path: ${window.location.pathname}`;
-                    }
-                };
-
-                const commandName = command.split(' ')[0];
-                if (commandName in commands) {
-                    const result = commands[commandName]();
-                    if (result) {
-                        // Add animation for navigation messages
-                        const line = document.createElement('div');
-                        line.textContent = result;
-                        this.output.appendChild(line);
-                        gsap.from(line, {
-                            opacity: 0,
-                            y: 10,
-                            duration: 0.3,
-                            ease: "power2.out"
-                        });
-                    }
-                } else {
-                    this.addToOutput(`Command not found: ${command}`);
-                }
-            }
-
-            addToOutput(text) {
+            addToOutput(text, className = '') {
                 const line = document.createElement('div');
-                line.className = 'terminal-output';
+                line.className = `output-line ${className}`;
                 line.textContent = text;
                 this.output.appendChild(line);
-                
-                // Scroll to bottom
                 this.output.scrollTop = this.output.scrollHeight;
-                
-                // Animate new line with GSAP
-                gsap.fromTo(line, 
-                    { opacity: 0, y: 10 },
-                    { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
-                );
             }
 
-            navigateHistory(direction) {
-                if (direction === 'up' && this.historyIndex > 0) {
-                    this.historyIndex--;
-                    this.input.value = this.history[this.historyIndex];
-                } else if (direction === 'down' && this.historyIndex < this.history.length - 1) {
-                    this.historyIndex++;
-                    this.input.value = this.history[this.historyIndex];
-                } else if (direction === 'down' && this.historyIndex === this.history.length - 1) {
-                    this.historyIndex = this.history.length;
-                    this.input.value = '';
+            executeCommand(command) {
+                const cmdLine = document.createElement('div');
+                cmdLine.className = 'output-line';
+                cmdLine.textContent = `guest@portfolio:~$ ${command}`;
+                this.output.appendChild(cmdLine);
+
+                const [cmd, ...args] = command.trim().toLowerCase().split(' ');
+
+                switch (cmd) {
+                    case 'help':
+                        this.showHelp();
+                        break;
+                    case 'ls':
+                        this.ls();
+                        break;
+                    case 'cd':
+                        this.cd(args[0]);
+                        break;
+                    case 'cat':
+                        this.cat(args[0]);
+                        break;
+                    case 'pwd':
+                        this.pwd();
+                        break;
+                    case 'clear':
+                        this.clear();
+                        break;
+                    default:
+                        this.addToOutput(`Command not found: ${cmd}`, 'error');
                 }
+            }
+
+            showHelp() {
+                const helpText = `
+Available commands:
+- help: Show this help message
+- ls: List directory contents
+- cd [dir]: Change directory
+- cat [file]: Display file contents
+- pwd: Print working directory
+- clear: Clear the terminal
+                `.trim();
+                this.addToOutput(helpText);
+            }
+
+            ls() {
+                const currentDirContent = this.fileSystem[this.currentPath] || [];
+                if (currentDirContent.length === 0) {
+                    this.addToOutput('📂 Directory is empty');
+                    return;
+                }
+                
+                const output = currentDirContent.map(item => {
+                    const isDirectory = this.fileSystem[`${this.currentPath}/${item}`] !== undefined;
+                    return `${isDirectory ? '📂' : '📄'} ${item}`;
+                }).join('\n');
+                
+                this.addToOutput(output);
+            }
+
+            cd(path) {
+                if (!path || path === '/') {
+                    this.currentPath = '/';
+                    this.addToOutput('Changed to root directory', 'success');
+                    return;
+                }
+
+                if (path === '..') {
+                 if (this.currentPath === '/') {
+                        this.addToOutput('Already at root directory', 'error');
+                        return;
+                    }
+                    this.currentPath = this.currentPath.split('/').slice(0, -1).join('/') || '/';
+                    this.addToOutput(`Changed to ${this.currentPath}`, 'success');
+                    return;
+                }
+
+                const newPath = this.currentPath === '/' ? 
+                    `/${path}` : `${this.currentPath}/${path}`;
+
+                if (this.fileSystem[newPath] || Object.keys(this.fileSystem).some(p => p.startsWith(newPath))) {
+                    this.currentPath = newPath;
+                    this.addToOutput(`Changed to ${this.currentPath}`, 'success');
+                } else {
+                    this.addToOutput(`Directory not found: ${path}`, 'error');
+                }
+            }
+
+            cat(filename) {
+                if (!filename) {
+                    this.addToOutput('Please specify a file', 'error');
+                    return;
+                }
+
+                const filePath = this.currentPath === '/' ? 
+                    `/${filename}` : `${this.currentPath}/${filename}`;
+
+                if (this.content[filePath]) {
+                    this.addToOutput(this.content[filePath]);
+                } else {
+                    this.addToOutput(`File not found: ${filename}`, 'error');
+                }
+            }
+
+            pwd() {
+                this.addToOutput(this.currentPath);
+            }
+
+            clear() {
+                this.output.innerHTML = '';
+                this.showWelcomeMessage();
             }
         }
 
-        // Initialize terminal and show welcome message
+        // Initialize the terminal when the page loads
         document.addEventListener('DOMContentLoaded', () => {
-            const terminal = new Terminal();
-            
-            // Initial welcome messages with staggered animation
-            const welcomeMessages = [
-                'Welcome to WhiteHat Mafia Terminal 🚀',
-                'Type "help" to see available commands',
-                'Type "ls" to see available sections'
-            ];
-
-            gsap.from('.header', {
-                opacity: 0,
-                y: -20,
-                duration: 1,
-                ease: "power2.out"
-            });
-            
-            gsap.from('#terminal', {
-                opacity: 0,
-                y: 20,
-                duration: 1,
-                delay: 0.3,
-                ease: "power2.out",
-                onComplete: () => {
-                    // Add welcome messages with staggered animation
-                    welcomeMessages.forEach((msg, index) => {
-                        setTimeout(() => {
-                            terminal.addToOutput(msg);
-                        }, index * 500);
-                    });
-                }
-            });
+            window.terminal = new Terminal();
         });
     </script>
 </body>

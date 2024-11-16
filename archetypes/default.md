@@ -1,27 +1,13 @@
+
 ---
-title: "{{ replace .Name "-" " " | title }}"
+title: "{{ replace .Name \"-\" \" \" | title }}"
 date: {{ .Date }}
+lastmod: {{ .Date }}
 draft: true
 tags: []
 categories: []
 description: ""
 showToc: false
+author: ""
 ---
 
-## Overview
-
-
-
-## Details
-
-### Prerequisites
-- Item 1
-- Item 2
-
-### Steps
-1. First step
-2. Second step
-
-## Conclusion
-
-## References
