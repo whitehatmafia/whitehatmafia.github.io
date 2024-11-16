@@ -10,7 +10,7 @@ showToc: false
 
 ## Overview
 
-[Your content here]
+
 
 ## Details
 

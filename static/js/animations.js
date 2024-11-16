@@ -1,179 +1,188 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Your existing animations
-  
-  // Add matrix rain effect in background
-  const createMatrixRain = () => {
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.zIndex = '-1';
-    canvas.style.opacity = '0.05';
-    document.body.appendChild(canvas);
+// animations.js
 
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// Configuration object for customizable settings
+const MATRIX_CONFIG = {
+    fontSize: 10,
+    opacity: 0.05,
+    color: '#0F0',
+    characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%',
+    fadeSpeed: 0.04,
+    dropSpeed: 0.975
+};
 
-    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
-    const drops = [];
-    const fontSize = 10;
-    const columns = canvas.width / fontSize;
-
-    for (let i = 0; i < columns; i++) {
-      drops[i] = 1;
+class MatrixRain {
+    constructor() {
+        this.canvas = null;
+        this.ctx = null;
+        this.drops = [];
+        this.animationFrame = null;
     }
 
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#0F0';
-      ctx.font = fontSize + 'px monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = matrix[Math.floor(Math.random() * matrix.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
+    initialize() {
+        this.setupCanvas();
+        this.initializeDrops();
+        this.startAnimation();
+        this.handleResize();
     }
 
-    setInterval(draw, 35);
-  };
+    setupCanvas() {
+        this.canvas = document.createElement('canvas');
+        Object.assign(this.canvas.style, {
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%',
+            zIndex: '-1',
+            opacity: MATRIX_CONFIG.opacity.toString()
+        });
 
-  // Add glitch effect for headings
-  const addGlitchEffect = () => {
-    const headings = document.querySelectorAll('h1, h2');
-    headings.forEach(heading => {
-      heading.addEventListener('mouseover', () => {
-        const originalText = heading.textContent;
-        let iterations = 0;
-const interval = setInterval(() => {
-        heading.textContent = originalText
-          .split("")
-          .map((letter, index) => {
-            if (index < iterations) {
-              return originalText[index];
+        document.body.appendChild(this.canvas);
+        this.ctx = this.canvas.getContext('2d');
+        this.resizeCanvas();
+    }
+
+    resizeCanvas() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    initializeDrops() {
+        const columns = Math.floor(this.canvas.width / MATRIX_CONFIG.fontSize);
+        this.drops = Array(columns).fill(1);
+    }
+
+    draw() {
+        // Create fade effect
+        this.ctx.fillStyle = `rgba(0, 0, 0, ${MATRIX_CONFIG.fadeSpeed})`;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Set text properties
+        this.ctx.fillStyle = MATRIX_CONFIG.color;
+        this.ctx.font = `${MATRIX_CONFIG.fontSize}px monospace`;
+
+        // Draw characters
+        this.drops.forEach((drop, i) => {
+            const char = MATRIX_CONFIG.characters[Math.floor(Math.random() * MATRIX_CONFIG.characters.length)];
+            const x = i * MATRIX_CONFIG.fontSize;
+            const y = drop * MATRIX_CONFIG.fontSize;
+
+            // Add random brightness effect
+            const brightness = Math.random() * 100;
+            this.ctx.fillStyle = `hsl(120, 100%, ${brightness}%)`;
+            
+            this.ctx.fillText(char, x, y);
+
+            // Reset drop when it reaches bottom or randomly
+            if (y > this.canvas.height && Math.random() > MATRIX_CONFIG.dropSpeed) {
+                this.drops[i] = 0;
             }
-            return String.fromCharCode(65 + Math.floor(Math.random() * 26));
-          })
-          .join("");
+            this.drops[i]++;
+        });
 
-        if (iterations >= originalText.length) {
-          clearInterval(interval);
-          heading.textContent = originalText;
+        this.animationFrame = requestAnimationFrame(() => this.draw());
+    }
+
+    handleResize() {
+        window.addEventListener('resize', () => {
+            this.resizeCanvas();
+            this.initializeDrops();
+        });
+    }
+
+    startAnimation() {
+        try {
+            this.draw();
+        } catch (error) {
+            console.error('Error starting matrix animation:', error);
         }
-        iterations += 1/3;
-      }, 30);
-    });
-  });
-};
+    }
 
-// Add terminal command effect for code blocks
-const addTerminalEffect = () => {
-  const codeBlocks = document.querySelectorAll('pre code');
-  codeBlocks.forEach(block => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'terminal-wrapper';
-    
-    const toolbar = document.createElement('div');
-    toolbar.className = 'terminal-toolbar';
-    toolbar.innerHTML = '<span class="terminal-btn"></span><span class="terminal-btn"></span><span class="terminal-btn"></span>';
-    
-    block.parentNode.insertBefore(wrapper, block);
-    wrapper.appendChild(toolbar);
-    wrapper.appendChild(block.parentNode);
-  });
-};
+    stopAnimation() {
+        if (this.animationFrame) {
+            cancelAnimationFrame(this.animationFrame);
+        }
+    }
 
-// Add hover effect for posts
-const addPostHoverEffect = () => {
-  const posts = document.querySelectorAll('.post');
-  posts.forEach(post => {
-    post.addEventListener('mouseenter', () => {
-      gsap.to(post, {
-        scale: 1.02,
-        boxShadow: '0 0 20px rgba(0, 255, 0, 0.2)',
-        duration: 0.3
-      });
-    });
-post.addEventListener('mouseleave', () => {
-      gsap.to(post, {
-        scale: 1,
-        boxShadow: '0 0 15px rgba(0, 255, 0, 0.1)',
-        duration: 0.3
-      });
-    });
-  });
-};
+    cleanup() {
+        this.stopAnimation();
+        if (this.canvas && this.canvas.parentElement) {
+            this.canvas.parentElement.removeChild(this.canvas);
+        }
+    }
+}
 
-// Add scanning line effect
-const addScanningEffect = () => {
-  const scanLine = document.createElement('div');
-  scanLine.className = 'scan-line';
-  document.body.appendChild(scanLine);
+// Initialize the matrix effect
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        const matrix = new MatrixRain();
+        matrix.initialize();
+  // Cleanup on page unload
+        window.addEventListener('unload', () => {
+            matrix.cleanup();
+        });
 
-  gsap.to(scanLine, {
-    top: '100%',
-    duration: 3,
-    ease: 'none',
-    repeat: -1,
-    yoyo: true
-  });
-};
+        // Add performance optimization for visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                matrix.stopAnimation();
+            } else {
+                matrix.startAnimation();
+            }
+        });
 
-// Add typing effect for code snippets
-const addTypingEffect = () => {
-  const codeSnippets = document.querySelectorAll('code:not(pre code)');
-  codeSnippets.forEach(snippet => {
-    snippet.style.opacity = '0';
-    gsap.to(snippet, {
-      opacity: 1,
-      duration: 0.5,
-      delay: 0.2,
-      scrollTrigger: {
-        trigger: snippet,
-        start: 'top bottom',
-        end: 'bottom top'
-      }
-    });
-  });
-};
+        // Add touch device detection and optimization
+        if ('ontouchstart' in window) {
+            MATRIX_CONFIG.dropSpeed = 0.99; // Slower drops for better mobile performance
+            MATRIX_CONFIG.fadeSpeed = 0.08; // Faster fade for mobile
+        }
 
-// Initialize all effects
-const initializeEffects = () => {
-  createMatrixRain();
-  addGlitchEffect();
-  addTerminalEffect();
-  addPostHoverEffect();
-  addScanningEffect();
-  addTypingEffect();
-};
+        // Add FPS control for performance
+        const FPS = 30;
+        let then = Date.now();
+        const interval = 1000 / FPS;
 
-// Run all animations and effects
-initializeEffects();
+        function animateWithFPSLimit(currentTime) {
+            requestAnimationFrame(animateWithFPSLimit);
+            
+            const now = Date.now();
+            const delta = now - then;
 
-// Handle window resize for matrix effect
-window.addEventListener('resize', () => {
-  const canvas = document.querySelector('canvas');
-  if (canvas) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+            if (delta > interval) {
+                then = now - (delta % interval);
+                matrix.draw();
+            }
+        }
+
+        // Start the FPS-controlled animation
+        animateWithFPSLimit();
+
+    } catch (error) {
+        console.error('Failed to initialize Matrix Rain:', error);
+        // Fallback to a simple background if animation fails
+        document.body.style.backgroundColor = '#000';
+    }
 });
 
-// Add loading animation
-window.addEventListener('load', () => {
-  const loader = document.querySelector('.loader');
-  if (loader) {
-    gsap.to(loader, {
-      opacity: 0,
-      duration: 0.5,
-      onComplete: () => loader.remove()
-    });
-  }
-});
+// Add debug mode
+if (process.env.NODE_ENV === 'development') {
+    window.matrixDebug = {
+        config: MATRIX_CONFIG,
+        toggleAnimation: function() {
+            const matrix = document.querySelector('canvas');
+            if (matrix.style.display === 'none') {
+                matrix.style.display = 'block';
+            } else {
+                matrix.style.display = 'none';
+            }
+        },
+        adjustSpeed: function(speed) {
+            MATRIX_CONFIG.dropSpeed = speed;
+        }
+    };
+}
+
+// Export for module usage
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { MatrixRain, MATRIX_CONFIG };
+}

@@ -2,6 +2,7 @@ module.exports = {
   content: [
     './layouts/**/*.html',
     './content/**/*.md',
+    './themes/**/layouts/**/*.html',  // Add theme layouts
   ],
   theme: {
     extend: {
@@ -10,12 +11,19 @@ module.exports = {
           bg: '#1a1b1d',
           green: '#00ff00',
           text: '#00ff00',
+          // Add more terminal-specific colors
+          muted: '#666666',
+          highlight: '#303030',
         }
       },
       fontFamily: {
-        mono: ['Courier New', 'monospace'],
+        mono: ['Courier New', 'Consolas', 'Monaco', 'monospace'], // Extended fallbacks
+      },
+      spacing: {
+        'terminal': '1rem',
       }
     },
   },
+  darkMode: 'class', // Enable dark mode
   plugins: [],
 }

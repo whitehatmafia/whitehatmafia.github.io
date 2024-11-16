@@ -1,6 +1,5 @@
 ---
 title: "Welcome to My Security Research Blog"
-date: 2024-11-10
 draft: false
 ---
 

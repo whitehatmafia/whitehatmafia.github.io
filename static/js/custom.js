@@ -1,12 +1,11 @@
 // custom.js
 document.addEventListener('DOMContentLoaded', () => {
-  // Utility functions
+  // Existing Matrix Rain Effect Code
   const randomChar = () => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
     return chars[Math.floor(Math.random() * chars.length)];
   };
 
-  // Matrix Rain Effect
   const createMatrixRain = () => {
     const canvas = document.createElement('canvas');
     canvas.style.position = 'fixed';
@@ -49,138 +48,212 @@ document.addEventListener('DOMContentLoaded', () => {
 
     draw();
   };
-// Glitch Effect
-  const addGlitchEffect = () => {
-    const headings = document.querySelectorAll('h1, h2');
-    headings.forEach(heading => {
-      heading.addEventListener('mouseover', () => {
-        const originalText = heading.textcontent;
- let iterations = 0;
-        
-        const interval = setInterval(() => {
-          heading.textContent = originalText
-            .split("")
-            .map((letter, index) => {
-              if (index < iterations) {
-                return originalText[index];
-              }
-              return String.fromCharCode(65 + Math.floor(Math.random() * 26));
-            })
-            .join("");
 
-          if (iterations >= originalText.length) {
-            clearInterval(interval);
-            heading.textContent = originalText;
-          }
-          iterations += 1/3;
-        }, 30);
-      });
-    });
-  };
+  // Terminal Class Implementation
+  class Terminal {
+    constructor() {
+      this.input = document.getElementById('terminal-input');
+      this.output = document.getElementById('terminal-output');
+      this.history = [];
+      this.historyIndex = -1;
+      this.initializeEventListeners();
+    }
 
-  // Terminal Effect for Code Blocks
-  const addTerminalEffect = () => {
-    const codeBlocks = document.querySelectorAll('pre code');
-    codeBlocks.forEach(block => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'terminal-wrapper';
-      
-      const toolbar = document.createElement('div');
-      toolbar.className = 'terminal-toolbar';
-      toolbar.innerHTML = '<span class="terminal-btn"></span><span class="terminal-btn"></span><span class="terminal-btn"></span>';
-      
-      block.parentNode.insertBefore(wrapper, block);
-      wrapper.appendChild(toolbar);
-      wrapper.appendChild(block.parentNode);
-    });
-  };
-
-  // Post Hover Effect
-  const addPostHoverEffect = () => {
-    const posts = document.querySelectorAll('.post');
-    posts.forEach(post => {
-      post.addEventListener('mouseenter', () => {
-        gsap.to(post, {
-          scale: 1.02,
-          boxShadow: '0 0 20px rgba(0, 255, 0, 0.2)',
-          duration: 0.3
+initializeEventListeners() {
+        this.input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.handleCommand();
+            } else if (e.key === 'ArrowUp') {
+                this.navigateHistory('up');
+                e.preventDefault();
+            } else if (e.key === 'ArrowDown') {
+                this.navigateHistory('down');
+                e.preventDefault();
+            }
         });
-      });
-      
-      post.addEventListener('mouseleave', () => {
-        gsap.to(post, {
-          scale: 1,
-          boxShadow: 'none',
-          duration: 0.3
+
+        // Handle window resize for matrix effect
+        window.addEventListener('resize', () => {
+            const canvas = document.querySelector('canvas');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
         });
-      });
-    });
-  };
-  // Scanning Line Effect
-  const addScanningEffect = () => {
-    const scanLine = document.createElement('div');
-    scanLine.className = 'scan-line';
-    document.body.appendChild(scanLine);
+    }
 
-    gsap.to(scanLine, {
-        top: '100%',
-        duration: 3,
-        ease: 'none',
-        repeat: -1,
-        yoyo: true
-    });
-  };
-
-  // Typing Effect for Code Snippets
-  const addTypingEffect = () => {
-    const codeSnippets = document.querySelectorAll('code:not(pre code)');
-    codeSnippets.forEach(snippet => {
-      snippet.style.opacity = '0';
-      
-      gsap.to(snippet, {
-        opacity: 1,
-        duration: 0.5,
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: snippet,
-          start: 'top bottom',
-          end: 'bottom top'
+    handleCommand() {
+        const command = this.input.value.trim().toLowerCase();
+        if (command) {
+            this.history.push(command);
+            this.historyIndex = this.history.length;
+            this.addToOutput(`❯ ${command}`);
+            this.processCommand(command);
         }
-      });
-    });
-  };
+        this.input.value = '';
+    }
 
-  // Initialize all effects
-  const initializeEffects = () => {
+    processCommand(command) {
+        const commands = {
+            help: () => {
+                this.addToOutput(`Available commands:
+                    - about: Learn about me
+                    - projects: View my projects
+                    - contact: Get in touch
+                    - skills: View my technical skills
+                    - clear: Clear terminal
+                    - ls: List available sections
+                    - cd [section]: Navigate to section`);
+            },
+            about: () => {
+                gsap.to(window, {
+                    duration: 0.5,
+                    scrollTo: "#about",
+                    ease: "power2.inOut"
+                });
+                this.addToOutput('Navigating to About section...');
+            },
+            projects: () => {
+                gsap.to(window, {
+                    duration: 0.5,
+                    scrollTo: "#projects",
+                    ease: "power2.inOut"
+                });
+                this.addToOutput('Loading projects...');
+            },
+            contact: () => {
+                gsap.to(window, {
+                    duration: 0.5,
+                    scrollTo: "#contact",
+                    ease: "power2.inOut"
+                });
+                this.addToOutput('Opening contact information...');
+            },
+            
+            clear: () => {
+                this.output.innerHTML = '';
+                return null;
+            },
+            ls: () => {
+                this.addToOutput(`
+                    📁 Available sections:
+                    - about/
+                    - projects/
+                    - posts/
+                    - contact/
+                `);
+            },
+            skills: () => {
+                this.addToOutput(`
+                    🔧 Technical Skills:
+                    - Security Research
+                    - Penetration Testing
+                    - Malware Analysis
+                    - Network Security
+                    - Web Security
+                `);
+            }
+        };
+
+        const commandName = command.split(' ')[0];
+        if (commandName in commands) {
+            const result = commands[commandName]();
+            if (result) {
+                this.addToOutput(result);
+            }
+        } else {
+            this.addToOutput(`Command not found: ${command}. Type 'help' for available commands.`);
+        }
+    }
+
+    addToOutput(text) {
+        const line = document.createElement('div');
+        line.className = 'terminal-output';
+        line.textContent = text;
+        this.output.appendChild(line);
+        
+        // Scroll to bottom
+        this.output.scrollTop = this.output.scrollHeight;
+        
+        // Animate new line with GSAP
+        gsap.fromTo(line, 
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+        );
+    }
+
+    navigateHistory(direction) {
+        if (direction === 'up' && this.historyIndex > 0) {
+            this.historyIndex--;
+            this.input.value = this.history[this.historyIndex];
+        } else if (direction === 'down' && this.historyIndex < this.history.length - 1) {
+            this.historyIndex++;
+            this.input.value = this.history[this.historyIndex];
+        } else if (direction === 'down' && this.historyIndex === this.history.length - 1) {
+            this.historyIndex = this.history.length;
+            this.input.value = '';
+        }
+    }
+}
+
+    // Initialize Matrix effect and Terminal
     createMatrixRain();
-    addGlitchEffect();
-    addTerminalEffect();
-    addPostHoverEffect();
-    addScanningEffect();
-    addTypingEffect();
-  };
+    const terminal = new Terminal();
+     // Welcome sequence with staggered animations
+    const welcomeMessages = [
+        'Welcome to WhiteHat Mafia Terminal 🚀',
+        'Type "help" to see available commands',
+        'Type "ls" to see available sections'
+    ];
 
-  // Run all animations and effects
-  initializeEffects();
-
-  // Handle window resize for matrix effect
-  window.addEventListener('resize', () => {
-    const canvas = document.querySelector('canvas');
-    if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-  });
-
-  // Add loading animation
-  window.addEventListener('load', () => {
-    const loader = document.querySelector('.loader');
-    if (loader) {
-      gsap.to(loader, {
+    gsap.from('.header', {
         opacity: 0,
-        duration: 0.5,
-        onComplete: () => loader.remove()
-      });
+        y: -20,
+        duration: 1,
+        ease: "power2.out"
+    });
+    
+    gsap.from('#terminal', {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        delay: 0.3,
+        ease: "power2.out",
+        onComplete: () => {
+            // Add welcome messages with staggered animation
+            welcomeMessages.forEach((msg, index) => {
+                setTimeout(() => {
+                    terminal.addToOutput(msg);
+                }, index * 500);
+            });
+        }
+    });
+
+    // Handle mobile touch events
+    if ('ontouchstart' in window) {
+        document.addEventListener('touchstart', () => {
+            const input = document.getElementById('terminal-input');
+            input.focus();
+        });
     }
-  });
+
+    // Handle visibility change
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            // Pause animations when tab is not visible
+            gsap.globalTimeline.pause();
+        } else {
+            // Resume animations when tab becomes visible
+            gsap.globalTimeline.resume();
+        }
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        // Cleanup any resources if needed
+        const canvas = document.querySelector('canvas');
+        if (canvas) {
+            canvas.remove();
+        }
+    });
 });
