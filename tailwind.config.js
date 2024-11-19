@@ -2,7 +2,8 @@ module.exports = {
   content: [
     './layouts/**/*.html',
     './content/**/*.md',
-    './themes/**/layouts/**/*.html',  // Add theme layouts
+    './themes/**/layouts/**/*.html', 
+    './assets/ts/**/*.ts'
   ],
   theme: {
     extend: {

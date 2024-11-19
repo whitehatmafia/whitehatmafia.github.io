@@ -5,7 +5,8 @@ resources/
 
 # Node
 node_modules/
-static/css/style.css
+static/css/
+static/js/
 
 # OS
 .DS_Store
