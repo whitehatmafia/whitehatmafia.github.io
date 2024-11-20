@@ -1,11 +1,13 @@
+<!-- baseof.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terminal Portfolio">
     <title>{{ .Title }} | Terminal Portfolio</title>
-    <link href="/css/style.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    <link href="/css/custom.css" rel="stylesheet">
+    {{ partial "extended_head.html" . }}
 </head>
 <body class="bg-black text-green-500 font-mono min-h-screen">
     <div id="terminal" class="container mx-auto p-4 max-w-4xl">
@@ -17,6 +19,9 @@
                 id="terminal-input"
                 class="bg-transparent border-none outline-none flex-1 text-green-500"
                 autofocus
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="terminal input"
             >
         </div>
     </div>

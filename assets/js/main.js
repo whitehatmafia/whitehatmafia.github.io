@@ -1,79 +1,59 @@
 import gsap from 'gsap';
-
-interface Command {
-    name: string;
-    description: string;
-    action: () => void;
-}
-
 class TerminalPortfolio {
-    private terminalOutput: HTMLElement;
-    private terminalInput: HTMLInputElement;
-    private commands: Map<string, Command>;
-    private commandHistory: string[] = [];
-    private historyIndex: number = -1;
-
     constructor() {
-        this.terminalOutput = document.getElementById('terminal-output') as HTMLElement;
-        this.terminalInput = document.getElementById('terminal-input') as HTMLInputElement;
+        this.commandHistory = [];
+        this.historyIndex = -1;
+        this.terminalOutput = document.getElementById('terminal-output');
+        this.terminalInput = document.getElementById('terminal-input');
         this.commands = new Map();
-        
         this.initializeCommands();
         this.setupEventListeners();
         this.animateIntro();
     }
-
-    private initializeCommands(): void {
+    initializeCommands() {
         this.commands.set('help', {
             name: 'help',
             description: 'Show available commands',
             action: () => this.showHelp()
         });
-
         this.commands.set('about', {
             name: 'about',
             description: 'Learn about me',
             action: () => this.showAbout()
         });
-
         this.commands.set('projects', {
             name: 'projects',
             description: 'View my projects',
             action: () => this.showProjects()
         });
-
         this.commands.set('contact', {
             name: 'contact',
             description: 'Get my contact information',
             action: () => this.showContact()
         });
-
         this.commands.set('clear', {
             name: 'clear',
             description: 'Clear the terminal',
             action: () => this.clearTerminal()
         });
-
         this.commands.set('skills', {
-        name: 'skills',
-        description: 'View my technical skills',
-        action: () => this.showSkills()
-        
+            name: 'skills',
+            description: 'View my technical skills',
+            action: () => this.showSkills()
         });
         this.commands.set('experience', {
-        name: 'experience',
-        description: 'View my work experience',
-        action: () => this.showExperience()
+            name: 'experience',
+            description: 'View my work experience',
+            action: () => this.showExperience()
         });
         this.commands.set('education', {
-        name: 'education',
-        description: 'View my educational background',
-        action: () => this.showEducation()
+            name: 'education',
+            description: 'View my educational background',
+            action: () => this.showEducation()
         });
     }
-    private showSkills(): void {
-        const skillsText = 
-            `Technical Skills:
+    showSkills() {
+        const skillsText = `Technical Skills:
             ├── Languages: TypeScript, JavaScript, Python, Go
         ├── Frontend: React, Vue, HTML5, CSS3, Tailwind
         ├── Backend: Node.js, Express, Django
@@ -81,9 +61,8 @@ class TerminalPortfolio {
         `;
         this.printOutput(skillsText);
     }
-    private showExperience(): void {
-        const experienceText = 
-            `Work Experience:
+    showExperience() {
+        const experienceText = `Work Experience:
             ├── [Current Company] (2023-Present)
         │   └── Senior Developer
         │
@@ -92,38 +71,35 @@ class TerminalPortfolio {
         `;
         this.printOutput(experienceText);
     }
-    private showEducation(): void {
-        const educationText = 
-            `Education:
+    showEducation() {
+        const educationText = `Education:
             └── Computer Science Degree
         └── University Name (2016-2020)
         `;
         this.printOutput(educationText);
     }
-
-    private setupEventListeners(): void {
-        this.terminalInput.addEventListener('keydown', (e: KeyboardEvent) => {
+    setupEventListeners() {
+        this.terminalInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 this.handleCommand();
-            } else if (e.key === 'ArrowUp') {
+            }
+            else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 this.navigateHistory('up');
-            } else if (e.key === 'ArrowDown') {
+            }
+            else if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 this.navigateHistory('down');
             }
         });
     }
-
-     private animateIntro(): void {
+    animateIntro() {
         const welcomeText = `Welcome to my terminal portfolio! Type 'help' to see available commands.`;
         let chars = welcomeText.split('');
-        
         gsap.from(this.terminalOutput, {
             opacity: 0,
             duration: 1
         });
-
         chars.forEach((char, index) => {
             gsap.to(this.terminalOutput, {
                 delay: index * 0.05,
@@ -133,47 +109,46 @@ class TerminalPortfolio {
             });
         });
     }
-
-    private handleCommand(): void {
+    handleCommand() {
         const input = this.terminalInput.value.trim().toLowerCase();
         if (input) {
             this.commandHistory.push(input);
             this.historyIndex = this.commandHistory.length;
             this.printCommand(input);
-
             const command = this.commands.get(input);
             if (command) {
                 command.action();
-            } else {
+            }
+            else {
                 this.printOutput(`Command not found: ${input}. Type 'help' for available commands.`);
             }
         }
         this.terminalInput.value = '';
     }
-
-    private navigateHistory(direction: 'up' | 'down'): void {
+    navigateHistory(direction) {
         if (direction === 'up') {
             if (this.historyIndex > 0) {
                 this.historyIndex--;
                 this.terminalInput.value = this.commandHistory[this.historyIndex];
             }
-        } else {
+        }
+        else {
             if (this.historyIndex < this.commandHistory.length - 1) {
                 this.historyIndex++;
                 this.terminalInput.value = this.commandHistory[this.historyIndex];
-            } else {
+            }
+            else {
                 this.historyIndex = this.commandHistory.length;
                 this.terminalInput.value = '';
             }
         }
     }
-
-    private printCommand(command: string): void {
+    printCommand(command) {
         const commandDiv = document.createElement('div');
         commandDiv.innerHTML = `<span class="text-green-300">$ </span>${command}`;
         this.terminalOutput.appendChild(commandDiv);
     }
-    private printOutput(output: string): void {
+    printOutput(output) {
         const outputDiv = document.createElement('div');
         outputDiv.innerHTML = output;
         outputDiv.classList.add('command-output');
@@ -185,7 +160,7 @@ class TerminalPortfolio {
             duration: 0.02 * chars.length, // Total duration based on text length
             ease: "none",
             onUpdate: () => {
-                const progress = Math.floor((gsap.getProperty({}, "progress") as number) * chars.length);
+                const progress = Math.floor(gsap.getProperty({}, "progress") * chars.length);
                 displayText = chars.slice(0, progress).join('');
                 outputDiv.textContent = displayText;
             },
@@ -193,21 +168,19 @@ class TerminalPortfolio {
                 outputDiv.textContent = output; // Ensure full text is displayed
                 this.scrollToBottom();
             }
-        });    
+        });
     }
-    private scrollToBottom(): void {
+    scrollToBottom() {
         this.terminalOutput.scrollTop = this.terminalOutput.scrollHeight;
     }
-
-    private showHelp(): void {
+    showHelp() {
         let helpText = 'Available commands:\n\n';
         this.commands.forEach(command => {
             helpText += `${command.name} - ${command.description}\n`;
         });
         this.printOutput(helpText);
     }
-
-    private showAbout(): void {
+    showAbout() {
         const aboutText = `
             About Me:
             🛡️ Cybersecurity enthusiast who loves breaking (and fixing) things
@@ -215,8 +188,7 @@ class TerminalPortfolio {
         `;
         this.printOutput(aboutText);
     }
-
-    private showProjects(): void {
+    showProjects() {
         const projectsText = `
             My Projects:
             1. Terminal Portfolio - A terminal-style portfolio website
@@ -224,8 +196,7 @@ class TerminalPortfolio {
         `;
         this.printOutput(projectsText);
     }
-
-    private showContact(): void {
+    showContact() {
         const contactText = `
             Contact Information:
             Email: saulemus@protonmail.com
@@ -234,14 +205,13 @@ class TerminalPortfolio {
         `;
         this.printOutput(contactText);
     }
-
-    private clearTerminal(): void {
+    clearTerminal() {
         this.terminalOutput.innerHTML = '';
         this.animateIntro();
     }
 }
-
 // Initialize the terminal when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new TerminalPortfolio();
 });
+//# sourceMappingURL=main.js.map

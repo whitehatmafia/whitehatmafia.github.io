@@ -1,4 +1,5 @@
-<!-- Tailwind CSS -->
+<!-- extended_head.html -->
+<!-- Tailwind CSS with proper bundling -->
 {{ $css := resources.Get "css/main.css" | resources.PostCSS }}
 {{ if .Site.IsServer }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
@@ -7,15 +8,85 @@
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 {{ end }}
 
-<!-- Custom CSS -->
+<!-- Hack Font - with preload for performance -->
+<link rel="preconnect" href="//cdn.jsdelivr.net" crossorigin>
+<link rel="preload" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" as="style">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css">
+
+<!-- Social APIs -->
+<!-- GitHub API -->
+<script async defer src="https://api.github.com/users/whitehatmafia?callback=githubCallback"></script>
+
+
+<!-- GSAP with performance optimizations -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+
+<!-- Meta tags for better SEO and social sharing -->
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="{{ .Title }} | Terminal Portfolio">
+<meta property="og:description" content="Terminal-style portfolio website">
+<meta property="og:type" content="website">
+
+<!-- Custom styles and scripts -->
 <link rel="stylesheet" href="/css/custom.css">
-
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-<!-- Custom JS -->
 <script defer src="/js/animations.js"></script>
 
-<!-- Hack Font -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css">
+<!-- Terminal-specific styles -->
+<style>
+    ::selection {
+        background: #10B981;
+        color: #000;
+    }
+    
+    .cursor-blink {
+        animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+
+    /* Terminal scrollbar styling */
+    #terminal-output::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #terminal-output::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+
+    #terminal-output::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+    }
+
+    #terminal-output::-webkit-scrollbar-thumb:hover {
+        background: #444;
+    }
+
+    /* Terminal input styling */
+    #terminal-input:focus {
+        outline: none;
+        caret-color: #10B981;
+    }
+
+    /* Command history styling */
+    .command-history {
+        opacity: 0.8;
+    }
+
+    /* Terminal response styling */
+    .response-success {
+        color: #10B981;
+    }
+
+    .response-error {
+        color: #EF4444;
+    }
+
+    .response-warning {
+        color: #F59E0B;
+    }
+</style>
+
