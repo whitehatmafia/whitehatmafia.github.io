@@ -1,4 +1,3 @@
-<!-- baseof.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,25 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Terminal Portfolio">
     <title>{{ .Title }} | Terminal Portfolio</title>
+    <!-- Add Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="/css/custom.css" rel="stylesheet">
     {{ partial "extended_head.html" . }}
 </head>
 <body class="bg-black text-green-500 font-mono min-h-screen">
-    <div id="terminal" class="container mx-auto p-4 max-w-4xl">
-        <div id="terminal-output" class="mb-4 overflow-y-auto max-h-[80vh] whitespace-pre-wrap"></div>
-        <div class="flex items-center">
-            <span class="mr-2">$</span>
-            <input 
-                type="text" 
-                id="terminal-input"
-                class="bg-transparent border-none outline-none flex-1 text-green-500"
-                autofocus
-                autocomplete="off"
-                spellcheck="false"
-                aria-label="terminal input"
-            >
+    <div id="app">
+        <div id="terminal" class="container mx-auto p-4 max-w-4xl">
+            <div id="terminal-output" 
+                 class="mb-4 overflow-y-auto max-h-[80vh] whitespace-pre-wrap"
+                 ref="terminalOutput">
+            </div>
+            <div class="flex items-center">
+                <span class="mr-2">$</span>
+                <input 
+                    type="text" 
+                    id="terminal-input"
+                    class="bg-transparent border-none outline-none flex-1 text-green-500"
+                    autofocus
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-label="terminal input"
+                    ref="terminalInput"
+                >
+            </div>
         </div>
     </div>
+
+    <!-- Your existing TypeScript/JavaScript bundle -->
     <script type="module" src="/js/main.js"></script>
 </body>
 </html>
