@@ -1,0 +1,34 @@
+{
+  "htmlElements": {
+    "tags": [
+      "body",
+      "div",
+      "head",
+      "html",
+      "input",
+      "link",
+      "meta",
+      "script",
+      "span",
+      "title"
+    ],
+    "classes": [
+      "close",
+      "input-field",
+      "input-line",
+      "maximize",
+      "minimize",
+      "output",
+      "prompt",
+      "terminal-button",
+      "terminal-content",
+      "terminal-header"
+    ],
+    "ids": [
+      "command-history",
+      "command-input",
+      "terminal",
+      "terminal-content"
+    ]
+  }
+}

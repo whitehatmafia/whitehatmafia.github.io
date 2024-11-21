@@ -1,1 +1,1 @@
-export {};
+export declare function initializeTerminal(): void;

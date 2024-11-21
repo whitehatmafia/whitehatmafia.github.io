@@ -1,25 +1,24 @@
 {
-  "compilerOptions": {
-    "outDir": "assets/js",
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "lib": ["es2015", "dom"],
-    "types": ["node"],
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "module": "esnext",
-    "target": "es2019",
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
-  },
-  "include": ["assets/ts/**/*"],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "strict": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "outDir": "./assets/js",
+        "rootDir": "./assets/ts",
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*"]
+        }
+    },
+    "include": ["assets/ts/**/*"],
+    "exclude": ["node_modules"]
 }
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

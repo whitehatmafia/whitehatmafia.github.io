@@ -9,7 +9,7 @@ theme = "terminal"
   
   # Terminal theme options
   titlePosition = "left"
-  showMenuItems = 4
+  showMenuItems = 6
   fullWidthTheme = true
   centerTheme = true
   autoCover = true
@@ -17,31 +17,98 @@ theme = "terminal"
   
   # Custom colors
   backgroundColor = "#1a1b1d"
-  accentColor = "#00ff00"
+  accentColor = "#10B981"  # Changed to match our terminal green
+  
+  # Terminal prompt configuration
+  terminalUser = "whitehat"
+  terminalHost = "mafia"
+  terminalDirectory = "~/security"
   
   # Social links
   github = "whitehatmafia"
-  # Add other social media links as needed
   
   # Additional custom parameters
   description = "Cybersecurity Research & Development"
   keywords = "cybersecurity, penetration testing, ethical hacking, CTF"
   
-  # Enable syntax highlighting
-  enableSyntaxHighlighting = true
+  # Terminal theme custom settings
+  terminalPromptSymbol = "❯"
+  terminalBackground = "rgba(26, 27, 29, 0.95)"
+  terminalBorderColor = "rgba(16, 185, 129, 0.3)"  # Matches our accent color
+  terminalTextColor = "#10B981"
+  
+  # Custom terminal commands
+  [[params.commands]]
+    name = "help"
+    description = "Display available commands"
+  [[params.commands]]
+    name = "projects"
+    description = "View security projects"
+  [[params.commands]]
+    name = "writes"
+    description = "View security write-ups"
 
+[build]
+  writeStats = true
+
+[build.buildStats]
+  enable = true
+
+[module]
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+    
+  [module.hugoVersion]
+    extended = true
+    min = "0.87.0"
+    max = ""
+  
+  [[module.imports]]
+    path = "github.com/panr/hugo-theme-terminal"
+    disabled = false    
+
+[build.processing]
+  [build.processing.js]
+    bundle = true
+    minify = true
+    target = "es2020"
 [markup]
   [markup.highlight]
     codeFences = true
     guessSyntax = true
     lineNos = true
     style = "monokai"
+    tabWidth = 4
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      typographer = false
 
 [languages.en]
+  languageName = "English"
+  weight = 1
+
   [languages.en.params]
     [languages.en.params.logo]
       logoText = "~/whitehat_mafia>"
       logoHomeLink = "/"
+
+    [languages.en.params.terminal]
+      # Terminal specific settings
+      welcomeMessage = """
+        Welcome to WhiteHat Mafia Terminal v1.0.0
+        Type 'help' to see available commands
+        """
+      promptString = "guest@whitehat:~$"
+      cursorStyle = "block"
+      fontSize = "1rem"
+      lineHeight = "1.5"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
@@ -49,18 +116,170 @@ theme = "terminal"
         name = "[About]"
         url = "/about"
         weight = 1
-      [[languages.en.menu.main]]
-        identifier = "posts"
-        name = "[Posts]"
-        url = "/posts"
-        weight = 2
+        
       [[languages.en.menu.main]]
         identifier = "projects"
         name = "[Projects]"
         url = "/projects"
-        weight = 3
+        weight = 2
+
       [[languages.en.menu.main]]
         identifier = "contact"
         name = "[Contact]"
         url = "/contact"
+        weight = 3
+
+      [[languages.en.menu.main]]
+        identifier = "writeups"
+        name = "[Writeups]"
+        url = "/writeups"
         weight = 4
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.twitter]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.youtube]
+    disable = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+[permalinks]
+  posts = "/posts/:year/:month/:title/"
+  projects = "/projects/:title/"
+  writeups = "/writeups/:title/"
+
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+  minifyOutput = true
+  [minify.tdewolff]
+    [minify.tdewolff.css]
+      keepCSS2 = true
+      precision = 1
+    [minify.tdewolff.html]
+      keepComments = false
+      keepConditionalComments = true
+      keepDefaultAttrVals = true
+      keepDocumentTags = true
+      keepEndTags = true
+      keepQuotes = false
+      keepWhitespace = false
+    [minify.tdewolff.js]
+      keepVarNames = false
+      precision = 1
+    [minify.tdewolff.json]
+      precision = 1
+    [minify.tdewolff.svg]
+      precision = 1
+    [minify.tdewolff.xml]
+      keepWhitespace = false
+[server]
+  [[server.headers]]
+    for = "/**"
+    [server.headers.values]
+      X-Frame-Options = "DENY"
+      X-Content-Type-Options = "nosniff"
+      X-XSS-Protection = "1; mode=block"
+      Referrer-Policy = "strict-origin-when-cross-origin"
+      Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'"
+      Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+
+[deployment]
+  [[deployment.targets]]
+    name = "github"
+    URL = "https://github.com/whitehatmafia/whitehatmafia.github.io.git"
+    branch = "main"
+
+[caches]
+  [caches.assets]
+    dir = ":resourceDir/_gen"
+    maxAge = "24h"
+  [caches.images]
+    dir = ":resourceDir/_gen"
+    maxAge = "24h"
+
+[imaging]
+  quality = 75
+  resampleFilter = "Lanczos"
+  anchor = "Smart"
+  bgColor = "#1a1b1d"
+
+[frontmatter]
+  date = ["date", "publishDate", "lastmod"]
+  lastmod = [":git", "lastmod", "date", "publishDate"]
+  publishDate = ["publishDate", "date"]
+  expiryDate = ["expiryDate"]        
+  
+[security]
+  enableInlineShortcodes = false
+  [security.exec]
+    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
+  [security.funcs]
+    getenv = ['^HUGO_']
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']
+
+[params.terminal]
+  # Terminal animations
+  [params.terminal.animations]
+    enabled = true
+    cursorBlink = true
+    textTyping = true
+    commandFade = true
+    
+  # Terminal commands output
+  [params.terminal.commandOutput]
+    help = """
+    Available commands:
+      help      - Show this help message
+      projects  - View security projects
+      writes    - View security write-ups
+      clear     - Clear terminal screen
+    """
+    
+    projects = """
+    Security Projects:
+      1. Project Alpha - Penetration Testing Framework
+      2. Project Beta  - Vulnerability Scanner
+      3. Project Gamma - Security Analysis Tool
+    Type 'cd projects' for more details
+    """
+    
+    writes = """
+    Security Write-ups:
+      1. CVE-2024-XXXX Analysis
+      2. Zero-Day Discovery
+      3. Red Team Operation Reports
+    Type 'cd writes' for more details
+    """
+
+[params.style]
+  # Custom CSS variables
+  [params.style.variables]
+    terminal-green = "#10B981"
+    terminal-bg = "#1A1B1D"
+    terminal-border = "rgba(16, 185, 129, 0.3)"
+    terminal-shadow = "0 0 30px rgba(16, 185, 129, 0.2)"
+    terminal-font = "'JetBrains Mono', monospace"
