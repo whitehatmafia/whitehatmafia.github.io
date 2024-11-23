@@ -1,10 +1,12 @@
 {
   "htmlElements": {
     "tags": [
+      "a",
       "body",
       "div",
       "head",
       "html",
+      "i",
       "input",
       "link",
       "meta",
@@ -14,12 +16,15 @@
     ],
     "classes": [
       "close",
+      "fa-brands",
+      "fa-github",
       "input-field",
       "input-line",
       "maximize",
       "minimize",
       "output",
       "prompt",
+      "social-links",
       "terminal-button",
       "terminal-content",
       "terminal-header"
