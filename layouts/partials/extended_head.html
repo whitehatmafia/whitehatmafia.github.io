@@ -2,20 +2,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ .Site.Title }}</title>
 
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Font Awesome (local) -->
-<link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
-
 <!-- Styles -->
+<link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
 <link rel="stylesheet" href="/css/custom.css">
-{{ $styles := resources.Get "css/main.css" | resources.ToCSS | resources.PostCSS | resources.Minify | resources.Fingerprint }}
+{{ $styles := resources.Get "css/main.css" | resources.PostCSS }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
-<!-- GSAP (local) -->
+<!-- Scripts -->
 <script src="/vendor/gsap/gsap.min.js"></script>
-
-<!-- Main JavaScript -->
-{{ $js := resources.Get "ts/main.ts" | js.Build | resources.Minify | resources.Fingerprint }}
+{{ $js := resources.Get "ts/main.ts" | js.Build }}
 <script src="{{ $js.RelPermalink }}" defer></script>
