@@ -10,12 +10,12 @@
 
 <!-- Styles -->
 <link rel="stylesheet" href="/css/custom.css">
-{{ $styles := resources.Get "css/main.css" | resources.PostCSS }}
+{{ $styles := resources.Get "css/main.css" | resources.ToCSS | resources.PostCSS | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
 <!-- GSAP (local) -->
 <script src="/vendor/gsap/gsap.min.js"></script>
 
 <!-- Main JavaScript -->
-{{ $js := resources.Get "ts/main.ts" | js.Build }}
+{{ $js := resources.Get "ts/main.ts" | js.Build | resources.Minify | resources.Fingerprint }}
 <script src="{{ $js.RelPermalink }}" defer></script>
