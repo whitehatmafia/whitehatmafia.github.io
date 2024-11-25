@@ -54,7 +54,10 @@ class Terminal {
             duration: 1,
             y: 50,
             opacity: 0,
-            ease: 'power3.out'
+            ease: 'power3.out',
+            onComplete: () => {
+                this.terminalContent.style.visibility = 'visible';
+            }
         });
         gsap.from('.terminal-header', {
             duration: 0.5,
