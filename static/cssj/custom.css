@@ -20,9 +20,15 @@ body {
 #terminal {
     visibility: visible !important;
     opacity: 1 !important;
-    width: 85%;
-    max-width: 900px;
-    background: var(--terminal-bg);
+    width: 90%;
+    max-width: 1000px;
+    height: 80vh;
+    max-height: 800px;
+    margin: 20px auto;
+    background: rgba(26, 27, 38, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(158, 206, 106, 0.2);
+    transition: all 0.3s ease;
     border-radius: 10px;
     box-shadow: 0 10px 30px var(--terminal-shadow);
     position: fixed; /* Add this */
@@ -64,7 +70,10 @@ body {
 .maximize { background: #27c93f; }
 
 .terminal-content {
-    padding: 20px;
+    height: calc(100% - 40px);
+    padding: 25px;
+    font-size: 16px;
+    line-height: 1.6;
     color: var(--terminal-text);
     min-height: 300px;
     position: relative;
@@ -269,7 +278,8 @@ body {
 @media (max-width: 768px) {
     #terminal {
         width: 95%;
-        margin: 10px;
+        height: 90vh;
+        margin: 10px auto;
     }
 
     .terminal-header {
@@ -295,6 +305,24 @@ body {
 
     .prompt {
         font-size: 12px;
+    }
+
+    .terminal-content {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    .terminal-header {
+        padding: 8px 15px;
+    }
+
+    .input-line {
+        flex-wrap: wrap;
+    }
+
+    .prompt {
+        font-size: 12px;
+        margin-bottom: 5px;
     }
 }
 
@@ -424,4 +452,26 @@ button {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* Command styling improvements */
+.command-output {
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    border-left: 3px solid var(--terminal-green);
+}
+
+.project-link, .writeup-link {
+    color: var(--terminal-green);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.project-link:hover, .writeup-link:hover {
+    background: rgba(158, 206, 106, 0.1);
+    transform: translateX(5px);
 }

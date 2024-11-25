@@ -1,8 +1,11 @@
+const { convertCompilerOptionsFromJson } = require('typescript');
+
 module.exports = {
   content: [
     './layouts/**/*.html',
     './content/**/*.md',
     './themes/**/layouts/**/*.html', 
+    './assets/css/**/*.css',
     './assets/ts/**/*.ts'
   ],
   theme: {
@@ -26,5 +29,15 @@ module.exports = {
     },
   },
   darkMode: 'class', // Enable dark mode
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss/aspect-ratio'),
+    require('tailwindcss/line-clamp'),
+    require('@tailwindcss/aspect-ratio'),
+
+  ],
+  corePlugins: {
+    preflight: false,
+  }
 }

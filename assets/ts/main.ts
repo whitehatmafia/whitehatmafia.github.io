@@ -13,24 +13,44 @@ class Terminal {
 
     private commands: CommandMap = {
         help: (): string => `Available commands:
-    help       - Display this help message
-    projects   - Display a list of projects
-    writes     - Display a list of write-ups`,
+    help     - Display this help message
+    clear    - Clear terminal screen
+    projects - View GitHub projects
+    writes   - View Medium writeups
+    social   - View social links`,
         
-        projects: (): string => `My Projects:
-    1. Project One - A brief description
-    2. Project Two - Another description
-    3. Project Three - Yet another description`,
+        projects: (): string => {
+            const projects = [
+                {name: "Project 1", url: "https://github.com/whitehatmafia/project1"},
+                {name: "Project 2", url: "https://github.com/whitehatmafia/project2"},
+                // Add your actual project URLs here
+            ];
+            
+            return projects.map(p => 
+                `<a href="${p.url}" class="project-link" target="_blank">→ ${p.name}</a>`
+            ).join('\n');
+        },
         
-        writes: (): string => `Recent Write-ups:
-    1. Article One - Technical writing
-    2. Article Two - Development tips
-    3. Article Three - Coding tutorials`,
-
+        writes: (): string => {
+            const articles = [
+                {name: "Article 1", url: "https://medium.com/@yourhandle/article1"},
+                {name: "Article 2", url: "https://medium.com/@yourhandle/article2"},
+                // Add your actual Medium article URLs here
+            ];
+            
+            return articles.map(a => 
+                `<a href="${a.url}" class="writeup-link" target="_blank">→ ${a.name}</a>`
+            ).join('\n');
+        },
+        
         clear: (): string => {
             this.commandHistory.innerHTML = '';
             return '';
-        }
+        },
+        
+        social: (): string => `Connect with me:
+    GitHub: https://github.com/whitehatmafia
+    Medium: https://medium.com/@yourhandle`
     };
 
     constructor() {
@@ -112,9 +132,9 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `<span class="prompt">visitor@portfolio:~$</span> ${content}`;
+            outputDiv.innerHTML = `<span class="prompt">visitor@whitehat:~$</span> ${content}`;
         } else {
-            outputDiv.textContent = content;
+            outputDiv.innerHTML = content; // Changed from textContent to innerHTML to support links
         }
         
         return outputDiv;
