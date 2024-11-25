@@ -18,6 +18,7 @@ body {
 }
 
 #terminal {
+    visibility: visible;
     width: 85%;
     max-width: 900px;
     background: var(--terminal-bg);

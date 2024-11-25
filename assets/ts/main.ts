@@ -67,7 +67,7 @@ class Terminal {
         });
     }
 
-     private initializeAnimations(): void {
+    private initializeAnimations(): void {
         gsap.from('#terminal', {
             duration: 1,
             y: 50,

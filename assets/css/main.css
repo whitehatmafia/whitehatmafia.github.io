@@ -15,6 +15,8 @@
     #terminal {
         @apply bg-terminal-bg rounded-xl shadow-lg max-w-4xl mx-auto my-8 p-8 relative;
         box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+        /* Ensure visibility */
+        visibility: visible;
     }
 
     .terminal-header {
