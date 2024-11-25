@@ -34,6 +34,7 @@ class Terminal {
     };
 
     constructor() {
+        console.log('Initializing Terminal...');
         this.commandInput = document.getElementById('command-input') as HTMLInputElement;
         this.commandHistory = document.getElementById('command-history') as HTMLElement;
         this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
@@ -172,6 +173,7 @@ class Terminal {
 
 // Initialize terminal when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
     const terminal = new Terminal();
     
     // Show initial help message

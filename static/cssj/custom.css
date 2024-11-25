@@ -4,9 +4,9 @@
     --terminal-green: #9ece6a;
     --terminal-header: #1f2335;
     --terminal-shadow: rgba(0, 0, 0, 0.4);
-  }
-  
-  body {
+}
+
+body {
     background: linear-gradient(135deg, #0f0f1a 0%, #2a2a3a 100%);
     font-family: 'JetBrains Mono', monospace;
     margin: 0;
@@ -15,9 +15,9 @@
     align-items: center;
     justify-content: center;
     border: 1px solid red; /* Temporary change to verify the file */
-  }
-  
-  #terminal {
+}
+
+#terminal {
     width: 85%;
     max-width: 900px;
     background: var(--terminal-bg);
@@ -27,409 +27,409 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     transform: translateY(0);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  #terminal:hover {
+}
+
+#terminal:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px var(--terminal-shadow);
-  }
-  
-  .terminal-header {
+}
+
+.terminal-header {
     background: var(--terminal-header);
     padding: 12px;
     border-radius: 10px 10px 0 0;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .terminal-button {
+}
+
+.terminal-button {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     margin-right: 8px;
     position: relative;
     transition: transform 0.2s ease;
-  }
-  
-  .terminal-button:hover {
+}
+
+.terminal-button:hover {
     transform: scale(1.1);
-  }
-  
-  .close { background: #ff5f56; }
-  .minimize { background: #ffbd2e; }
-  .maximize { background: #27c93f; }
-  
-  .terminal-content {
-      padding: 20px;
-      color: var(--terminal-text);
-      min-height: 300px;
-      position: relative;
-      overflow-y: auto;
-      background: linear-gradient(
-          rgba(26, 27, 38, 0.8),
-          rgba(26, 27, 38, 0.95)
-      );
-  }
-  
-  .input-line {
-      display: flex;
-      align-items: center;
-      margin: 10px 0;
-      opacity: 0;
-      animation: fadeIn 0.3s ease forwards;
-  }
-  
-  .prompt {
-      color: var(--terminal-green);
-      margin-right: 10px;
-      font-weight: bold;
-      white-space: nowrap;
-  }
-  
-  .input-field {
-      background: transparent;
-      border: none;
-      color: var(--terminal-text);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      width: 100%;
-      outline: none;
-      caret-color: var(--terminal-green);
-  }
-  
-  .social-links {
-      margin-left: auto;
-      display: flex;
-      gap: 15px;
-  }
-  
-  .social-links a {
-      color: var(--terminal-text);
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      font-size: 16px;
-  }
-  
-  .social-links a:hover {
-      opacity: 1;
-      color: var(--terminal-green);
-      transform: translateY(-2px);
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-  }
-  
-  /* Custom Scrollbar */
-  .terminal-content::-webkit-scrollbar {
-      width: 8px;
-  }
-  
-  .terminal-content::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.2);
-  }
-  
-  .terminal-content::-webkit-scrollbar-thumb {
-      background: rgba(169, 177, 214, 0.3);
-      border-radius: 4px;
-  }
-  
-  .terminal-content::-webkit-scrollbar-thumb:hover {
-      background: rgba(169, 177, 214, 0.5);
-  }
-  
-  /* Command output styling */
-  .output {
-      padding: 5px 0;
-      line-height: 1.5;
-      position: relative;
-      animation: slideIn 0.3s ease-out;
-  }
-  
-  .output pre {
-      margin: 10px 0;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-      overflow-x: auto;
-  }
-  
-  /* Command typing effect */
-  .typing {
-      display: inline-block;
-  }
-  
-  .typing::after {
-      content: '█';
-      animation: blink 1s infinite;
-      color: var(--terminal-green);
-  }
-  
-  /* Command history styling */
-  #command-history {
-      margin-bottom: 15px;
-  }
-  
-  .history-item {
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(169, 177, 214, 0.1);
-      transition: background-color 0.2s ease;
-  }
-  
-  .history-item:hover {
-      background-color: rgba(169, 177, 214, 0.05);
-  }
-  
-  /* Message styling */
-  .error-message {
-      color: #ff5f56;
-      padding: 5px 10px;
-      background: rgba(255, 95, 86, 0.1);
-      border-left: 3px solid #ff5f56;
-      margin: 5px 0;
-  }
-  
-  .success-message {
-      color: var(--terminal-green);
-      padding: 5px 10px;
-      background: rgba(158, 206, 106, 0.1);
-      border-left: 3px solid var(--terminal-green);
-      margin: 5px 0;
-  }
-  
-  @keyframes slideIn {
-      from {
-          opacity: 0;
-          transform: translateX(-10px);
-      }
-      to {
-          opacity: 1;
-          transform: translateX(0);
-      }
-  }
-  
-  /* Terminal focus effects */
-  #terminal.focused {
-      box-shadow: 0 15px 40px rgba(158, 206, 106, 0.2);
-      border-color: rgba(158, 206, 106, 0.3);
-  }
-  
-  /* Command suggestions */
-  .suggestions {
-      position: absolute;
-      background: var(--terminal-header);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
-      padding: 5px 0;
-      margin-top: 5px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      z-index: 100;
-  }
-  
-  .suggestion-item {
-      padding: 5px 15px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-  }
-  
-  .suggestion-item:hover {
-      background: rgba(158, 206, 106, 0.1);
-      color: var(--terminal-green);
-  }
-  
-  /* Loading animation */
-  .loading {
-      display: inline-block;
-      margin-left: 10px;
-  }
-  
-  .loading::after {
-      content: '';
-      animation: loading 1s infinite;
-  }
-  
-  @keyframes loading {
-      0% { content: '.'; }
-      33% { content: '..'; }
-      66% { content: '...'; }
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-      #terminal {
-          width: 95%;
-          margin: 10px;
-      }
-  
-      .terminal-header {
-          padding: 8px;
-      }
-  
-      .terminal-button {
-          width: 10px;
-          height: 10px;
-      }
-  
-      .social-links {
-          gap: 10px;
-      }
-  
-      .social-links a {
-          font-size: 14px;
-      }
-  
-      .input-field {
-          font-size: 14px;
-      }
-  
-      .prompt {
-          font-size: 12px;
-      }
-  }
-  
-  /* Dark mode support */
-  @media (prefers-color-scheme: dark) {
-      :root {
-          --terminal-bg: #1a1b26;
-          --terminal-text: #a9b1d6;
-          --terminal-green: #9ece6a;
-          --terminal-header: #1f2335;
-      }
-  }
-  
-  /* Selection styling */
-  ::selection {
-      background: rgba(158, 206, 106, 0.3);
-      color: var(--terminal-text);
-  }
-  
-  /* Terminal startup animation */
-  @keyframes startup {
-      0% {
-          opacity: 0;
-          transform: scale(0.95);
-      }
-      100% {
-          opacity: 1;
-          transform: scale(1);
-      }
-  }
-  
-  #terminal {
-      animation: startup 0.5s ease-out;
-  }
-  
-  /* Command input autofill style override */
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-      -webkit-text-fill-color: var(--terminal-text);
-      -webkit-box-shadow: 0 0 0px 1000px var(--terminal-bg) inset;
-      transition: background-color 5000s ease-in-out 0s;
-  }
-  
-  /* Glass morphism effects */
-  .glass-effect {
-      background: rgba(26, 27, 38, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Print styles */
-  @media print {
-      #terminal {
-          box-shadow: none;
-          border: 1px solid #ccc;
-      }
-      
-      .terminal-button,
-      .social-links {
-          display: none;
-      }
-      
-      .terminal-content {
-          background: white;
-          color: black;
-      }
-  }
-  
-  /* Accessibility improvements */
-  .input-field:focus {
-      outline: 2px solid var(--terminal-green);
-      outline-offset: 2px;
-  }
-  
-  [role="button"],
-  button {
-      cursor: pointer;
-  }
-  /* Focus visible polyfill */
-  .js-focus-visible :focus:not(.focus-visible) {
-      outline: none;
-  }
-  
-  .focus-visible {
-      outline: 2px solid var(--terminal-green) !important;
-      outline-offset: 2px;
-  }
-  
-  /* Performance optimizations */
-  .terminal-content {
-      will-change: transform;
-      backface-visibility: hidden;
-      transform: translateZ(0);
-  }
-  
-  /* Smooth scrolling for command history */
-  .terminal-content {
-      scroll-behavior: smooth;
-      overscroll-behavior: contain;
-  }
-  
-  /* Text highlight effect for commands */
-  .command-highlight {
-      background: linear-gradient(
-          transparent 0%,
-          transparent 40%,
-          rgba(158, 206, 106, 0.2) 40%,
-          rgba(158, 206, 106, 0.2) 60%,
-          transparent 60%,
-          transparent 100%
-      );
-  }
-  
-  /* Easter egg animation */
-  @keyframes matrix {
-      0% {
-          text-shadow: 0 0 5px var(--terminal-green);
-      }
-      50% {
-          text-shadow: 0 0 20px var(--terminal-green);
-      }
-      100% {
-          text-shadow: 0 0 5px var(--terminal-green);
-      }
-  }
-  
-  .matrix-effect {
-      animation: matrix 2s infinite;
-  }
-  
-  /* Reduce motion */
-  @media (prefers-reduced-motion: reduce) {
-      * {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-          scroll-behavior: auto !important;
-      }
-  }
+}
+
+.close { background: #ff5f56; }
+.minimize { background: #ffbd2e; }
+.maximize { background: #27c93f; }
+
+.terminal-content {
+    padding: 20px;
+    color: var(--terminal-text);
+    min-height: 300px;
+    position: relative;
+    overflow-y: auto;
+    background: linear-gradient(
+        rgba(26, 27, 38, 0.8),
+        rgba(26, 27, 38, 0.95)
+    );
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.prompt {
+    color: var(--terminal-green);
+    margin-right: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.input-field {
+    background: transparent;
+    border: none;
+    color: var(--terminal-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    caret-color: var(--terminal-green);
+}
+
+.social-links {
+    margin-left: auto;
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    color: var(--terminal-text);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.social-links a:hover {
+    opacity: 1;
+    color: var(--terminal-green);
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Custom Scrollbar */
+.terminal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+    background: rgba(169, 177, 214, 0.3);
+    border-radius: 4px;
+}
+
+.terminal-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(169, 177, 214, 0.5);
+}
+
+/* Command output styling */
+.output {
+    padding: 5px 0;
+    line-height: 1.5;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+.output pre {
+    margin: 10px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+/* Command typing effect */
+.typing {
+    display: inline-block;
+}
+
+.typing::after {
+    content: '█';
+    animation: blink 1s infinite;
+    color: var(--terminal-green);
+}
+
+/* Command history styling */
+#command-history {
+    margin-bottom: 15px;
+}
+
+.history-item {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(169, 177, 214, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.history-item:hover {
+    background-color: rgba(169, 177, 214, 0.05);
+}
+
+/* Message styling */
+.error-message {
+    color: #ff5f56;
+    padding: 5px 10px;
+    background: rgba(255, 95, 86, 0.1);
+    border-left: 3px solid #ff5f56;
+    margin: 5px 0;
+}
+
+.success-message {
+    color: var(--terminal-green);
+    padding: 5px 10px;
+    background: rgba(158, 206, 106, 0.1);
+    border-left: 3px solid var(--terminal-green);
+    margin: 5px 0;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Terminal focus effects */
+#terminal.focused {
+    box-shadow: 0 15px 40px rgba(158, 206, 106, 0.2);
+    border-color: rgba(158, 206, 106, 0.3);
+}
+
+/* Command suggestions */
+.suggestions {
+    position: absolute;
+    background: var(--terminal-header);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 5px 0;
+    margin-top: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.suggestion-item {
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: rgba(158, 206, 106, 0.1);
+    color: var(--terminal-green);
+}
+
+/* Loading animation */
+.loading {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.loading::after {
+    content: '';
+    animation: loading 1s infinite;
+}
+
+@keyframes loading {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #terminal {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .terminal-header {
+        padding: 8px;
+    }
+
+    .terminal-button {
+        width: 10px;
+        height: 10px;
+    }
+
+    .social-links {
+        gap: 10px;
+    }
+
+    .social-links a {
+        font-size: 14px;
+    }
+
+    .input-field {
+        font-size: 14px;
+    }
+
+    .prompt {
+        font-size: 12px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --terminal-bg: #1a1b26;
+        --terminal-text: #a9b1d6;
+        --terminal-green: #9ece6a;
+        --terminal-header: #1f2335;
+    }
+}
+
+/* Selection styling */
+::selection {
+    background: rgba(158, 206, 106, 0.3);
+    color: var(--terminal-text);
+}
+
+/* Terminal startup animation */
+@keyframes startup {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#terminal {
+    animation: startup 0.5s ease-out;
+}
+
+/* Command input autofill style override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--terminal-text);
+    -webkit-box-shadow: 0 0 0px 1000px var(--terminal-bg) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Glass morphism effects */
+.glass-effect {
+    background: rgba(26, 27, 38, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Print styles */
+@media print {
+    #terminal {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .terminal-button,
+    .social-links {
+        display: none;
+    }
+    
+    .terminal-content {
+        background: white;
+        color: black;
+    }
+}
+
+/* Accessibility improvements */
+.input-field:focus {
+    outline: 2px solid var(--terminal-green);
+    outline-offset: 2px;
+}
+
+[role="button"],
+button {
+    cursor: pointer;
+}
+/* Focus visible polyfill */
+.js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+}
+
+.focus-visible {
+    outline: 2px solid var(--terminal-green) !important;
+    outline-offset: 2px;
+}
+
+/* Performance optimizations */
+.terminal-content {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* Smooth scrolling for command history */
+.terminal-content {
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+}
+
+/* Text highlight effect for commands */
+.command-highlight {
+    background: linear-gradient(
+        transparent 0%,
+        transparent 40%,
+        rgba(158, 206, 106, 0.2) 40%,
+        rgba(158, 206, 106, 0.2) 60%,
+        transparent 60%,
+        transparent 100%
+    );
+}
+
+/* Easter egg animation */
+@keyframes matrix {
+    0% {
+        text-shadow: 0 0 5px var(--terminal-green);
+    }
+    50% {
+        text-shadow: 0 0 20px var(--terminal-green);
+    }
+    100% {
+        text-shadow: 0 0 5px var(--terminal-green);
+    }
+}
+
+.matrix-effect {
+    animation: matrix 2s infinite;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
