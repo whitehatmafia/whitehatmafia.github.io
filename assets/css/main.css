@@ -1,4 +1,4 @@
-/* Ensure Tailwind CSS is properly configured and imported */
+/* Replace PostCSS with standard CSS import */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";

@@ -1,9 +1,10 @@
+/** @type {import('tailwindcss').Config} */
 const { convertCompilerOptionsFromJson } = require('typescript');
 
 module.exports = {
   content: [
     './layouts/**/*.html',
-    './content/**/*.md',
+    './content/**/*.{html,md}',
     './themes/**/layouts/**/*.html', 
     './assets/css/**/*.css',
     './assets/ts/**/*.ts'
@@ -11,8 +12,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'terminal-green': 'var(--terminal-green)',
+        'terminal-bg': 'var(--terminal-bg)',
         terminal: {
-          bg: '#1a1b1d',
           green: '#00ff00',
           text: '#00ff00',
           // Add more terminal-specific colors
@@ -21,10 +23,7 @@ module.exports = {
         }
       },
       fontFamily: {
-        mono: ['Courier New', 'Consolas', 'Monaco', 'monospace'], // Extended fallbacks
-      },
-      spacing: {
-        'terminal': '1rem',
+        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
       }
     },
   },
@@ -32,10 +31,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
-    require('tailwindcss/aspect-ratio'),
-    require('tailwindcss/line-clamp'),
-    require('@tailwindcss/aspect-ratio'),
-
+    require('@tailwindcss/aspect-ratio')  // Fixed: using correct package path
   ],
   corePlugins: {
     preflight: false,
