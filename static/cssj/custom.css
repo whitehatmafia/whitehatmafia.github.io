@@ -18,16 +18,18 @@ body {
 }
 
 #terminal {
-    visibility: visible;
+    visibility: visible !important;
+    opacity: 1 !important;
     width: 85%;
     max-width: 900px;
     background: var(--terminal-bg);
     border-radius: 10px;
     box-shadow: 0 10px 30px var(--terminal-shadow);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transform: translateY(0);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: fixed; /* Add this */
+    top: 50%; /* Add this */
+    left: 50%; /* Add this */
+    transform: translate(-50%, -50%); /* Add this */
+    z-index: 1000; /* Add this */
 }
 
 #terminal:hover {
@@ -314,18 +316,7 @@ body {
 
 /* Terminal startup animation */
 @keyframes startup {
-    0% {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-#terminal {
-    animation: startup 0.5s ease-out;
+     0%, 100% { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 /* Command input autofill style override */

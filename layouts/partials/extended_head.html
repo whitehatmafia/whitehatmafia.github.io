@@ -1,7 +1,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 <title>{{ .Site.Title }}</title>
+
+<!-- Critical CSS first -->
+<style>
+    #terminal {
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+    }
+    body { background: #1a1b26; }
+</style>
 
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -15,7 +24,7 @@
 {{ $styles := resources.Get "css/main.css" | resources.PostCSS }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
-<!-- Scripts -->
-<script src="/vendor/gsap/gsap.min.js"></script>
+<!-- Move scripts to end -->
+<script defer src="/vendor/gsap/gsap.min.js"></script>
 {{ $js := resources.Get "ts/main.ts" | js.Build }}
-<script src="{{ $js.RelPermalink }}" defer></script>
+<script defer src="{{ $js.RelPermalink }}"></script>

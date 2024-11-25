@@ -35,12 +35,24 @@ class Terminal {
 
     constructor() {
         console.log('Initializing Terminal...');
+        // Ensure terminal is visible first
+        const terminal = document.getElementById('terminal');
+        if (terminal) {
+            terminal.style.visibility = 'visible';
+            terminal.style.opacity = '1';
+        }
+        
         this.commandInput = document.getElementById('command-input') as HTMLInputElement;
         this.commandHistory = document.getElementById('command-history') as HTMLElement;
         this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
         
+        if (this.terminalContent) {
+            this.terminalContent.style.visibility = 'visible';
+        }
+        
         this.initializeEventListeners();
-        this.initializeAnimations();
+        // Comment out animations temporarily
+        // this.initializeAnimations();
     }
 
     private initializeEventListeners(): void {
