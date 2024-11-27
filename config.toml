@@ -242,12 +242,13 @@ theme = "terminal"
     urls = ['.*']
 
 [params.terminal]
-  # Terminal animations
   [params.terminal.animations]
     enabled = true
     cursorBlink = true
     textTyping = true
     commandFade = true
+    startupDelay = 800
+    commandDelay = 100
     
   # Terminal commands output
   [params.terminal.commandOutput]
@@ -280,11 +281,6 @@ theme = "terminal"
     shortcuts = true
     clearKey = "ctrl+l"
     helpKey = "?"
-    
-  [params.terminal.animations]
-    enabled = true
-    startupDelay = 800
-    commandDelay = 100
     
   [params.terminal.prompt]
     user = "visitor"
