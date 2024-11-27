@@ -87,16 +87,27 @@ body {
 .input-line {
     display: flex;
     align-items: center;
-    margin: 10px 0;
+    margin: 15px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(158, 206, 106, 0.1);
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
 }
 
 .prompt {
     color: var(--terminal-green);
-    margin-right: 10px;
+    margin-right: 12px;
     font-weight: bold;
     white-space: nowrap;
+    padding: 4px 8px;
+    background: rgba(158, 206, 106, 0.1);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 8px rgba(158, 206, 106, 0.3);
+}
+
+.prompt:hover {
+    background: rgba(158, 206, 106, 0.2);
 }
 
 .input-field {
@@ -142,7 +153,7 @@ body {
 
 /* Custom Scrollbar */
 .terminal-content::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .terminal-content::-webkit-scrollbar-track {
@@ -150,12 +161,12 @@ body {
 }
 
 .terminal-content::-webkit-scrollbar-thumb {
-    background: rgba(169, 177, 214, 0.3);
-    border-radius: 4px;
+    background: rgba(158, 206, 106, 0.3);
+    border-radius: 3px;
 }
 
 .terminal-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(169, 177, 214, 0.5);
+    background: rgba(158, 206, 106, 0.5);
 }
 
 /* Command output styling */
@@ -474,4 +485,37 @@ button {
 .project-link:hover, .writeup-link:hover {
     background: rgba(158, 206, 106, 0.1);
     transform: translateX(5px);
+}
+
+/* Command name styling */
+.command-name {
+    font-weight: 700;
+    color: var(--terminal-green);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: rgba(158, 206, 106, 0.1);
+    transition: all 0.2s ease;
+    text-shadow: 0 0 8px rgba(158, 206, 106, 0.3);
+}
+
+.command-name:hover {
+    background: rgba(158, 206, 106, 0.2);
+    transform: translateX(2px);
+}
+
+/* Enhance command output styling */
+.command-output {
+    position: relative;
+    padding: 12px 15px;
+    margin: 8px 0;
+    background: rgba(26, 27, 38, 0.6);
+    border-radius: 6px;
+    border-left: 3px solid var(--terminal-green);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.command-output:hover {
+    background: rgba(26, 27, 38, 0.8);
+    transform: translateX(2px);
 }

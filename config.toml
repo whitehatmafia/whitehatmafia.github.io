@@ -274,6 +274,49 @@ theme = "terminal"
       3. Red Team Operation Reports
     Type 'cd writes' for more details
     """
+    
+  # Enhanced terminal features
+  [params.terminal.keyboard]
+    shortcuts = true
+    clearKey = "ctrl+l"
+    helpKey = "?"
+    
+  [params.terminal.animations]
+    enabled = true
+    startupDelay = 800
+    commandDelay = 100
+    
+  [params.terminal.prompt]
+    user = "visitor"
+    host = "whitehat"
+    path = "~"
+    symbol = "$"
+    
+  [params.terminal.welcome]
+    enabled = true
+    message = """
+      Welcome to WhiteHat Mafia Terminal v1.0.0
+      Type 'help' for available commands
+      Press '?' for keyboard shortcuts
+      """
+
+[params.pwa]
+  enabled = true
+  manifest = "/site.webmanifest"
+  theme_color = "#1a1b26"
+  background_color = "#1a1b26"
+  display = "standalone"
+  name = "WhiteHat Mafia Terminal"
+  short_name = "WHM Term"
+  description = "Cybersecurity Research & Development Terminal"
+  start_url = "/"
+  
+[params.performance]
+  prefetch = true
+  preload = true
+  lazy_load = true
+  critical_css = true
+  font_display = "swap"
 
 [params.style]
   # Custom CSS variables

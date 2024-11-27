@@ -10,10 +10,37 @@
         display: block !important;
     }
     body { background: #1a1b26; }
+    .loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #1a1b26;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .loading-animation {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #9ece6a;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
 </style>
 
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<!-- Preload essential assets -->
+<link rel="preload" href="/vendor/fontawesome/css/all.min.css" as="style">
+<link rel="preload" href="/cssj/custom.css" as="style">
+<link rel="preload" href="{{ $js.RelPermalink }}" as="script">
+
+<!-- Modern favicons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">

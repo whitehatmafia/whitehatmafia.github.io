@@ -13,11 +13,11 @@ class Terminal {
 
     private commands: CommandMap = {
         help: (): string => `Available commands:
-    help     - Display this help message
-    clear    - Clear terminal screen
-    projects - View GitHub projects
-    writes   - View Medium writeups
-    social   - View social links`,
+    <span class="command-name">help</span>     - Display this help message
+    <span class="command-name">clear</span>    - Clear terminal screen
+    <span class="command-name">projects</span> - View GitHub projects
+    <span class="command-name">writes</span>   - View Medium writeups
+    <span class="command-name">social</span>   - View social links`,
         
         projects: (): string => {
             const projects = [
