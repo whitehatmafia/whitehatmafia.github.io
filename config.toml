@@ -2,6 +2,13 @@ baseURL = "https://whitehatmafia.github.io/"
 languageCode = "en"
 title = "WhiteHat Mafia"
 
+# Basic configuration to ensure main page loads
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "robotsTXT"]
+
+[outputs]
+  home = ["HTML"]
+  page = ["HTML"]
+
 [params]
   # Theme colors and basic settings
   backgroundColor = "#1a1b1d"
@@ -12,6 +19,11 @@ title = "WhiteHat Mafia"
     welcomeMessage = "Welcome to WhiteHat Mafia Terminal v1.0.0"
     promptString = "visitor@whitehat:~$"
     cursorStyle = "block"
+
+[build]
+  writeStats = true
+  [build.processing]
+    includeFiles = ["css/*", "js/*"]
 
 [module]
   [[module.mounts]]
