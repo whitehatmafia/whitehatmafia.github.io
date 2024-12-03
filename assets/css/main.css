@@ -83,6 +83,32 @@
            bg-black/20 rounded-r p-3
            animate-fade-in-down;
   }
+
+  .system-message {
+    @apply text-emerald-500/70 text-sm
+           pl-4 animate-fade-in-down;
+  }
+
+  .matrix-mode {
+    @apply relative;
+    &::before {
+      @apply content-[''] fixed inset-0 z-[-1]
+             bg-[linear-gradient(transparent,_#0f0)] animate-matrix opacity-30;
+    }
+  }
+
+  .command-error {
+    @apply text-red-500 pl-4 border-l-2 border-red-500;
+  }
+
+  .command-success {
+    @apply text-emerald-500 pl-4 border-l-2 border-emerald-500;
+  }
+
+  .welcome-message {
+    @apply text-emerald-500 font-mono text-xs md:text-sm lg:text-base
+           whitespace-pre font-bold animate-fade-in-down;
+  }
 }
 
 @layer utilities {
@@ -127,6 +153,12 @@
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes matrix {
+  0% { transform: translateY(-50%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(50%); opacity: 0; }
 }
 
 .animate-fade-in-down {

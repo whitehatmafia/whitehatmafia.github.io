@@ -26,7 +26,9 @@ class Terminal {
                 ['clear', 'Clear terminal screen'],
                 ['projects', 'View GitHub projects'],
                 ['writes', 'View Medium writeups'],
-                ['social', 'View social links']
+                ['social', 'View social links'],
+                ['ascii', 'Display ASCII art'],
+                ['matrix', 'Activate Matrix mode']
             ];
             
             return commands.map(([cmd, desc]) => 
@@ -80,7 +82,21 @@ class Terminal {
         
         social: (): string => `Connect with me:
     GitHub: https://github.com/whitehatmafia
-    Medium: https://medium.com/@whitehatmafia`
+    Medium: https://medium.com/@whitehatmafia`,
+        
+        ascii: (): string => `
+    ██╗    ██╗██╗  ██╗██╗████████╗███████╗██╗  ██╗ █████╗ ████████╗
+    ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+    ██║ █╗ ██║███████║██║   ██║   █████╗  ███████║███████║   ██║   
+    ██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██╔══██║██╔══██║   ██║   
+    ╚███╔███╔╝██║  ██║██║   ██║   ███████╗██║  ██║██║  ██║   ██║   
+     ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+        `,
+        
+        matrix: (): string => {
+            this.startMatrixEffect();
+            return 'Matrix mode activated...';
+        }
     };
 
     constructor() {
@@ -105,9 +121,41 @@ class Terminal {
             this.terminalContent.style.visibility = 'visible';
         }
         
+        // Start matrix effect on load
+        setTimeout(() => {
+            this.startMatrixEffect();
+        }, 500);
+        
         this.initializeEventListeners();
         // Comment out animations temporarily
         // this.initializeAnimations();
+        
+        // Add initialization message
+        this.showInitMessage();
+    }
+
+    private showInitMessage(): void {
+        const initMessages = [
+            "Initializing secure connection...",
+            "Accessing terminal...",
+            "Systems online.",
+            "Type 'help' for available commands."
+        ];
+
+        let delay = 0;
+        initMessages.forEach((msg) => {
+            setTimeout(() => {
+                const msgElement = this.createOutputElement(msg);
+                msgElement.classList.add('system-message');
+                this.commandHistory.appendChild(msgElement);
+            }, delay);
+            delay += 500; // Add 500ms delay between each message
+        });
+
+        // Execute help command after init messages
+        setTimeout(() => {
+            this.executeCommand('help');
+        }, delay);
     }
 
     private initializeEventListeners(): void {
@@ -376,6 +424,12 @@ class Terminal {
 
     private renderPreview(image: HTMLImageElement): void {
         // Add WebGL rendering code here
+    }
+
+    private startMatrixEffect(): void {
+        document.body.classList.add('matrix-mode');
+        // Keep matrix effect longer on initial load
+        setTimeout(() => document.body.classList.remove('matrix-mode'), 8000);
     }
 }
 

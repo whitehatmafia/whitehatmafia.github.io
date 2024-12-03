@@ -22,8 +22,16 @@ disableKinds = ["RSS", "robotsTXT", "404", "taxonomy", "term", "sitemap"]
   description = "Cybersecurity Research & Development"
   
   [params.terminal]
-    welcomeMessage = "Welcome to WhiteHat Mafia Terminal v1.0.0"
-    promptString = "visitor@whitehat:~$"
+    welcomeMessage = """
+    ██╗    ██╗██╗  ██╗██╗████████╗███████╗██╗  ██╗ █████╗ ████████╗
+    ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+    ██║ █╗ ██║███████║██║   ██║   █████╗  ███████║███████║   ██║   
+    ██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██╔══██║██╔══██║   ██║   
+    ╚███╔███╔╝██║  ██║██║   ██║   ███████╗██║  ██║██║  ██║   ██║   
+     ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+    
+    Terminal v1.0.0 - Type 'help' for available commands"""
+    promptString = "whitehat@mafia:~$"
     cursorStyle = "block"
 
 [build]

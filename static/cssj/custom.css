@@ -15,7 +15,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid red; /* Temporary change to verify the file */
 }
 
 body::before {
