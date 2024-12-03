@@ -95,24 +95,44 @@ class Terminal {
     };
 
     constructor() {
-        // Initialize immediately
-        this.initializeTerminal();
+        document.addEventListener('DOMContentLoaded', () => {
+            this.initializeTerminal();
+        });
     }
 
     private async initializeTerminal(): Promise<void> {
-        console.log('Initializing terminal...');
-        
-        // Wait for DOM elements
-        const waitForElements = setInterval(() => {
-            this.commandInput = document.getElementById('command-input') as HTMLInputElement;
-            this.commandHistory = document.getElementById('command-history') as HTMLElement;
-            this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
+        // Add timeout to ensure DOM is fully loaded
+        await new Promise(resolve => setTimeout(resolve, 100));
 
-            if (this.commandInput && this.commandHistory && this.terminalContent) {
-                clearInterval(waitForElements);
-                this.startTerminal();
-            }
-        }, 100);
+        const elements = {
+            commandInput: document.getElementById('command-input'),
+            commandHistory: document.getElementById('command-history'),
+            terminalContent: document.getElementById('terminal-content'),
+            loadingScreen: document.getElementById('loading-screen'),
+            terminal: document.getElementById('terminal')
+        };
+
+        if (!Object.values(elements).every(el => el)) {
+            console.error('Required DOM elements not found. Retrying...');
+            setTimeout(() => this.initializeTerminal(), 100);
+            return;
+        }
+
+        this.commandInput = elements.commandInput as HTMLInputElement;
+        this.commandHistory = elements.commandHistory as HTMLElement;
+        this.terminalContent = elements.terminalContent as HTMLElement;
+
+        // Show terminal and hide loading screen
+        elements.terminal.classList.add('loaded');
+        elements.loadingScreen.classList.add('fade-out');
+
+        // Initialize terminal
+        await this.startTerminal();
+        
+        // Remove loading screen
+        setTimeout(() => {
+            elements.loadingScreen.style.display = 'none';
+        }, 300);
     }
 
     private async startTerminal(): Promise<void> {
@@ -447,7 +467,7 @@ class Terminal {
 }
 
 // Initialize terminal
-document.addEventListener('DOMContentLoaded', () => new Terminal());
+new Terminal();
 
 declare global {
     interface Window {

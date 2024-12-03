@@ -3,18 +3,14 @@
 </div>
 
 <div id="terminal">
-    <div id="terminal-content" class="terminal-content">
-        <div id="command-history" class="command-history"></div>
+    <div id="terminal-content">
+        <div id="command-history"></div>
         <div class="terminal-input-wrapper">
             <div class="terminal-input-line">
                 <span class="prompt-text">root@kali:~$&nbsp;</span>
                 <input type="text" 
                        id="command-input" 
-                       class="input-field"
-                       autofocus
-                       autocomplete="off" 
-                       spellcheck="false"
-                       autocapitalize="none">
+                       class="input-field">
             </div>
         </div>
     </div>
@@ -112,40 +108,3 @@
     margin-bottom: 20px;
 }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const cursor = document.getElementById('terminal-cursor');
-    const input = document.getElementById('terminal-input');
-    let currentCommand = '';
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key.length === 1) {
-            currentCommand += e.key;
-            input.textContent = currentCommand;
-        } else if (e.key === 'Backspace') {
-            currentCommand = currentCommand.slice(0, -1);
-            input.textContent = currentCommand;
-        } else if (e.key === 'Enter') {
-            processCommand(currentCommand);
-            currentCommand = '';
-            input.textContent = '';
-        }
-    });
-
-    function processCommand(cmd) {
-        const history = document.querySelector('.command-history');
-        const line = document.createElement('div');
-        line.innerHTML = `<span class="prompt">{{ .Site.Params.terminal.promptString }}</span> ${cmd}`;
-        history.appendChild(line);
-        
-        // Add command response logic here
-        const response = document.createElement('div');
-        response.textContent = `Command '${cmd}' executed`;
-        history.appendChild(response);
-    }
-});
-
-document.documentElement.style.visibility = 'visible';
-document.documentElement.style.opacity = '1';
-</script>
