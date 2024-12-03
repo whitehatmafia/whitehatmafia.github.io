@@ -15,6 +15,18 @@
         <div class="loading-animation"></div>
     </div>
     
+    <!-- Add Matrix effect canvas -->
+    <canvas id="matrix-rain" class="matrix-background"></canvas>
+    
+    <!-- Add security headers display -->
+    <div id="security-headers" class="security-headers hidden">
+        <div class="header-info">
+            <span class="header-name">X-Frame-Options:</span> DENY
+            <span class="header-name">Content-Security-Policy:</span> default-src 'self'
+            <!-- Add more security headers -->
+        </div>
+    </div>
+    
     <main class="container mx-auto"> <!-- Add container -->
         <div id="terminal">
             <!-- Ensure visibility -->
@@ -52,6 +64,17 @@
                 <li><kbd>?</kbd> Show this help</li>
             </ul>
         </div>
+    </div>
+    
+    <!-- Add cybersecurity tools panel -->
+    <div id="tools-panel" class="tools-panel hidden">
+        <div class="tool-item">
+            <i class="fas fa-shield-alt"></i> Port Scanner
+        </div>
+        <div class="tool-item">
+            <i class="fas fa-bug"></i> Vulnerability Scanner
+        </div>
+        <!-- Add more tools -->
     </div>
 </body>
 </html>
