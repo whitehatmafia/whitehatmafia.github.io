@@ -31,9 +31,8 @@ jobs:
           
       - name: Install Dependencies
         run: |
-          npm install postcss postcss-cli autoprefixer
-          npm install tailwindcss @tailwindcss/forms tailwind-scrollbar
-          npm install -D @tailwindcss/typography @tailwindcss/aspect-ratio
+          npm ci
+          npm run css-build
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
@@ -45,6 +44,7 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
+          NODE_ENV: production
         run: |
           hugo --minify --baseURL "https://whitehatmafia.github.io/"
 

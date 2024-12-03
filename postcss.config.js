@@ -1,9 +1,10 @@
 module.exports = {
   plugins: {
-    'tailwindcss': {},
-    'autoprefixer': {},
-    'cssnano': {
-      preset: 'default',
-    }
+    'tailwindcss/nesting': {},
+    tailwindcss: {},
+    autoprefixer: {},
+    ...(process.env.HUGO_ENVIRONMENT === 'production'
+      ? { cssnano: { preset: 'default' } }
+      : {})
   }
 }

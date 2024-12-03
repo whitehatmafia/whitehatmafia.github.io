@@ -5,10 +5,10 @@
   "main": "postcss.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "hugo server",
-    "build": "hugo --minify",
-    "css-dev": "postcss assets/css/main.css -o static/css/style.css --watch",
-    "css-build": "postcss assets/css/main.css -o static/css/style.css --env production",
+    "dev": "hugo server --disableFastRender",
+    "build": "npm run css-build && hugo --minify",
+    "css-dev": "postcss assets/css/main.css -o assets/css/style.css --watch",
+    "css-build": "NODE_ENV=production postcss assets/css/main.css -o assets/css/style.css",
     "ts-watch": "tsc --watch",
     "ts-build": "tsc"
   },

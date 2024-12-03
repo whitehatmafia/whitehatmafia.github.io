@@ -48,7 +48,7 @@
 
   .terminal-content {
     @apply p-6 h-[calc(100%-3rem)] overflow-y-auto
-           font-mono text-sm md:text-base text-terminal-text
+           font-mono text-sm md:text-base text-gray-300
            space-y-4;
   }
 
@@ -73,8 +73,8 @@
 
   .input-field {
     @apply bg-transparent w-full outline-none
-           text-terminal-text caret-terminal-green
-           focus:bg-terminal-green/5 px-2 py-1
+           text-gray-300 caret-emerald-500
+           focus:bg-emerald-500/5 px-2 py-1
            transition-colors duration-200;
   }
 
