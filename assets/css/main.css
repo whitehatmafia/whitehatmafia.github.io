@@ -17,22 +17,33 @@
   }
 
   .terminal-window {
-    @apply w-full max-w-4xl h-[85vh] bg-[#1F1F1F] 
-           rounded-none shadow-2xl backdrop-blur-md
-           border-0 transition-all duration-300
-           border border-[#2F2F2F];
-
-    &:hover {
-      @apply shadow-emerald-500/20;
-    }
+    @apply fixed inset-0 w-full h-full 
+           bg-[#1F1F1F] border-0 m-0 p-0
+           shadow-none backdrop-blur-none;
   }
 
   .terminal-header {
-    @apply flex items-center px-4 py-1.5
-           bg-[#2F2F2F] border-b-0
-           text-xs
-           bg-[#2F2F2F] h-8 flex items-center px-4
-           border-b border-[#3F3F3F];
+    display: none; /* Remove header completely */
+  }
+
+  .terminal-content {
+    @apply h-full p-4 font-mono text-sm
+           bg-[#1F1F1F] overflow-y-auto;
+  }
+
+  .prompt {
+    @apply text-white font-bold
+           whitespace-pre-wrap border-0;
+  }
+
+  .input-field {
+    @apply bg-transparent text-white
+           caret-white ml-2;
+  }
+
+  /* Remove any decorative elements */
+  .glassmorphism {
+    @apply backdrop-blur-none bg-opacity-100;
   }
 
   .terminal-controls {
@@ -58,11 +69,6 @@
     }
   }
 
-  .terminal-content {
-    @apply bg-[#1F1F1F] p-4 font-mono
-           p-4 bg-[#1F1F1F] font-mono text-sm;
-  }
-
   .command-input {
     @apply flex items-center gap-2;
   }
@@ -73,24 +79,6 @@
 
   .terminal-input-line {
     @apply flex items-center gap-2 w-full;
-  }
-
-  .prompt {
-    @apply text-[#4AF626] font-bold bg-transparent
-           border-0 px-0
-           text-[#4AF626] whitespace-pre-wrap
-           font-bold bg-transparent px-0 py-0
-           border-0;
-    white-space: nowrap !important;
-  }
-
-  .input-field {
-    @apply bg-transparent w-full outline-none
-           text-gray-300 caret-emerald-500
-           focus:bg-emerald-500/5 px-2 py-1
-           transition-colors duration-200
-           bg-transparent text-[#4AF626]
-           caret-[#4AF626] ml-2;
   }
 
   .command-output {

@@ -1,15 +1,15 @@
 :root {
     --terminal-bg: #1F1F1F;  /* Kali Linux colors */
-    --terminal-text: #F8F8F2;
+    --terminal-text: #FFFFFF;
     --terminal-green: #4AF626;  /* Kali Linux green */
     --terminal-header: #2F2F2F;
 }
 
 body {
-    background: linear-gradient(135deg, #0f0f1a 0%, #2a2a3a 100%);
-    font-family: 'JetBrains Mono', monospace;
     margin: 0;
-    padding: 20px; /* Add padding */
+    padding: 0;
+    background: #1F1F1F;
+    font-family: 'JetBrains Mono', monospace;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -44,7 +44,8 @@ body::before {
     border: 1px solid #3F3F3F;  /* Kali Linux border */
     border-radius: 0;  /* Remove rounded corners */
     box-shadow: 0 10px 30px var(--terminal-shadow);
-    position: relative; /* Changed from fixed */
+    position: fixed;
+    inset: 0;
     top: auto; /* Remove fixed positioning */
     left: auto; /* Remove fixed positioning */
     transform: none; /* Remove transform */
