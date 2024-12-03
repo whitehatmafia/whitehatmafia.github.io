@@ -181,48 +181,44 @@ class Terminal {
         }
     }
 
-     private executeCommand(command: string): void {
+    private async typeWriter(element: HTMLElement, text: string, speed: number = 30): Promise<void> {
+        let i = 0;
+        element.textContent = '';
+        return new Promise(resolve => {
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                    resolve();
+                }
+            }, speed);
+        });
+    }
+
+    private async executeCommand(command: string): Promise<void> {
         const cmd = command.toLowerCase().trim();
         
         if (cmd) {
             this.addToHistory(command);
             
-            // Animate command entry
-            const commandElement = this.createOutputElement(command, true);
+            // Create command element with typing animation
+            const commandElement = this.createOutputElement('', true);
             this.commandHistory.appendChild(commandElement);
+            await this.typeWriter(commandElement, `${command}`, 20);
             
-            gsap.from(commandElement, {
-                duration: 0.3,
-                opacity: 0,
-                y: 10,
-                ease: 'power2.out'
-            });
-
             if (cmd in this.commands) {
                 const output = this.commands[cmd]();
                 if (output) {
-                    const outputElement = this.createOutputElement(output);
+                    const outputElement = this.createOutputElement('');
                     this.commandHistory.appendChild(outputElement);
-                    
-                    gsap.from(outputElement, {
-                        duration: 0.3,
-                        opacity: 0,
-                        y: 10,
-                        delay: 0.1,
-                        ease: 'power2.out'
-                    });
+                    await this.typeWriter(outputElement, output, 10);
                 }
             } else {
-                const errorElement = this.createOutputElement(`Command not found: ${cmd}`);
+                const errorElement = this.createOutputElement('');
                 this.commandHistory.appendChild(errorElement);
-                
-                gsap.from(errorElement, {
-                    duration: 0.3,
-                    opacity: 0,
-                    y: 10,
-                    delay: 0.1,
-                    ease: 'power2.out'
-                });
+                await this.typeWriter(errorElement, `Command not found: ${cmd}`, 20);
             }
             
             this.terminalContent.scrollTop = this.terminalContent.scrollHeight;

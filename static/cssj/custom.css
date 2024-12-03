@@ -36,11 +36,18 @@ body {
     left: auto; /* Remove fixed positioning */
     transform: none; /* Remove transform */
     z-index: 1000;
+    box-shadow: 0 0 20px rgba(158, 206, 106, 0.15),
+                0 0 40px rgba(158, 206, 106, 0.1),
+                0 0 60px rgba(158, 206, 106, 0.05);
+    transition: box-shadow 0.3s ease;
 }
 
 #terminal:hover {
     transform: none; /* Remove transform on hover */
     box-shadow: 0 15px 40px var(--terminal-shadow);
+    box-shadow: 0 0 25px rgba(158, 206, 106, 0.2),
+                0 0 50px rgba(158, 206, 106, 0.15),
+                0 0 75px rgba(158, 206, 106, 0.1);
 }
 
 .terminal-header {
@@ -104,6 +111,8 @@ body {
     border-radius: 4px;
     transition: all 0.2s ease;
     text-shadow: 0 0 8px rgba(158, 206, 106, 0.3);
+    background: linear-gradient(135deg, rgba(158, 206, 106, 0.2), rgba(158, 206, 106, 0.1));
+    border-left: 2px solid var(--terminal-green);
 }
 
 .prompt:hover {
@@ -194,6 +203,24 @@ body {
     content: '█';
     animation: blink 1s infinite;
     color: var(--terminal-green);
+}
+
+.typing-animation {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid var(--terminal-green);
+    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--terminal-green) }
 }
 
 /* Command history styling */
@@ -291,6 +318,7 @@ body {
         width: 95%;
         height: 90vh;
         margin: 10px auto;
+        height: 85vh;
     }
 
     .terminal-header {
@@ -334,6 +362,7 @@ body {
     .prompt {
         font-size: 12px;
         margin-bottom: 5px;
+        padding: 4px 6px;
     }
 }
 
