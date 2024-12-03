@@ -128,6 +128,55 @@ class Terminal {
         document.getElementById('terminal')?.addEventListener('click', () => {
             this.commandInput.focus();
         });
+
+        // Add Ctrl+L shortcut to clear terminal
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.ctrlKey && e.key === 'l') {
+                e.preventDefault();
+                this.executeCommand('clear');
+            }
+        });
+
+        // Add Tab completion
+        this.commandInput.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                this.handleTabCompletion();
+            }
+        });
+    }
+
+    private handleTabCompletion(): void {
+        const input = this.commandInput.value;
+        const availableCommands = Object.keys(this.commands);
+        const matches = availableCommands.filter(cmd => cmd.startsWith(input));
+
+        if (matches.length === 1) {
+            this.commandInput.value = matches[0];
+        }
+    }
+
+    private addCopyToClipboard(): void {
+        const outputs = document.querySelectorAll('.command-output');
+        outputs.forEach(output => {
+            output.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(output.textContent || '');
+                    this.showNotification('Copied to clipboard!');
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            });
+        });
+    }
+
+    private showNotification(message: string): void {
+        const notification = document.createElement('div');
+        notification.className = 'terminal-notification';
+        notification.textContent = message;
+        this.terminalContent.appendChild(notification);
+        
+        setTimeout(() => notification.remove(), 2000);
     }
 
     private initializeAnimations(): void {

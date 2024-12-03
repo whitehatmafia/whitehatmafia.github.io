@@ -53,7 +53,8 @@ body::before {
     z-index: 1000;
     box-shadow: 0 0 20px rgba(158, 206, 106, 0.15),
                 0 0 40px rgba(158, 206, 106, 0.1),
-                0 0 60px rgba(158, 206, 106, 0.05);
+                0 0 60px rgba(158, 206, 106, 0.05),
+                inset 0 0 20px rgba(158, 206, 106, 0.05);
     transition: box-shadow 0.3s ease;
 }
 
@@ -101,8 +102,9 @@ body::before {
     position: relative;
     overflow-y: auto;
     background: linear-gradient(
-        rgba(26, 27, 38, 0.8),
-        rgba(26, 27, 38, 0.95)
+        170deg,
+        rgba(26, 27, 38, 0.95),
+        rgba(26, 27, 38, 0.98)
     );
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -149,6 +151,18 @@ body::before {
     caret-color: var(--terminal-green);
 }
 
+.input-field::after {
+    content: '▋';
+    animation: blink 1s infinite;
+    color: var(--terminal-green);
+}
+
+.input-field:focus {
+    outline: 2px solid var(--terminal-green);
+    outline-offset: 2px;
+    background: rgba(158, 206, 106, 0.05);
+}
+
 .social-links {
     margin-left: auto;
     display: flex;
@@ -177,6 +191,17 @@ body::before {
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Custom Scrollbar */
@@ -528,6 +553,7 @@ button {
     transition: all 0.3s ease;
     overflow-x: auto;
     max-width: 100%;
+    animation: fadeInSlide 0.3s ease-out;
 }
 
 .command-output pre {
@@ -541,6 +567,8 @@ button {
     padding: 5px 10px;
     border-radius: 3px;
     transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .project-link:hover, .writeup-link:hover {
@@ -556,6 +584,24 @@ button {
     border-radius: 6px;
     transition: all 0.3s ease;
     border-left: 2px solid transparent;
+}
+
+.project-link::before, .writeup-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--terminal-green);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.project-link:hover::before, .writeup-link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .project-link:hover, .writeup-link:hover {
