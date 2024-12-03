@@ -130,31 +130,29 @@ class Terminal {
     }
 
     private showInitMessage(): void {
-        // Move ASCII art to first position
         const initMessages = [
-            this.asciiArt,
-            "[*] WhiteHat Mafia Security Assessment Tool v1.0.0",
-            "[*] Developer: WhiteHat Mafia",
-            "[*] Github: https://github.com/whitehatmafia",
-            "[!] Starting security assessment...",
-            "[+] Checking system access...",
-            "[+] Loading security modules...",
-            "[!] System ready."
+            { text: this.asciiArt, class: 'ascii-art' },
+            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation' },
+            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation' },
+            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation' },
+            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning' },
+            { text: "[+] Checking system access...", class: 'system-message startup-animation' },
+            { text: "[+] Loading security modules...", class: 'system-message startup-animation' },
+            { text: "[!] System ready.", class: 'system-message startup-animation success' }
         ];
 
         let delay = 0;
         initMessages.forEach((msg, index) => {
             setTimeout(() => {
-                const msgElement = this.createOutputElement(msg);
-                msgElement.classList.add('system-message');
-                if (index === 0) { // ASCII art
-                    msgElement.style.color = '#4AF626';
+                const msgElement = this.createOutputElement(msg.text);
+                msgElement.className = msg.class;
+                if (index === 0) {
                     msgElement.style.lineHeight = '1.2';
-                    msgElement.style.whiteSpace = 'pre';
                 }
                 this.commandHistory.appendChild(msgElement);
+                this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
             }, delay);
-            delay += index === 0 ? 0 : 500; // No delay for ASCII art
+            delay += index === 0 ? 0 : 500;
         });
     }
 

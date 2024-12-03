@@ -2,35 +2,22 @@ baseURL = "https://whitehatmafia.github.io/"
 languageCode = "en"
 title = "WhiteHat Mafia"
 
-# Completely disable RSS and other outputs
-disableKinds = ["RSS", "robotsTXT", "404", "taxonomy", "term", "sitemap"]
-
-# Explicitly set HTML output
+# Enable HTML pages
 [outputs]
   home = ["HTML"]
   section = ["HTML"]
   page = ["HTML"]
 
-# Force home page to be rendered as HTML
-[permalinks]
-  "/" = "/"
-
+# Basic parameters
 [params]
-  # Theme colors and basic settings
   backgroundColor = "#1F1F1F"
-  accentColor = "#4AF626"  # Kali Linux green
+  accentColor = "#4AF626"
   description = "Cybersecurity Research & Development"
   
   [params.terminal]
-    welcomeMessage = ""  # Empty since we're moving it to TypeScript
-    promptString = "┌──(root㉿kali)-[~/whitehat]\n└─$"  # Kali-style prompt
-    cursorStyle = "block"
+    promptString = "┌──(root㉿kali)-[~/whitehat]\n└─$"
 
-[build]
-  writeStats = true
-  [build.processing]
-    includeFiles = ["css/*", "js/*"]
-
+# Module configuration for Hugo
 [module]
   [[module.mounts]]
     source = "assets"
@@ -39,15 +26,20 @@ disableKinds = ["RSS", "robotsTXT", "404", "taxonomy", "term", "sitemap"]
     source = "static"
     target = "static"
 
+# Markup configuration
 [markup]
   [markup.highlight]
     codeFences = true
     guessSyntax = true
     style = "monokai"
 
+# Security settings
 [security]
   [security.funcs]
     getenv = ['^HUGO_']
   [security.http]
     methods = ['GET']
     urls = ['.*']
+
+# Remove unnecessary settings
+disableKinds = ["taxonomy", "term"]
