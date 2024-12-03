@@ -869,3 +869,37 @@ button {
     outline: none;
     caret-color: var(--terminal-green);
 }
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 4px 0;
+    background: transparent;
+}
+
+.prompt-text {
+    color: var(--terminal-text);
+    white-space: pre;
+    user-select: none;
+}
+
+.input-field {
+    background: transparent !important;
+    border: none !important;
+    color: var(--terminal-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    flex: 1;
+    padding: 4px 0;
+    margin: 0;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.input-field:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}

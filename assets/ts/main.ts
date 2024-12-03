@@ -95,37 +95,43 @@ class Terminal {
     };
 
     constructor() {
-        // Wait for loading screen to complete
-        window.addEventListener('load', () => {
-            this.initializeTerminal();
-        });
+        // Initialize immediately
+        this.initializeTerminal();
     }
 
     private async initializeTerminal(): Promise<void> {
-        const terminal = document.getElementById('terminal');
-        this.commandInput = document.getElementById('command-input') as HTMLInputElement;
-        this.commandHistory = document.getElementById('command-history') as HTMLElement;
-        this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
+        console.log('Initializing terminal...');
+        
+        // Wait for DOM elements
+        const waitForElements = setInterval(() => {
+            this.commandInput = document.getElementById('command-input') as HTMLInputElement;
+            this.commandHistory = document.getElementById('command-history') as HTMLElement;
+            this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
 
-        if (!this.commandInput || !this.commandHistory || !this.terminalContent) {
-            console.error('Required DOM elements not found');
-            return;
-        }
+            if (this.commandInput && this.commandHistory && this.terminalContent) {
+                clearInterval(waitForElements);
+                this.startTerminal();
+            }
+        }, 100);
+    }
 
+    private async startTerminal(): Promise<void> {
         // Initialize terminal elements
-        terminal?.classList.add('loaded');
         this.terminalContent.style.visibility = 'visible';
         
-        // Show initialization messages
+        // Show initialization messages first
         await this.showInitMessage();
         
-        // Initialize event listeners after messages
+        // Initialize event listeners
         this.initializeEventListeners();
+        
+        // Focus input
+        this.commandInput.focus();
         
         // Start matrix effect
         this.startMatrixEffect();
 
-        // Show help message after initialization
+        // Show help message after delay
         setTimeout(() => {
             this.executeCommand('help');
         }, 1000);
@@ -271,7 +277,7 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `root@kali:~$ ${this.sanitizeHTML(content)}`;
+            outputDiv.innerHTML = `<span class="prompt-text">root@kali:~$ </span>${this.sanitizeHTML(content)}`;
         } else {
             outputDiv.innerHTML = content;
         }
@@ -440,11 +446,8 @@ class Terminal {
     }
 }
 
-// Initialize terminal without immediate help message
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
-    new Terminal();
-});
+// Initialize terminal
+document.addEventListener('DOMContentLoaded', () => new Terminal());
 
 declare global {
     interface Window {
