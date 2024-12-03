@@ -12,14 +12,12 @@ interface Article {
 
 class Terminal {
     private readonly asciiArt = `
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ���█╗  ██╗ ██���██╗ ████████╗
-[*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔���═██╗╚══██╔══╝
+[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ██╗  ██╗ █████╗ ████████╗
+[*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
 [*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
-[*] ██║███╗██║██╔══██║██║   ██║   ██╔══╝      ██╔══██║██╔══██║   ██║   
+[*] ██║███╗██║██╔══██║██║   ██║   ██╔��═╝      ██╔══██║██╔══██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
-[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
     `;
 
     private commandInput: HTMLInputElement;
@@ -140,13 +138,19 @@ class Terminal {
         // Initialize event listeners
         this.initializeEventListeners();
         
-        // Focus input and add ready class for cursor
+        // Focus input
         this.commandInput.focus();
-        document.querySelector('.terminal-input-line')?.classList.add('ready');
         
-        // Start matrix effect
-        this.startMatrixEffect();
-
+        // Add final initialization message
+        const successElement = this.createOutputElement("[+] Terminal initialized successfully.");
+        successElement.className = 'system-message success';
+        this.commandHistory.appendChild(successElement);
+        
+        // Add ready class for cursor AFTER initialization
+        setTimeout(() => {
+            document.querySelector('.terminal-input-line')?.classList.add('ready');
+        }, 500);
+        
         // Show help message after delay
         setTimeout(() => {
             this.executeCommand('help');

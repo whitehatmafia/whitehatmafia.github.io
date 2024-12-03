@@ -1058,3 +1058,46 @@ button {
 .terminal-input-line.ready::after {
     animation: blink 1s step-end infinite;
 }
+
+/* Terminal cursor styling */
+.terminal-input-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-input-line::after {
+    content: '';
+    position: absolute;
+    left: calc(100% + 1px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 16px;
+    background: var(--terminal-text);
+    display: none;
+}
+
+.terminal-input-line.ready::after {
+    display: block;
+    animation: blink 1s step-end infinite;
+}
+
+.input-field {
+    background: transparent !important;
+    border: none !important;
+    color: var(--terminal-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    flex: 1;
+    padding: 4px 0;
+    margin: 0;
+    caret-color: transparent !important;
+}
+
+/* Remove all other cursor animations */
+.input-field::after,
+.cursor,
+.typing::after {
+    display: none !important;
+}
