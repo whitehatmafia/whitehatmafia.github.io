@@ -9,33 +9,50 @@
         width: 100%;
         height: 100%;
         background: #1F1F1F;
-        visibility: visible !important;
-        opacity: 1 !important;
         overflow: hidden;
     }
     
     #terminal {
+        display: flex !important;
         visibility: visible !important;
-        opacity: 1 !important;
-        position: fixed;
-        inset: 0;
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        background: #1F1F1F;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    #terminal.loaded {
+        opacity: 1;
     }
 
     .terminal-content {
         visibility: visible !important;
         opacity: 1 !important;
-        width: 100%;
-        height: 100%;
-        padding: 25px;
-        box-sizing: border-box;
+    }
+
+    #loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #1F1F1F;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    #loading-screen.fade-out {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .loader {
+        color: #4AF626;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 16px;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
     }
 </style>
 
@@ -55,3 +72,21 @@
 
 <script defer src="/vendor/gsap/gsap.min.js"></script>
 <script defer src="{{ $js.RelPermalink }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadingScreen = document.getElementById('loading-screen');
+        const terminal = document.getElementById('terminal');
+        
+        // Show terminal after resources are loaded
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loadingScreen.classList.add('fade-out');
+                terminal.classList.add('loaded');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 300);
+            }, 500);
+        });
+    });
+</script>

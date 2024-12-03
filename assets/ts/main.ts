@@ -95,14 +95,14 @@ class Terminal {
     };
 
     constructor() {
-        console.log('Initializing Terminal...');
-        // Ensure terminal is visible first
+        // Wait for loading screen to complete
+        window.addEventListener('load', () => {
+            this.initializeTerminal();
+        });
+    }
+
+    private async initializeTerminal(): Promise<void> {
         const terminal = document.getElementById('terminal');
-        if (terminal) {
-            terminal.style.visibility = 'visible';
-            terminal.style.opacity = '1';
-        }
-        
         this.commandInput = document.getElementById('command-input') as HTMLInputElement;
         this.commandHistory = document.getElementById('command-history') as HTMLElement;
         this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
@@ -111,25 +111,27 @@ class Terminal {
             console.error('Required DOM elements not found');
             return;
         }
+
+        // Initialize terminal elements
+        terminal?.classList.add('loaded');
+        this.terminalContent.style.visibility = 'visible';
         
-        if (this.terminalContent) {
-            this.terminalContent.style.visibility = 'visible';
-        }
+        // Show initialization messages
+        await this.showInitMessage();
         
-        // Start matrix effect on load
-        setTimeout(() => {
-            this.startMatrixEffect();
-        }, 500);
-        
+        // Initialize event listeners after messages
         this.initializeEventListeners();
-        // Comment out animations temporarily
-        // this.initializeAnimations();
         
-        // Add initialization message
-        this.showInitMessage();
+        // Start matrix effect
+        this.startMatrixEffect();
+
+        // Show help message after initialization
+        setTimeout(() => {
+            this.executeCommand('help');
+        }, 1000);
     }
 
-    private showInitMessage(): void {
+    private async showInitMessage(): Promise<void> {
         const initMessages = [
             { text: this.asciiArt, class: 'ascii-art' },
             { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation' },
@@ -141,18 +143,25 @@ class Terminal {
             { text: "[!] System ready.", class: 'system-message startup-animation success' }
         ];
 
-        let delay = 0;
-        initMessages.forEach((msg, index) => {
-            setTimeout(() => {
-                const msgElement = this.createOutputElement(msg.text);
-                msgElement.className = msg.class;
-                if (index === 0) {
-                    msgElement.style.lineHeight = '1.2';
-                }
-                this.commandHistory.appendChild(msgElement);
-                this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
-            }, delay);
-            delay += index === 0 ? 0 : 500;
+        // Return promise that resolves when all messages are shown
+        return new Promise((resolve) => {
+            let delay = 0;
+            initMessages.forEach((msg, index) => {
+                setTimeout(() => {
+                    const msgElement = this.createOutputElement(msg.text);
+                    msgElement.className = msg.class;
+                    if (index === 0) {
+                        msgElement.style.lineHeight = '1.2';
+                    }
+                    this.commandHistory.appendChild(msgElement);
+                    this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
+                    
+                    if (index === initMessages.length - 1) {
+                        resolve();
+                    }
+                }, delay);
+                delay += index === 0 ? 0 : 500;
+            });
         });
     }
 
@@ -431,15 +440,10 @@ class Terminal {
     }
 }
 
-// Initialize terminal when DOM is loaded
+// Initialize terminal without immediate help message
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
-    const terminal = new Terminal();
-    
-    // Show initial help message
-    setTimeout(() => {
-        terminal['executeCommand']('help');
-    }, 1500);
+    new Terminal();
 });
 
 declare global {

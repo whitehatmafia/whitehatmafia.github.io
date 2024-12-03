@@ -93,6 +93,17 @@ body::before {
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: var(--terminal-bg);
+    border: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 #terminal:hover {
@@ -160,6 +171,10 @@ body::before {
     min-height: 0 !important;
     max-height: 100vh !important;
     overflow-y: auto !important;
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: var(--terminal-bg);
 }
 
 .input-line {
@@ -805,6 +820,34 @@ button {
     align-items: center;
     width: 100%;
     padding: 4px 0;
+    background: transparent;
+}
+
+.prompt-text {
+    color: var(--terminal-text);
+    margin-right: 8px;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.input-field {
+    background: transparent;
+    border: none;
+    color: var(--terminal-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    flex: 1;
+    padding: 4px 0;
+    outline: none !important;
+    box-shadow: none !important;
+    margin-left: 8px;
+}
+
+.input-field:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
 }
 
 .prompt {
