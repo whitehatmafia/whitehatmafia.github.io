@@ -1,42 +1,57 @@
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>{{ .Site.Title }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Critical CSS first -->
+<!-- Critical CSS -->
 <style>
     html, body {
         margin: 0;
         padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #1F1F1F;
+        visibility: visible !important;
+        opacity: 1 !important;
+        overflow: hidden;
+    }
+    
+    #terminal {
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed;
+        inset: 0;
         width: 100vw;
         height: 100vh;
-        overflow: hidden;
+        margin: 0;
+        padding: 0;
         background: #1F1F1F;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    #terminal {
-        position: fixed !important;
-        inset: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        margin: 0 !important;
-        padding: 0 !important;
+
+    .terminal-content {
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100%;
+        height: 100%;
+        padding: 25px;
+        box-sizing: border-box;
     }
 </style>
 
-<!-- Remove font preloading since we're using Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Preload critical resources -->
+<link rel="preload" href="/cssj/custom.css" as="style">
+<link rel="preload" href="{{ $js.RelPermalink }}" as="script">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" as="style">
 
-<!-- Remove unused resources -->
-<!--
-<link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/JetBrainsMono-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="manifest" href="/site.webmanifest">
--->
+<title>{{ .Site.Title }}</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="/cssj/custom.css">
 {{ $styles := resources.Get "css/main.css" | resources.PostCSS }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
-<!-- Move scripts to end -->
 <script defer src="/vendor/gsap/gsap.min.js"></script>
 {{ $js := resources.Get "ts/main.ts" | js.Build }}
 <script defer src="{{ $js.RelPermalink }}"></script>

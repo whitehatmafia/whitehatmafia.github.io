@@ -262,7 +262,7 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `<span class="prompt">┌──(root㉿kali)-[~/whitehat]<br>└─$</span> ${this.sanitizeHTML(content)}`;
+            outputDiv.innerHTML = `root@kali:~$ ${this.sanitizeHTML(content)}`;
         } else {
             outputDiv.innerHTML = content;
         }

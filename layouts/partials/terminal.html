@@ -1,16 +1,15 @@
-<div id="terminal">
-    <div id="terminal-content">
+<div id="terminal" style="visibility: visible !important; opacity: 1 !important;">
+    <div id="terminal-content" class="terminal-content" style="visibility: visible !important;">
         <div id="command-history" class="command-history"></div>
         <div class="terminal-input-wrapper">
-            <div class="terminal-input-line">
-                <span class="prompt">┌──(root㉿kali)-[~/whitehat]<br>└─$</span>
-                <input type="text" 
-                       id="command-input" 
-                       class="input-field"
-                       autofocus
-                       autocomplete="off" 
-                       spellcheck="false">
-            </div>
+            <input type="text" 
+                   id="command-input" 
+                   class="input-field"
+                   placeholder="root@kali:~$ "
+                   autofocus
+                   autocomplete="off" 
+                   spellcheck="false"
+                   autocapitalize="none">
         </div>
     </div>
 </div>
@@ -140,4 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         history.appendChild(response);
     }
 });
+
+document.documentElement.style.visibility = 'visible';
+document.documentElement.style.opacity = '1';
 </script>
