@@ -1,6 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const { convertCompilerOptionsFromJson } = require('typescript');
-
 module.exports = {
   content: [
     './layouts/**/*.html',
@@ -8,9 +6,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        // Remove custom colors and use Tailwind's built-in colors
-      },
       boxShadow: {
         'terminal': '0 0 30px rgba(16, 185, 129, 0.2)',
       },
@@ -23,7 +18,6 @@ module.exports = {
       },
     },
   },
-  darkMode: 'class', // Enable dark mode
   plugins: [
     require('@tailwindcss/forms'),
   ],
