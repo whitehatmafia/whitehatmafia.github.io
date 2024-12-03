@@ -109,7 +109,7 @@
 
   .typing-cursor::after {
     content: '▋';
-    @apply animate-blink text-terminal-green;
+    @apply animate-blink text-emerald-500;
   }
 }
 
