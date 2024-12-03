@@ -53,7 +53,11 @@
   }
 
   .command-input {
-    @apply flex items-center gap-2 group;
+    @apply flex items-center gap-2;
+  }
+
+  .command-input-group {
+    @apply group flex items-center gap-2;
   }
 
   .prompt {
