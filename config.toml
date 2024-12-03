@@ -2,12 +2,18 @@ baseURL = "https://whitehatmafia.github.io/"
 languageCode = "en"
 title = "WhiteHat Mafia"
 
-# Basic configuration to ensure main page loads
-disableKinds = ["taxonomy", "term", "RSS", "sitemap", "robotsTXT"]
+# Completely disable RSS and other outputs
+disableKinds = ["RSS", "robotsTXT", "404", "taxonomy", "term", "sitemap"]
 
+# Explicitly set HTML output
 [outputs]
   home = ["HTML"]
+  section = ["HTML"]
   page = ["HTML"]
+
+# Force home page to be rendered as HTML
+[permalinks]
+  "/" = "/"
 
 [params]
   # Theme colors and basic settings

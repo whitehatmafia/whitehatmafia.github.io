@@ -1,0 +1,143 @@
+<div id="terminal" class="terminal-window glassmorphism">
+    <div class="terminal-header">
+        <div class="terminal-controls">
+            <span class="terminal-button close"></span>
+            <span class="terminal-button minimize"></span>
+            <span class="terminal-button maximize"></span>
+        </div>
+        <div class="terminal-title">{{ .Site.Title }} Terminal</div>
+    </div>
+
+    <div id="terminal-content" class="terminal-content terminal-scrollbar">
+        <div id="command-history" class="command-history">
+            <div class="welcome-message typing-cursor">
+                {{ .Site.Params.terminal.welcomeMessage }}
+            </div>
+        </div>
+        
+        <div class="terminal-input-wrapper">
+            <div class="terminal-input-line">
+                <span class="prompt">{{ .Site.Params.terminal.promptString }}</span>
+                <input type="text" 
+                       id="command-input" 
+                       class="input-field"
+                       autocomplete="off" 
+                       autocorrect="off" 
+                       autocapitalize="off" 
+                       spellcheck="false">
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.terminal-container {
+    background-color: {{ .Site.Params.backgroundColor }};
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    margin: 40px auto;
+    max-width: 800px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.terminal-header {
+    background-color: #2d2d2d;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.close { background-color: #ff5f56; }
+.minimize { background-color: #ffbd2e; }
+.maximize { background-color: #27c93f; }
+
+.terminal-title {
+    color: #c8c8c8;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.terminal-content {
+    padding: 20px;
+    color: #fff;
+    min-height: 300px;
+}
+
+.welcome-message {
+    color: {{ .Site.Params.accentColor }};
+    margin: 0 0 20px 0;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    color: {{ .Site.Params.accentColor }};
+    margin-right: 10px;
+}
+
+.cursor {
+    width: 8px;
+    height: 16px;
+    background-color: #fff;
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.command-history {
+    margin-bottom: 20px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cursor = document.getElementById('terminal-cursor');
+    const input = document.getElementById('terminal-input');
+    let currentCommand = '';
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key.length === 1) {
+            currentCommand += e.key;
+            input.textContent = currentCommand;
+        } else if (e.key === 'Backspace') {
+            currentCommand = currentCommand.slice(0, -1);
+            input.textContent = currentCommand;
+        } else if (e.key === 'Enter') {
+            processCommand(currentCommand);
+            currentCommand = '';
+            input.textContent = '';
+        }
+    });
+
+    function processCommand(cmd) {
+        const history = document.querySelector('.command-history');
+        const line = document.createElement('div');
+        line.innerHTML = `<span class="prompt">{{ .Site.Params.terminal.promptString }}</span> ${cmd}`;
+        history.appendChild(line);
+        
+        // Add command response logic here
+        const response = document.createElement('div');
+        response.textContent = `Command '${cmd}' executed`;
+        history.appendChild(response);
+    }
+});
+</script>
