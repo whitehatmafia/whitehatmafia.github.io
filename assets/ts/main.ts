@@ -22,13 +22,11 @@ class Terminal {
     private commands: CommandMap = {
         help: (): string => {
             const commands = [
-                ['help', 'Display this help message'],
-                ['clear', 'Clear terminal screen'],
-                ['projects', 'View GitHub projects'],
-                ['writes', 'View Medium writeups'],
-                ['social', 'View social links'],
-                ['ascii', 'Display ASCII art'],
-                ['matrix', 'Activate Matrix mode']
+                ['help', '[+] Display available commands'],
+                ['clear', '[+] Clear terminal screen'],
+                ['projects', '[+] Enumerate GitHub projects'],
+                ['writes', '[+] List security writeups'],
+                ['social', '[+] Show contact information']
             ];
             
             return commands.map(([cmd, desc]) => 
@@ -83,20 +81,6 @@ class Terminal {
         social: (): string => `Connect with me:
     GitHub: https://github.com/whitehatmafia
     Medium: https://medium.com/@whitehatmafia`,
-        
-        ascii: (): string => `
-    ██╗    ██╗██╗  ██╗██╗████████╗███████╗██╗  ██╗ █████╗ ████████╗
-    ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██║  ██║██╔══██╗╚══██╔══╝
-    ██║ █╗ ██║███████║██║   ██║   █████╗  ███████║███████║   ██║   
-    ██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██╔══██║██╔══██║   ██║   
-    ╚███╔███╔╝██║  ██║██║   ██║   ███████╗██║  ██║██║  ██║   ██║   
-     ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
-        `,
-        
-        matrix: (): string => {
-            this.startMatrixEffect();
-            return 'Matrix mode activated...';
-        }
     };
 
     constructor() {
@@ -136,10 +120,10 @@ class Terminal {
 
     private showInitMessage(): void {
         const initMessages = [
-            "Initializing secure connection...",
-            "Accessing terminal...",
-            "Systems online.",
-            "Type 'help' for available commands."
+            "[*] Initializing security assessment...",
+            "[+] Checking system access...",
+            "[+] Loading security modules...",
+            "[!] System ready. Type 'help' to list available commands"
         ];
 
         let delay = 0;
@@ -264,7 +248,7 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `<span class="prompt">visitor@whitehat:~$</span> ${this.sanitizeHTML(content)}`;
+            outputDiv.innerHTML = `<span class="prompt">[whitehat@system]$</span> ${this.sanitizeHTML(content)}`;
         } else {
             outputDiv.innerHTML = content; // Allow HTML in command output
         }

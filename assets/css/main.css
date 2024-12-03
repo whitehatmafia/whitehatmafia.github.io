@@ -81,12 +81,18 @@
   .command-output {
     @apply pl-4 border-l-2 border-emerald-500/50
            bg-black/20 rounded-r p-3
-           animate-fade-in-down;
+           animate-fade-in-down font-mono;
+        
+    a { @apply text-emerald-500 hover:text-emerald-400; }
   }
 
   .system-message {
-    @apply text-emerald-500/70 text-sm
-           pl-4 animate-fade-in-down;
+    @apply text-emerald-500/70 text-sm pl-4 
+           font-mono animate-fade-in-down;
+    &:before {
+      content: '[*] ';
+      @apply text-yellow-500;
+    }
   }
 
   .matrix-mode {
