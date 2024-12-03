@@ -11,6 +11,8 @@
 </head>
 <body>
     {{ block "main" . }}{{ end }}
-    <script defer src="{{ $js.RelPermalink }}"></script>
+    {{ with resources.Get "ts/main.ts" | js.Build }}
+    <script defer src="{{ .RelPermalink }}"></script>
+    {{ end }}
 </body>
 </html>

@@ -43,3 +43,13 @@ title = "WhiteHat Mafia"
 
 # Remove unnecessary settings
 disableKinds = ["taxonomy", "term"]
+
+[build]
+  writeStats = true
+  [build.processing]
+    skip = ["**.min.js"]
+
+# Add these for CSS processing
+[build.processing.css]
+  includePaths = ["assets/css"]
+  method = "postcss"

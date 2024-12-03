@@ -57,11 +57,19 @@
 </style>
 
 <!-- Preload critical resources -->
-<link rel="preload" href="/cssj/custom.css" as="style">
+<!-- Resources -->
 {{ $js := resources.Get "ts/main.ts" | js.Build }}
+{{ $mainCSS := resources.Get "css/main.css" | resources.PostCSS }}
+
+<!-- Preload -->
 <link rel="preload" href="{{ $js.RelPermalink }}" as="script">
+<link rel="preload" href="{{ $mainCSS.RelPermalink }}" as="style">
+<link rel="preload" href="/cssj/custom.css" as="style">
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" as="style">
 
 <title>{{ .Site.Title }}</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/cssj/custom.css">
+<link rel="stylesheet" href="{{ $mainCSS.RelPermalink }}">
+
+<!-- Remove main.css -->
