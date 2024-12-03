@@ -30,7 +30,7 @@ class Terminal {
             ];
             
             return commands.map(([cmd, desc]) => 
-                `${cmd.padEnd(10)} - ${desc}`
+                `${cmd.padEnd(12)} ${desc}`
             ).join('\n');
         },
         
