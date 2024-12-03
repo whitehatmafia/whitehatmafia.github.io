@@ -173,16 +173,18 @@ class Terminal {
     private async typeWriter(element: HTMLElement, text: string, speed: number = 30): Promise<void> {
         let i = 0;
         element.innerHTML = '';
+
+        // If this is command output (not an input line), render HTML directly
+        if (!element.classList.contains('input-line')) {
+            element.innerHTML = text;
+            return Promise.resolve();
+        }
+
+        // For input lines, use character-by-character typing
         return new Promise(resolve => {
             const typing = setInterval(() => {
                 if (i < text.length) {
-                    // For commands, we want to sanitize the input
-                    if (element.classList.contains('input-line')) {
-                        element.textContent += text.charAt(i);
-                    } else {
-                        // For command output, we build up the HTML string
-                        element.innerHTML += text.charAt(i);
-                    }
+                    element.textContent += text.charAt(i);
                     i++;
                 } else {
                     clearInterval(typing);
@@ -215,7 +217,7 @@ class Terminal {
         if (cmd) {
             this.addToHistory(command);
             
-            // Create command element with typing animation
+            // Show the command input
             const commandElement = this.createOutputElement('', true);
             this.commandHistory.appendChild(commandElement);
             await this.typeWriter(commandElement, `${command}`, 20);
@@ -223,14 +225,14 @@ class Terminal {
             if (cmd in this.commands) {
                 const output = this.commands[cmd]();
                 if (output) {
-                    const outputElement = this.createOutputElement('');
+                    const outputElement = this.createOutputElement(output);
                     this.commandHistory.appendChild(outputElement);
-                    await this.typeWriter(outputElement, output, 10);
+                    // No need to type the output, just display it instantly
+                    outputElement.innerHTML = output;
                 }
             } else {
-                const errorElement = this.createOutputElement('');
+                const errorElement = this.createOutputElement(`Command not found: ${cmd}`);
                 this.commandHistory.appendChild(errorElement);
-                await this.typeWriter(errorElement, `Command not found: ${cmd}`, 20);
             }
             
             this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
