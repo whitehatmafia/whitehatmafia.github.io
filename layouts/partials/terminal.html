@@ -18,12 +18,12 @@
 
     <div id="terminal-content" class="terminal-content terminal-scrollbar">
         <div id="command-history" class="command-history">
-            <pre class="welcome-message">{{ .Site.Params.terminal.welcomeMessage }}</pre>
+            <pre class="welcome-message typing">{{ .Site.Params.terminal.welcomeMessage }}</pre>
         </div>
         
         <div class="terminal-input-wrapper">
             <div class="terminal-input-line">
-                <span class="prompt">{{ .Site.Params.terminal.promptString }}</span>
+                <span class="prompt" style="white-space: nowrap;">[whitehat@system]$ </span>
                 <input type="text" 
                        id="command-input" 
                        class="input-field"

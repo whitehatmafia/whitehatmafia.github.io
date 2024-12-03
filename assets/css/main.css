@@ -65,10 +65,9 @@
   }
 
   .prompt {
-    @apply text-emerald-500 font-bold whitespace-nowrap
-           px-2 py-1 rounded bg-emerald-500/10
-           border-l-2 border-emerald-500
-           transition-colors duration-200;
+    @apply text-emerald-500 font-bold font-mono
+           px-2 py-1 rounded bg-emerald-500/10;
+    white-space: nowrap !important;
   }
 
   .input-field {
@@ -114,9 +113,10 @@
 
   .welcome-message {
     @apply text-emerald-500 font-mono text-xs md:text-sm lg:text-base
-           whitespace-pre font-bold animate-fade-in-down;
+           whitespace-pre font-bold;
     white-space: pre !important;
     font-family: 'JetBrains Mono', monospace !important;
+    line-height: 1.2;
   }
 }
 

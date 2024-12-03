@@ -123,7 +123,7 @@ class Terminal {
             "[*] Initializing security assessment...",
             "[+] Checking system access...",
             "[+] Loading security modules...",
-            "[!] System ready. Type 'help' to list available commands"
+            "[!] System ready."
         ];
 
         let delay = 0;
@@ -136,10 +136,10 @@ class Terminal {
             delay += 500; // Add 500ms delay between each message
         });
 
-        // Execute help command after init messages
-        setTimeout(() => {
-            this.executeCommand('help');
-        }, delay);
+        // Remove automatic help command here too
+        // setTimeout(() => {
+        //     this.executeCommand('help');
+        // }, delay);
     }
 
     private initializeEventListeners(): void {
