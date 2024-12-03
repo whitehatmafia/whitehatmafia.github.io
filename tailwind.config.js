@@ -9,10 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'terminal-green': 'var(--terminal-green)',
-        'terminal-bg': 'var(--terminal-bg)',
-        'terminal-text': 'var(--terminal-text)',
-        'terminal-header': 'var(--terminal-header)',
+        // Remove custom colors and use Tailwind's built-in colors
       },
       boxShadow: {
         'terminal': '0 0 30px rgba(16, 185, 129, 0.2)',
@@ -29,7 +26,6 @@ module.exports = {
   darkMode: 'class', // Enable dark mode
   plugins: [
     require('@tailwindcss/forms'),
-    ...(process.env.NODE_ENV === 'development' ? [require('tailwind-scrollbar')] : []),
   ],
   corePlugins: {
     preflight: false,

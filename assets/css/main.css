@@ -65,9 +65,9 @@
   }
 
   .prompt {
-    @apply text-terminal-green font-bold whitespace-nowrap
-           px-2 py-1 rounded bg-terminal-green/10
-           border-l-2 border-terminal-green
+    @apply text-emerald-500 font-bold whitespace-nowrap
+           px-2 py-1 rounded bg-emerald-500/10
+           border-l-2 border-emerald-500
            transition-colors duration-200;
   }
 
