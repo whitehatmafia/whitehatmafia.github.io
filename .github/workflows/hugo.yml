@@ -32,6 +32,8 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install postcss postcss-cli autoprefixer
+          npm install tailwindcss @tailwindcss/forms tailwind-scrollbar
+          npm install -D @tailwindcss/typography @tailwindcss/aspect-ratio
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2

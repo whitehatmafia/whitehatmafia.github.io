@@ -13,12 +13,6 @@ module.exports = {
         'terminal-bg': 'var(--terminal-bg)',
         'terminal-text': 'var(--terminal-text)',
         'terminal-header': 'var(--terminal-header)',
-        terminal: {
-          green: '#00ff00',
-          text: '#00ff00',
-          muted: '#666666',
-          highlight: '#303030',
-        }
       },
       boxShadow: {
         'terminal': '0 0 30px rgba(16, 185, 129, 0.2)',
@@ -35,7 +29,8 @@ module.exports = {
   darkMode: 'class', // Enable dark mode
   plugins: [
     require('@tailwindcss/forms'),
-    require('tailwind-scrollbar'),
+    // Make scrollbar plugin optional
+    ...(process.env.NODE_ENV === 'development' ? [require('tailwind-scrollbar')] : []),
   ],
   corePlugins: {
     preflight: false,
