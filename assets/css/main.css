@@ -93,7 +93,8 @@
     @apply relative;
     &::before {
       @apply content-[''] fixed inset-0 z-[-1]
-             bg-[linear-gradient(transparent,_#0f0)] animate-matrix opacity-30;
+             bg-[linear-gradient(transparent,_#0f0)] opacity-30;
+      animation: matrix 5s linear infinite;
     }
   }
 
@@ -136,6 +137,16 @@
   .typing-cursor::after {
     content: '▋';
     @apply animate-blink text-emerald-500;
+  }
+
+  @keyframes matrix {
+    0% { transform: translateY(-50%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(50%); opacity: 0; }
+  }
+
+  .animate-matrix {
+    animation: matrix 5s linear infinite;
   }
 }
 
