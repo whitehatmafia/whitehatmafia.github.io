@@ -115,6 +115,8 @@
   .welcome-message {
     @apply text-emerald-500 font-mono text-xs md:text-sm lg:text-base
            whitespace-pre font-bold animate-fade-in-down;
+    white-space: pre !important;
+    font-family: 'JetBrains Mono', monospace !important;
   }
 }
 

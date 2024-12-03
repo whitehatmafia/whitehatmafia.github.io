@@ -18,9 +18,7 @@
 
     <div id="terminal-content" class="terminal-content terminal-scrollbar">
         <div id="command-history" class="command-history">
-            <div class="welcome-message typing-cursor">
-                {{ .Site.Params.terminal.welcomeMessage }}
-            </div>
+            <pre class="welcome-message">{{ .Site.Params.terminal.welcomeMessage }}</pre>
         </div>
         
         <div class="terminal-input-wrapper">
