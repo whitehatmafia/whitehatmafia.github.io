@@ -48,9 +48,11 @@
                     <div class="output typing-animation loading" style="animation-delay: 2s;">Initializing security modules...</div>
                 </div>
                 <div id="command-history"></div>
-                <div class="terminal-input-wrapper group"> <!-- Changed class name and added group directly -->
-                    <span class="prompt group-hover:bg-emerald-500/20">visitor@whitehat:~$</span>
-                    <input type="text" class="input-field" id="command-input" autofocus>
+                <div class="terminal-input-wrapper">
+                    <div class="terminal-input-line group">
+                        <span class="prompt transition-colors duration-200 group-hover:bg-emerald-500/20">visitor@whitehat:~$</span>
+                        <input type="text" class="input-field" id="command-input" autofocus>
+                    </div>
                 </div>
             </div>
         </div>

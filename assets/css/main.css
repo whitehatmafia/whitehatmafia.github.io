@@ -56,19 +56,19 @@
     @apply flex items-center gap-2;
   }
 
-  /* Remove the problematic class and handle it differently */
   .terminal-input-wrapper {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-2 relative;
   }
 
-  .command-input-group {
-    @apply group flex items-center gap-2;
+  .terminal-input-line {
+    @apply flex items-center gap-2 w-full;
   }
 
   .prompt {
     @apply text-terminal-green font-bold whitespace-nowrap
            px-2 py-1 rounded bg-terminal-green/10
-           border-l-2 border-terminal-green;
+           border-l-2 border-terminal-green
+           transition-colors duration-200;
   }
 
   .input-field {
