@@ -41,6 +41,7 @@
 
 <!-- Preload critical resources -->
 <link rel="preload" href="/cssj/custom.css" as="style">
+{{ $js := resources.Get "ts/main.ts" | js.Build }}
 <link rel="preload" href="{{ $js.RelPermalink }}" as="script">
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" as="style">
 
@@ -53,5 +54,4 @@
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
 <script defer src="/vendor/gsap/gsap.min.js"></script>
-{{ $js := resources.Get "ts/main.ts" | js.Build }}
 <script defer src="{{ $js.RelPermalink }}"></script>
