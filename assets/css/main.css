@@ -87,9 +87,20 @@
 
 @layer utilities {
   .terminal-scrollbar {
-    @apply scrollbar-thin scrollbar-track-gray-800
-           scrollbar-thumb-terminal-green/30
-           hover:scrollbar-thumb-terminal-green/50;
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.emerald.500/30') theme('colors.gray.800');
+  }
+
+  .terminal-scrollbar::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  .terminal-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-800 rounded-full;
+  }
+
+  .terminal-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-emerald-500/30 rounded-full hover:bg-emerald-500/50 transition-colors;
   }
 
   .glassmorphism {

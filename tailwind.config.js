@@ -6,16 +6,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      boxShadow: {
-        'terminal': '0 0 30px rgba(16, 185, 129, 0.2)',
-      },
-      fontFamily: {
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-      animation: {
-        'blink': 'blink 1s infinite',
-        'fade-in-down': 'fade-in-down 0.3s ease-out',
-      },
+      // ...existing theme extensions...
     },
   },
   plugins: [
