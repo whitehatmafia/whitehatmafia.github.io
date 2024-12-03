@@ -1,81 +1,17 @@
 baseURL = "https://whitehatmafia.github.io/"
 languageCode = "en"
 title = "WhiteHat Mafia"
-theme = "terminal"
 
 [params]
-  # Theme colors
-  themeColor = "green"
-  
-  # Terminal theme options
-  titlePosition = "left"
-  showMenuItems = 6
-  fullWidthTheme = true
-  centerTheme = true
-  autoCover = true
-  showLastUpdated = true
-  
-  # Custom colors
+  # Theme colors and basic settings
   backgroundColor = "#1a1b1d"
-  accentColor = "#10B981"  # Changed to match our terminal green
-  
-  # Terminal prompt configuration
-  terminalUser = "whitehat"
-  terminalHost = "mafia"
-  terminalDirectory = "~/security"
-  
-  # Social links
-  github = "whitehatmafia"
-  
-  # Additional custom parameters
+  accentColor = "#10B981"
   description = "Cybersecurity Research & Development"
-  keywords = "cybersecurity, penetration testing, ethical hacking, CTF"
   
-  # Terminal theme custom settings
-  terminalPromptSymbol = "❯"
-  terminalBackground = "rgba(26, 27, 29, 0.95)"
-  terminalBorderColor = "rgba(16, 185, 129, 0.3)"  # Matches our accent color
-  terminalTextColor = "#10B981"
-  
-  # Custom terminal commands
-  [[params.commands]]
-    name = "help"
-    description = "Display available commands"
-  [[params.commands]]
-    name = "projects"
-    description = "View security projects"
-  [[params.commands]]
-    name = "writes"
-    description = "View security write-ups"
-
   [params.terminal]
     welcomeMessage = "Welcome to WhiteHat Mafia Terminal v1.0.0"
     promptString = "visitor@whitehat:~$"
     cursorStyle = "block"
-
-[build]
-  writeStats = true
-
-[build.buildStats]
-  enable = true
-
-[build.processing]
-  css = true
-  js = true
-
-[build.processing.css]
-  bundle = true
-  minify = true
-  includePaths = ["assets/css"]
-  processor = ["postcss"]
-  output = "css/style.css"
-
-[build.processing.js]
-  bundle = true
-  minify = true
-  includePaths = ["assets/ts"]
-  processor = ["babel"]
-  output = "js/main.js"
 
 [module]
   [[module.mounts]]
@@ -84,264 +20,16 @@ theme = "terminal"
   [[module.mounts]]
     source = "static"
     target = "static"
-    
-  [module.hugoVersion]
-    extended = true
-    min = "0.87.0"
-    max = ""
-  
-  [[module.imports]]
-    path = "github.com/panr/hugo-theme-terminal"
-    disabled = false    
 
 [markup]
   [markup.highlight]
     codeFences = true
     guessSyntax = true
-    lineNos = true
     style = "monokai"
-    tabWidth = 4
 
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
-    [markup.goldmark.extensions]
-      typographer = false
-
-[languages.en]
-  languageName = "English"
-  weight = 1
-
-  [languages.en.params]
-    [languages.en.params.logo]
-      logoText = "~/whitehat_mafia>"
-      logoHomeLink = "/"
-
-    [languages.en.params.terminal]
-      # Terminal specific settings
-      welcomeMessage = """
-        Welcome to WhiteHat Mafia Terminal v1.0.0
-        Type 'help' to see available commands
-        """
-      promptString = "guest@whitehat:~$"
-      cursorStyle = "block"
-      fontSize = "1rem"
-      lineHeight = "1.5"
-
-    [languages.en.menu]
-      [[languages.en.menu.main]]
-        identifier = "about"
-        name = "[About]"
-        url = "/about"
-        weight = 1
-        
-      [[languages.en.menu.main]]
-        identifier = "projects"
-        name = "[Projects]"
-        url = "/projects"
-        weight = 2
-
-      [[languages.en.menu.main]]
-        identifier = "contact"
-        name = "[Contact]"
-        url = "/contact"
-        weight = 3
-
-      [[languages.en.menu.main]]
-        identifier = "writeups"
-        name = "[Writeups]"
-        url = "/writeups"
-        weight = 4
-[privacy]
-  [privacy.disqus]
-    disable = true
-  [privacy.googleAnalytics]
-    disable = true
-  [privacy.instagram]
-    disable = true
-  [privacy.twitter]
-    disable = true
-  [privacy.vimeo]
-    disable = true
-  [privacy.youtube]
-    disable = true
-
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
-  section = ["HTML", "RSS"]
-  taxonomy = ["HTML", "RSS"]
-  term = ["HTML", "RSS"]
-
-[taxonomies]
-  category = "categories"
-  tag = "tags"
-  series = "series"
-
-[permalinks]
-  posts = "/posts/:year/:month/:title/"
-  projects = "/projects/:title/"
-  writeups = "/writeups/:title/"
-
-[minify]
-  disableCSS = false
-  disableHTML = false
-  disableJS = false
-  disableJSON = false
-  disableSVG = false
-  disableXML = false
-  minifyOutput = true
-  [minify.tdewolff]
-    [minify.tdewolff.css]
-      keepCSS2 = true
-      precision = 1
-    [minify.tdewolff.html]
-      keepComments = false
-      keepConditionalComments = true
-      keepDefaultAttrVals = true
-      keepDocumentTags = true
-      keepEndTags = true
-      keepQuotes = false
-      keepWhitespace = false
-    [minify.tdewolff.js]
-      keepVarNames = false
-      precision = 1
-    [minify.tdewolff.json]
-      precision = 1
-    [minify.tdewolff.svg]
-      precision = 1
-    [minify.tdewolff.xml]
-      keepWhitespace = false
-[server]
-  [[server.headers]]
-    for = "/**"
-    [server.headers.values]
-      X-Frame-Options = "DENY"
-      X-Content-Type-Options = "nosniff"
-      X-XSS-Protection = "1; mode=block"
-      Referrer-Policy = "strict-origin-when-cross-origin"
-      Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'"
-      Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
-      
-[deployment]
-  [[deployment.targets]]
-    name = "github"
-    URL = "https://github.com/whitehatmafia/whitehatmafia.github.io.git"
-    branch = "main"
-
-[caches]
-  [caches.assets]
-    dir = ":resourceDir/_gen"
-    maxAge = "24h"
-  [caches.images]
-    dir = ":resourceDir/_gen"
-    maxAge = "24h"
-
-[imaging]
-  quality = 75
-  resampleFilter = "Lanczos"
-  anchor = "Smart"
-  bgColor = "#1a1b1d"
-
-[frontmatter]
-  date = ["date", "publishDate", "lastmod"]
-  lastmod = [":git", "lastmod", "date", "publishDate"]
-  publishDate = ["publishDate", "date"]
-  expiryDate = ["expiryDate"]        
-  
 [security]
-  enableInlineShortcodes = false
-  [security.exec]
-    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$']
-    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
   [security.funcs]
     getenv = ['^HUGO_']
   [security.http]
     methods = ['GET']
     urls = ['.*']
-
-[params.terminal]
-  [params.terminal.animations]
-    enabled = true
-    cursorBlink = true
-    textTyping = true
-    commandFade = true
-    startupDelay = 800
-    commandDelay = 100
-
-  [params.terminal.commands]
-    [[params.terminal.commands.list]]
-      name = "help"
-      description = "Display this help message"
-      output = '''
-Available commands:
-  help      - Display this help message
-  projects  - View security projects
-  writes    - View security write-ups
-  clear     - Clear terminal screen'''
-
-    [[params.terminal.commands.list]]
-      name = "projects"
-      description = "View security projects"
-      output = '''
-Security Projects:
-  1. Project Alpha - Penetration Testing Framework
-  2. Project Beta  - Vulnerability Scanner
-  3. Project Gamma - Security Analysis Tool
-Type 'cd projects' for more details'''
-
-    [[params.terminal.commands.list]]
-      name = "writes"
-      description = "View security write-ups"
-      output = '''
-Security Write-ups:
-  1. CVE-2024-XXXX Analysis
-  2. Zero-Day Discovery
-  3. Red Team Operation Reports
-Type 'cd writes' for more details'''
-
-  # Enhanced terminal features
-  [params.terminal.keyboard]
-    shortcuts = true
-    clearKey = "ctrl+l"
-    helpKey = "?"
-    
-  [params.terminal.prompt]
-    user = "visitor"
-    host = "whitehat"
-    path = "~"
-    symbol = "$"
-    
-  [params.terminal.welcome]
-    enabled = true
-    message = """
-      Welcome to WhiteHat Mafia Terminal v1.0.0
-      Type 'help' for available commands
-      Press '?' for keyboard shortcuts
-      """
-
-[params.pwa]
-  enabled = true
-  manifest = "/site.webmanifest"
-  theme_color = "#1a1b26"
-  background_color = "#1a1b26"
-  display = "standalone"
-  name = "WhiteHat Mafia Terminal"
-  short_name = "WHM Term"
-  description = "Cybersecurity Research & Development Terminal"
-  start_url = "/"
-  
-[params.performance]
-  prefetch = true
-  preload = true
-  lazy_load = true
-  critical_css = true
-  font_display = "swap"
-
-[params.style]
-  # Custom CSS variables
-  [params.style.variables]
-    terminal-green = "#10B981"
-    terminal-bg = "#1A1B1D"
-    terminal-border = "rgba(16, 185, 129, 0.3)"
-    terminal-shadow = "0 0 30px rgba(16, 185, 129, 0.2)"
-    terminal-font = "'JetBrains Mono', monospace"

@@ -1,0 +1,14 @@
+
+build:
+  writeStats: true
+  
+assets:
+  - source: assets/css
+    target: assets/css
+    command: postcss
+    args: ["--config", "postcss.config.js"]
+    
+  - source: assets/ts
+    target: assets/js
+    command: tsc
+    args: ["--project", "tsconfig.json"]
