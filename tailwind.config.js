@@ -4,7 +4,7 @@ const { convertCompilerOptionsFromJson } = require('typescript');
 module.exports = {
   content: [
     './layouts/**/*.html',
-    './assets/**/*.{js,ts,jsx,tsx}',
+    './assets/**/*.{js,ts,jsx,tsx,css}',
   ],
   theme: {
     extend: {
@@ -29,7 +29,6 @@ module.exports = {
   darkMode: 'class', // Enable dark mode
   plugins: [
     require('@tailwindcss/forms'),
-    // Make scrollbar plugin optional
     ...(process.env.NODE_ENV === 'development' ? [require('tailwind-scrollbar')] : []),
   ],
   corePlugins: {

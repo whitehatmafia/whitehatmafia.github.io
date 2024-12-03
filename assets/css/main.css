@@ -17,19 +17,19 @@
   }
 
   .terminal-window {
-    @apply w-full max-w-4xl h-[85vh] bg-terminal-bg/95 
+    @apply w-full max-w-4xl h-[85vh] bg-gray-900/95 
            rounded-lg shadow-2xl backdrop-blur-md
-           border border-terminal-green/20
+           border border-emerald-500/20
            transition-all duration-300;
 
     &:hover {
-      @apply shadow-terminal-green/20;
+      @apply shadow-emerald-500/20;
     }
   }
 
   .terminal-header {
     @apply flex items-center gap-2 px-4 py-3
-           bg-terminal-header/90 rounded-t-lg
+           bg-gray-800/90 rounded-t-lg
            border-b border-white/10;
   }
 
@@ -70,7 +70,7 @@
   }
 
   .command-output {
-    @apply pl-4 border-l-2 border-terminal-green/50
+    @apply pl-4 border-l-2 border-emerald-500/50
            bg-black/20 rounded-r p-3
            animate-fade-in-down;
   }
