@@ -56,6 +56,11 @@
     @apply flex items-center gap-2;
   }
 
+  /* Remove the problematic class and handle it differently */
+  .terminal-input-wrapper {
+    @apply flex items-center gap-2;
+  }
+
   .command-input-group {
     @apply group flex items-center gap-2;
   }
