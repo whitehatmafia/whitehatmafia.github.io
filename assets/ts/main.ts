@@ -4,12 +4,20 @@ interface CommandMap {
     [key: string]: () => string;
 }
 
+interface Article {
+    name: string;
+    url: string;
+    imageUrl: string;
+}
+
 class Terminal {
     private commandInput: HTMLInputElement;
     private commandHistory: HTMLElement;
     private terminalContent: HTMLElement;
     private commandsHistory: string[] = [];
     private historyIndex: number = -1;
+    private webglContext: WebGLRenderingContext | null = null;
+    private previewCanvas: HTMLCanvasElement | null = null;
 
     private commands: CommandMap = {
         help: (): string => `Available commands:
@@ -32,15 +40,31 @@ class Terminal {
         },
         
         writes: (): string => {
-            const articles = [
-                {name: "Article 1", url: "https://medium.com/@yourhandle/article1"},
-                {name: "Article 2", url: "https://medium.com/@yourhandle/article2"},
-                // Add your actual Medium article URLs here
+            const articles: Article[] = [
+                {
+                    name: "Article 1",
+                    url: "https://medium.com/@whitehatmafia/article1",
+                    imageUrl: "/path/to/article1-thumbnail.jpg"
+                },
+                {
+                    name: "Article 2",
+                    url: "https://medium.com/@whitehatmafia/article2",
+                    imageUrl: "/path/to/article2-thumbnail.jpg"
+                }
+                // Add more articles as needed
             ];
             
-            return articles.map(a => 
-                `<a href="${a.url}" class="writeup-link" target="_blank">→ ${a.name}</a>`
-            ).join('\n');
+            this.initWebGL();
+            
+            return articles.map(article => `
+                <div class="article-preview" 
+                     data-image="${article.imageUrl}"
+                     onmouseover="window.showArticlePreview(event, '${article.imageUrl}')"
+                     onmouseout="window.hideArticlePreview()">
+                    <a href="${article.url}" class="writeup-link" target="_blank">→ ${article.name}</a>
+                    <canvas class="preview-canvas" width="200" height="120" style="display: none;"></canvas>
+                </div>
+            `).join('\n');
         },
         
         clear: (): string => {
@@ -50,7 +74,7 @@ class Terminal {
         
         social: (): string => `Connect with me:
     GitHub: https://github.com/whitehatmafia
-    Medium: https://medium.com/@yourhandle`
+    Medium: https://medium.com/@whitehatmafia`
     };
 
     constructor() {
@@ -204,6 +228,75 @@ class Terminal {
             this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
         }
     }
+
+    private initWebGL(): void {
+        if (!this.previewCanvas) {
+            this.previewCanvas = document.createElement('canvas');
+            this.previewCanvas.width = 200;
+            this.previewCanvas.height = 120;
+            this.webglContext = this.previewCanvas.getContext('webgl');
+            
+            // Initialize WebGL context and shaders
+            if (this.webglContext) {
+                this.initShaders();
+                window.showArticlePreview = this.showArticlePreview.bind(this);
+                window.hideArticlePreview = this.hideArticlePreview.bind(this);
+            }
+        }
+    }
+
+    private initShaders(): void {
+        if (!this.webglContext) return;
+
+        const vertexShader = `
+            attribute vec2 position;
+            attribute vec2 texCoord;
+            varying vec2 vTexCoord;
+            void main() {
+                gl_Position = vec4(position, 0.0, 1.0);
+                vTexCoord = texCoord;
+            }
+        `;
+
+        const fragmentShader = `
+            precision mediump float;
+            varying vec2 vTexCoord;
+            uniform sampler2D uTexture;
+            void main() {
+                gl_FragColor = texture2D(uTexture, vTexCoord);
+            }
+        `;
+
+        // Create and compile shaders
+        // Add WebGL shader compilation code here
+    }
+
+    private showArticlePreview(event: MouseEvent, imageUrl: string): void {
+        if (!this.previewCanvas || !this.webglContext) return;
+
+        const target = event.currentTarget as HTMLElement;
+        const canvas = target.querySelector('canvas');
+        if (!canvas) return;
+
+        canvas.style.display = 'block';
+        canvas.style.position = 'absolute';
+        canvas.style.left = `${event.pageX + 20}px`;
+        canvas.style.top = `${event.pageY + 20}px`;
+
+        // Load and render image using WebGL
+        const image = new Image();
+        image.onload = () => this.renderPreview(image);
+        image.src = imageUrl;
+    }
+
+    private hideArticlePreview(): void {
+        const canvases = document.querySelectorAll('.preview-canvas');
+        canvases.forEach(canvas => (canvas as HTMLElement).style.display = 'none');
+    }
+
+    private renderPreview(image: HTMLImageElement): void {
+        // Add WebGL rendering code here
+    }
 }
 
 // Initialize terminal when DOM is loaded
@@ -216,5 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
         terminal['executeCommand']('help');
     }, 1500);
 });
+
+declare global {
+    interface Window {
+        showArticlePreview: (event: MouseEvent, imageUrl: string) => void;
+        hideArticlePreview: () => void;
+    }
+}
 
 export {};
