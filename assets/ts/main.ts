@@ -119,8 +119,21 @@ class Terminal {
     }
 
     private showInitMessage(): void {
+        const asciiArt = `
+██╗    ██╗██╗  ██╗██╗████████╗███████╗██╗  ██╗ █████╗ ████████╗
+██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+██║ █╗ ██║███████║██║   ██║   █████╗  ███████║███████║   ██║   
+██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██╔══██║██╔══██║   ██║   
+╚███╔███╔╝██║  ██║██║   ██║   ███████╗██║  ██║██║  ██║   ██║   
+ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+`;
+
         const initMessages = [
-            "[*] Initializing security assessment...",
+            "[*] WhiteHat Mafia Security Assessment Tool v1.0.0",
+            "[*] Developer: WhiteHat Mafia",
+            "[*] Github: https://github.com/whitehatmafia",
+            asciiArt,
+            "[!] Starting security assessment...",
             "[+] Checking system access...",
             "[+] Loading security modules...",
             "[!] System ready."
@@ -131,15 +144,14 @@ class Terminal {
             setTimeout(() => {
                 const msgElement = this.createOutputElement(msg);
                 msgElement.classList.add('system-message');
+                if (msg === asciiArt) {
+                    msgElement.style.lineHeight = '1.2';
+                    msgElement.style.whiteSpace = 'pre';
+                }
                 this.commandHistory.appendChild(msgElement);
             }, delay);
-            delay += 500; // Add 500ms delay between each message
+            delay += msg === asciiArt ? 100 : 500;
         });
-
-        // Remove automatic help command here too
-        // setTimeout(() => {
-        //     this.executeCommand('help');
-        // }, delay);
     }
 
     private initializeEventListeners(): void {

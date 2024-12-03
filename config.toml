@@ -17,26 +17,13 @@ disableKinds = ["RSS", "robotsTXT", "404", "taxonomy", "term", "sitemap"]
 
 [params]
   # Theme colors and basic settings
-  backgroundColor = "#1a1b1d"
-  accentColor = "#10B981"
+  backgroundColor = "#1F1F1F"
+  accentColor = "#4AF626"  # Kali Linux green
   description = "Cybersecurity Research & Development"
   
   [params.terminal]
-    welcomeMessage = '''
-[*] WhiteHat Mafia Security Assessment Tool v1.0.0
-[*] Developer: WhiteHat Mafia
-[*] Github: https://github.com/whitehatmafia
-
-██╗    ██╗██╗  ██╗██╗████████╗███████╗██╗  ██╗ █████╗ ████████╗
-██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██║  ██║██╔══██╗╚══██╔══╝
-██║ █╗ ██║███████║██║   ██║   █████╗  ███████║███████║   ██║   
-██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██╔══██║██╔══██║   ██║   
-╚███╔███╔╝██║  ██║██║   ██║   ███████╗██║  ██║██║  ██║   ██║   
- ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
-
-[!] Starting enumeration...
-[+] Available commands: help, projects, writes, social, clear'''
-    promptString = "[whitehat@system]$"
+    welcomeMessage = ""  # Empty since we're moving it to TypeScript
+    promptString = "┌──(root㉿kali)-[~/whitehat]\n└─$"  # Kali-style prompt
     cursorStyle = "block"
 
 [build]
