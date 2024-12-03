@@ -129,6 +129,21 @@
   .glassmorphism {
     @apply backdrop-blur-none;
   }
+
+  #terminal {
+    @apply fixed inset-0 w-screen h-screen
+           bg-[#1F1F1F] border-0 m-0 p-0;
+  }
+
+  #terminal-content {
+    @apply w-full h-full p-4
+           font-mono text-sm text-white
+           overflow-y-auto;
+  }
+
+  .command-history {
+    @apply mb-4;
+  }
 }
 
 @layer utilities {
@@ -221,4 +236,11 @@
   .terminal-window {
     @apply p-8;
   }
+}
+
+.terminal-header,
+.terminal-controls,
+.matrix-mode,
+.glassmorphism {
+    display: none;
 }

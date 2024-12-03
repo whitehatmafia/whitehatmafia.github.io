@@ -8,12 +8,14 @@
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
     background: #1F1F1F;
     font-family: 'JetBrains Mono', monospace;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 body::before {
@@ -34,9 +36,9 @@ body::before {
 #terminal {
     visibility: visible !important;
     opacity: 1 !important;
-    width: 90%;
+    width: 100vw;
     max-width: 1000px;
-    height: 80vh;
+    height: 100vh;
     max-height: 800px;
     margin: 20px auto;
     background: var(--terminal-bg);
@@ -55,6 +57,12 @@ body::before {
                 0 0 60px rgba(158, 206, 106, 0.05),
                 inset 0 0 20px rgba(158, 206, 106, 0.05);
     transition: box-shadow 0.3s ease;
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    width: 100vw;
+    background: #1F1F1F;
+    overflow: hidden;
 }
 
 #terminal:hover {
@@ -63,6 +71,15 @@ body::before {
     box-shadow: 0 0 25px rgba(158, 206, 106, 0.2),
                 0 0 50px rgba(158, 206, 106, 0.15),
                 0 0 75px rgba(158, 206, 106, 0.1);
+}
+
+.terminal-header,
+.terminal-controls,
+.matrix-mode,
+.glassmorphism,
+.terminal-button,
+.terminal-title {
+    display: none !important;
 }
 
 .terminal-header {
