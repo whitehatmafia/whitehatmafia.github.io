@@ -983,12 +983,42 @@ button {
 .star-symbol { color: #00ffff; }  /* Cyan * */
 .minus-symbol { color: #ff0000; } /* Red - */
 .exclaim-symbol { color: #ffff00; } /* Yellow ! */
-.url { color: #729fcf; }         /* Blue URLs */
+.tree-symbol { color: #4AF626; }  /* Tree structure */
+.url { 
+    color: #729fcf;
+    text-decoration: none;
+}
+.url:hover {
+    text-decoration: underline;
+}
 
+/* Command output */
 .command-output {
     font-family: 'JetBrains Mono', monospace;
-    opacity: 1;
     line-height: 1.5;
+    white-space: pre-wrap;
+    margin: 8px 0;
+}
+
+/* Input cursor */
+.input-field {
+    caret-color: transparent;
+}
+
+.terminal-input-line::after {
+    content: '█';
+    color: var(--terminal-text);
+    animation: none;
+    margin-left: 1px;
+}
+
+.terminal-input-line.typing::after {
+    animation: blink 1s step-end infinite;
+}
+
+/* Remove any existing cursor animations */
+.input-field::after {
+    display: none;
 }
 
 /* Keep output aligned */

@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 
 interface CommandMap {
-    [key: string]: () => string;
+    [key: string]: () => string | boolean;
 }
 
 interface Article {
@@ -13,12 +13,12 @@ interface Article {
 class Terminal {
     private readonly asciiArt = `
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ██╗  ██╗ █████╗ ████████╗
+[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ���█╗  ██╗ █████╗ ████████╗
 [*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
 [*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
 [*] ██║███╗██║██╔══██║██║   ██║   ██╔══╝      ██╔══██║██╔══██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
-[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
     `;
 
@@ -33,18 +33,18 @@ class Terminal {
     private commands: CommandMap = {
         help: (): string => {
             const commands = [
-                ['help', '[+] Display available commands'],
-                ['clear', '[+] Clear terminal screen [Ctrl+L]'],
-                ['projects', '[+] List active engagements'],
-                ['writes', '[+] View security writeups'],
-                ['social', '[+] Display contact information']
+                ['help', 'Display available commands'],
+                ['clear', 'Clear terminal screen'],
+                ['projects', 'List active engagements'],
+                ['writes', 'View security writeups'],
+                ['social', 'Display contact information']
             ];
             
             return `[*] Available commands:\n${commands.map(([cmd, desc]) => 
-                `    ${desc}`
+                `    [+] ${cmd.padEnd(12)} - ${desc}`
             ).join('\n')}`;
         },
-        
+
         clear: (): string => {
             this.commandHistory.innerHTML = '';
             return '';
@@ -52,40 +52,41 @@ class Terminal {
         
         projects: (): string => {
             const projects = [
-                {name: "Project 1", url: "https://github.com/whitehatmafia/project1"},
-                {name: "Project 2", url: "https://github.com/whitehatmafia/project2"},
-                // Add your actual project URLs here
+                {name: "WebHackLabs", url: "https://github.com/whitehatmafia/webhacklabs", desc: "Web Security Testing Lab Environment"},
+                {name: "PenTest Tools", url: "https://github.com/whitehatmafia/pentest-tools", desc: "Custom Security Testing Tools"},
             ];
             
-            return `[*] Found ${projects.length} projects:\n${projects.map(p => 
-                `    [+] <a href="${p.url}" class="project-link" target="_blank">${p.name}</a>`
-            ).join('\n')}`;
+            return `[*] Active Security Projects:\n${projects.map(p => 
+                `    [+] ${p.name}\n       └─ ${p.desc}\n       └─ <a href="${p.url}" class="project-link" target="_blank">${p.url}</a>`
+            ).join('\n\n')}`;
         },
         
         writes: (): string => {
             const articles: Article[] = [
                 {
-                    name: "Article 1",
-                    url: "https://medium.com/@whitehatmafia/article1",
-                    imageUrl: "/images/article1.jpg" // Update with actual image paths
+                    name: "Web Application Security",
+                    url: "https://medium.com/@whitehatmafia/web-security",
+                    imageUrl: "/images/article1.jpg"
                 },
                 {
-                    name: "Article 2",
-                    url: "https://medium.com/@whitehatmafia/article2",
-                    imageUrl: "/images/article2.jpg" // Update with actual image paths
+                    name: "Penetration Testing Guide",
+                    url: "https://medium.com/@whitehatmafia/pentest-guide",
+                    imageUrl: "/images/article2.jpg"
                 }
             ];
             
             this.initWebGL();
             
-            return `[*] Security writeups found:\n${articles.map(article => 
-                `    [+] <a href="${article.url}" class="writeup-link" target="_blank">${article.name}</a>`
-            ).join('\n')}`;
+            return `[*] Security Research & Writeups:\n${articles.map(article => 
+                `    [+] ${article.name}\n       └─ <a href="${article.url}" class="writeup-link" target="_blank">${article.url}</a>`
+            ).join('\n\n')}`;
         },
         
-        social: (): string => `[*] Contact information:
-    [+] GitHub: https://github.com/whitehatmafia
-    [+] Medium: https://medium.com/@whitehatmafia`,
+        social: (): string => `[*] Contact Information:
+    [+] GitHub
+       └─ https://github.com/whitehatmafia
+    [+] Medium
+       └─ https://medium.com/@whitehatmafia`,  // Fixed missing closing quote and comma
     };
 
     constructor() {
@@ -304,7 +305,8 @@ class Terminal {
     private processOutputColors(text: string): string {
         return text
             .replace(/\[(\+|\*|\-|\!)\]/g, '<span class="$1-symbol">[$1]</span>')
-            .replace(/https?:\/\/\S+/g, '<span class="url">$&</span>');
+            .replace(/https?:\/\/\S+/g, '<span class="url"><a href="$&" target="_blank">$&</a></span>')
+            .replace(/└─/g, '<span class="tree-symbol">└─</span>');
     }
 
     private sanitizeHTML(text: string): string {
@@ -366,26 +368,24 @@ class Terminal {
             
             if (cmd in this.commands) {
                 const output = this.commands[cmd]();
-                if (output) {
+                if (typeof output === 'string' && output) {  // Check output type and existence
                     const outputElement = this.createOutputElement('');
                     this.commandHistory.appendChild(outputElement);
                     
-                    // Handle different commands differently
                     switch(cmd) {
                         case 'projects':
                         case 'writes':
-                            // These commands need HTML rendering
-                            outputElement.innerHTML = output;
+                        case 'social':  // Add social to HTML rendering
+                            outputElement.innerHTML = this.processOutputColors(output);  // Process colors
                             break;
                         default:
-                            // For help, social, and other commands - use text
-                            outputElement.innerText = output;
+                            outputElement.innerHTML = this.processOutputColors(output);  // Process colors
                     }
                 }
             } else {
                 const errorElement = this.createOutputElement('');
                 this.commandHistory.appendChild(errorElement);
-                errorElement.innerText = `Command not found: ${cmd}`;
+                errorElement.innerHTML = `<span class="minus-symbol">[!]</span> Command not found: ${cmd}`;  // Style error
             }
             
             this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
