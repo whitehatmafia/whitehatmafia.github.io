@@ -1,9 +1,8 @@
 :root {
-    --terminal-bg: #1a1b26;
-    --terminal-text: #a9b1d6;
-    --terminal-green: #9ece6a;
-    --terminal-header: #1f2335;
-    --terminal-shadow: rgba(0, 0, 0, 0.4);
+    --terminal-bg: #1F1F1F;  /* Kali Linux colors */
+    --terminal-text: #F8F8F2;
+    --terminal-green: #4AF626;  /* Kali Linux green */
+    --terminal-header: #2F2F2F;
 }
 
 body {
@@ -40,10 +39,10 @@ body::before {
     height: 80vh;
     max-height: 800px;
     margin: 20px auto;
-    background: rgba(26, 27, 38, 0.95);
+    background: var(--terminal-bg);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(158, 206, 106, 0.2);
-    border-radius: 10px;
+    border: 1px solid #3F3F3F;  /* Kali Linux border */
+    border-radius: 0;  /* Remove rounded corners */
     box-shadow: 0 10px 30px var(--terminal-shadow);
     position: relative; /* Changed from fixed */
     top: auto; /* Remove fixed positioning */

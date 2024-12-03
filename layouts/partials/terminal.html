@@ -1,32 +1,14 @@
 <div id="terminal" class="terminal-window" tabindex="0">
     <div class="terminal-header">
-        <div class="terminal-title">root@kali: ~/whitehat</div>
-    </div>
-    <div class="terminal-header">
-        <div class="terminal-controls">
-            <span class="terminal-button close"></span>
-            <span class="terminal-button minimize"></span>
-            <span class="terminal-button maximize"></span>
-        </div>
-        <div class="terminal-title">{{ .Site.Title }} Terminal</div>
-        <div class="terminal-header-actions">
-            <button class="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-adjust"></i>
-            </button>
-            <button class="fullscreen-toggle" aria-label="Toggle fullscreen">
-                <i class="fas fa-expand"></i>
-            </button>
-        </div>
+        <div class="terminal-title">🦊 Terminal</div>
     </div>
 
     <div id="terminal-content" class="terminal-content terminal-scrollbar">
-        <div id="command-history" class="command-history">
-            <pre class="welcome-message typing">{{ .Site.Params.terminal.welcomeMessage }}</pre>
-        </div>
+        <div id="command-history" class="command-history"></div>
         
         <div class="terminal-input-wrapper">
             <div class="terminal-input-line">
-                <span class="prompt" style="white-space: nowrap;">[whitehat@system]$ </span>
+                <span class="prompt">┌──(root㉿kali)-[~/whitehat]<br>└─$</span>
                 <input type="text" 
                        id="command-input" 
                        class="input-field"

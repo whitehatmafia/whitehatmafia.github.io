@@ -11,6 +11,17 @@ interface Article {
 }
 
 class Terminal {
+    private readonly asciiArt = `
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ██╗  ██╗ █████╗ ████████╗
+[*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
+[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
+[*] ██║███╗██║██╔══██║██║   ██║   ██╔══╝      ██╔══██║██╔══██║   ██║   
+[*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
+[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    `;
+
     private commandInput: HTMLInputElement;
     private commandHistory: HTMLElement;
     private terminalContent: HTMLElement;
@@ -119,20 +130,12 @@ class Terminal {
     }
 
     private showInitMessage(): void {
-        const asciiArt = `
-██╗    ██╗██╗  ██╗██╗████████╗███████╗██╗  ██╗ █████╗ ████████╗
-██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██║  ██║██╔══██╗╚══██╔══╝
-██║ █╗ ██║███████║██║   ██║   █████╗  ███████║███████║   ██║   
-██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██╔══██║██╔══██║   ██║   
-╚███╔███╔╝██║  ██║██║   ██║   ███████╗██║  ██║██║  ██║   ██║   
- ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
-`;
-
+        // Move ASCII art to first position
         const initMessages = [
+            this.asciiArt,
             "[*] WhiteHat Mafia Security Assessment Tool v1.0.0",
             "[*] Developer: WhiteHat Mafia",
             "[*] Github: https://github.com/whitehatmafia",
-            asciiArt,
             "[!] Starting security assessment...",
             "[+] Checking system access...",
             "[+] Loading security modules...",
@@ -140,17 +143,18 @@ class Terminal {
         ];
 
         let delay = 0;
-        initMessages.forEach((msg) => {
+        initMessages.forEach((msg, index) => {
             setTimeout(() => {
                 const msgElement = this.createOutputElement(msg);
                 msgElement.classList.add('system-message');
-                if (msg === asciiArt) {
+                if (index === 0) { // ASCII art
+                    msgElement.style.color = '#4AF626';
                     msgElement.style.lineHeight = '1.2';
                     msgElement.style.whiteSpace = 'pre';
                 }
                 this.commandHistory.appendChild(msgElement);
             }, delay);
-            delay += msg === asciiArt ? 100 : 500;
+            delay += index === 0 ? 0 : 500; // No delay for ASCII art
         });
     }
 
@@ -260,9 +264,9 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `<span class="prompt">[whitehat@system]$</span> ${this.sanitizeHTML(content)}`;
+            outputDiv.innerHTML = `<span class="prompt">┌──(root㉿kali)-[~/whitehat]<br>└─$</span> ${this.sanitizeHTML(content)}`;
         } else {
-            outputDiv.innerHTML = content; // Allow HTML in command output
+            outputDiv.innerHTML = content;
         }
         
         return outputDiv;

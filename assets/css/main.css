@@ -19,7 +19,8 @@
   .terminal-window {
     @apply w-full max-w-4xl h-[85vh] bg-[#1F1F1F] 
            rounded-none shadow-2xl backdrop-blur-md
-           border-0 transition-all duration-300;
+           border-0 transition-all duration-300
+           border border-[#2F2F2F];
 
     &:hover {
       @apply shadow-emerald-500/20;
@@ -29,7 +30,9 @@
   .terminal-header {
     @apply flex items-center px-4 py-1.5
            bg-[#2F2F2F] border-b-0
-           text-xs;
+           text-xs
+           bg-[#2F2F2F] h-8 flex items-center px-4
+           border-b border-[#3F3F3F];
   }
 
   .terminal-controls {
@@ -47,7 +50,8 @@
 
   .terminal-title {
     @apply text-gray-300 font-mono text-sm
-           flex items-center gap-2;
+           flex items-center gap-2
+           text-gray-300 text-sm font-mono;
     &::before {
       content: '🦊';  /* Kali fox icon */
       @apply text-base;
@@ -55,7 +59,8 @@
   }
 
   .terminal-content {
-    @apply bg-[#1F1F1F] p-4 font-mono;
+    @apply bg-[#1F1F1F] p-4 font-mono
+           p-4 bg-[#1F1F1F] font-mono text-sm;
   }
 
   .command-input {
@@ -72,7 +77,10 @@
 
   .prompt {
     @apply text-[#4AF626] font-bold bg-transparent
-           border-0 px-0;
+           border-0 px-0
+           text-[#4AF626] whitespace-pre-wrap
+           font-bold bg-transparent px-0 py-0
+           border-0;
     white-space: nowrap !important;
   }
 
@@ -80,7 +88,9 @@
     @apply bg-transparent w-full outline-none
            text-gray-300 caret-emerald-500
            focus:bg-emerald-500/5 px-2 py-1
-           transition-colors duration-200;
+           transition-colors duration-200
+           bg-transparent text-[#4AF626]
+           caret-[#4AF626] ml-2;
   }
 
   .command-output {
@@ -125,6 +135,11 @@
     padding: 1rem !important;
     letter-spacing: 0 !important;
     tab-size: 1 !important;
+  }
+
+  /* Remove any rounded corners or shadows */
+  .glassmorphism {
+    @apply backdrop-blur-none;
   }
 }
 
