@@ -20,12 +20,19 @@ class Terminal {
     private previewCanvas: HTMLCanvasElement | null = null;
 
     private commands: CommandMap = {
-        help: (): string => `Available commands:
-    <span class="command-name">help</span>     - Display this help message
-    <span class="command-name">clear</span>    - Clear terminal screen
-    <span class="command-name">projects</span> - View GitHub projects
-    <span class="command-name">writes</span>   - View Medium writeups
-    <span class="command-name">social</span>   - View social links`,
+        help: (): string => {
+            const commands = [
+                ['help', 'Display this help message'],
+                ['clear', 'Clear terminal screen'],
+                ['projects', 'View GitHub projects'],
+                ['writes', 'View Medium writeups'],
+                ['social', 'View social links']
+            ];
+            
+            return commands.map(([cmd, desc]) => 
+                `${cmd.padEnd(10)} - ${desc}`
+            ).join('\n');
+        },
         
         projects: (): string => {
             const projects = [
@@ -217,7 +224,6 @@ class Terminal {
         if (cmd) {
             this.addToHistory(command);
             
-            // Show the command input
             const commandElement = this.createOutputElement('', true);
             this.commandHistory.appendChild(commandElement);
             await this.typeWriter(commandElement, `${command}`, 20);
@@ -225,14 +231,25 @@ class Terminal {
             if (cmd in this.commands) {
                 const output = this.commands[cmd]();
                 if (output) {
-                    const outputElement = this.createOutputElement(output);
+                    const outputElement = this.createOutputElement('');
                     this.commandHistory.appendChild(outputElement);
-                    // No need to type the output, just display it instantly
-                    outputElement.innerHTML = output;
+                    
+                    // Handle different commands differently
+                    switch(cmd) {
+                        case 'projects':
+                        case 'writes':
+                            // These commands need HTML rendering
+                            outputElement.innerHTML = output;
+                            break;
+                        default:
+                            // For help, social, and other commands - use text
+                            outputElement.innerText = output;
+                    }
                 }
             } else {
-                const errorElement = this.createOutputElement(`Command not found: ${cmd}`);
+                const errorElement = this.createOutputElement('');
                 this.commandHistory.appendChild(errorElement);
+                errorElement.innerText = `Command not found: ${cmd}`;
             }
             
             this.terminalContent.scrollTop = this.terminalContent.scrollHeight;
