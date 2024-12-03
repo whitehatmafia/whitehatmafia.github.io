@@ -18,7 +18,7 @@ class Terminal {
 [*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
 [*] ██║███╗██║██╔══██║██║   ██║   ██╔══╝      ██╔══██║██╔══██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
-[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+[*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
     `;
 
@@ -34,15 +34,20 @@ class Terminal {
         help: (): string => {
             const commands = [
                 ['help', '[+] Display available commands'],
-                ['clear', '[+] Clear terminal screen'],
-                ['projects', '[+] Enumerate GitHub projects'],
-                ['writes', '[+] List security writeups'],
-                ['social', '[+] Show contact information']
+                ['clear', '[+] Clear terminal screen [Ctrl+L]'],
+                ['projects', '[+] List active engagements'],
+                ['writes', '[+] View security writeups'],
+                ['social', '[+] Display contact information']
             ];
             
-            return commands.map(([cmd, desc]) => 
-                `${cmd.padEnd(12)} ${desc}`
-            ).join('\n');
+            return `[*] Available commands:\n${commands.map(([cmd, desc]) => 
+                `    ${desc}`
+            ).join('\n')}`;
+        },
+        
+        clear: (): string => {
+            this.commandHistory.innerHTML = '';
+            return '';
         },
         
         projects: (): string => {
@@ -52,9 +57,9 @@ class Terminal {
                 // Add your actual project URLs here
             ];
             
-            return projects.map(p => 
-                `<a href="${p.url}" class="project-link" target="_blank">→ ${p.name}</a>`
-            ).join('\n');
+            return `[*] Found ${projects.length} projects:\n${projects.map(p => 
+                `    [+] <a href="${p.url}" class="project-link" target="_blank">${p.name}</a>`
+            ).join('\n')}`;
         },
         
         writes: (): string => {
@@ -73,25 +78,14 @@ class Terminal {
             
             this.initWebGL();
             
-            return articles.map(article => `
-                <div class="article-preview" 
-                     data-image="${article.imageUrl}"
-                     onmouseover="window.showArticlePreview(event, '${article.imageUrl}')"
-                     onmouseout="window.hideArticlePreview()">
-                    <a href="${article.url}" class="writeup-link" target="_blank">→ ${article.name}</a>
-                    <canvas class="preview-canvas" width="200" height="120" style="display: none;"></canvas>
-                </div>
-            `).join('\n');
+            return `[*] Security writeups found:\n${articles.map(article => 
+                `    [+] <a href="${article.url}" class="writeup-link" target="_blank">${article.name}</a>`
+            ).join('\n')}`;
         },
         
-        clear: (): string => {
-            this.commandHistory.innerHTML = '';
-            return '';
-        },
-        
-        social: (): string => `Connect with me:
-    GitHub: https://github.com/whitehatmafia
-    Medium: https://medium.com/@whitehatmafia`,
+        social: (): string => `[*] Contact information:
+    [+] GitHub: https://github.com/whitehatmafia
+    [+] Medium: https://medium.com/@whitehatmafia`,
     };
 
     constructor() {
@@ -101,8 +95,8 @@ class Terminal {
     }
 
     private async initializeTerminal(): Promise<void> {
-        // Add timeout to ensure DOM is fully loaded
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Reduce timeout for faster loading
+        await new Promise(resolve => setTimeout(resolve, 50));
 
         const elements = {
             commandInput: document.getElementById('command-input'),
@@ -158,15 +152,16 @@ class Terminal {
     }
 
     private async showInitMessage(): Promise<void> {
+        // Reduce delays between messages
         const initMessages = [
-            { text: this.asciiArt, class: 'ascii-art' },
-            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation' },
-            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation' },
-            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation' },
-            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning' },
-            { text: "[+] Checking system access...", class: 'system-message startup-animation' },
-            { text: "[+] Loading security modules...", class: 'system-message startup-animation' },
-            { text: "[!] System ready.", class: 'system-message startup-animation success' }
+            { text: this.asciiArt, class: 'ascii-art', delay: 0 },
+            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation', delay: 100 },
+            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation', delay: 100 },
+            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation', delay: 100 },
+            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning', delay: 100 },
+            { text: "[+] Checking system access...", class: 'system-message startup-animation', delay: 100 },
+            { text: "[+] Loading security modules...", class: 'system-message startup-animation', delay: 100 },
+            { text: "[!] System ready.", class: 'system-message startup-animation success', delay: 100 }
         ];
 
         // Return promise that resolves when all messages are shown
@@ -186,7 +181,7 @@ class Terminal {
                         resolve();
                     }
                 }, delay);
-                delay += index === 0 ? 0 : 500;
+                delay += msg.delay;
             });
         });
     }
@@ -297,12 +292,19 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `<span class="prompt-text">root@kali:~$ </span>${this.sanitizeHTML(content)}`;
+            outputDiv.innerHTML = `<span class="prompt-text">root@kali:~# </span>${this.sanitizeHTML(content)}`;
         } else {
-            outputDiv.innerHTML = content;
+            const coloredContent = this.processOutputColors(content);
+            outputDiv.innerHTML = coloredContent;
         }
         
         return outputDiv;
+    }
+
+    private processOutputColors(text: string): string {
+        return text
+            .replace(/\[(\+|\*|\-|\!)\]/g, '<span class="$1-symbol">[$1]</span>')
+            .replace(/https?:\/\/\S+/g, '<span class="url">$&</span>');
     }
 
     private sanitizeHTML(text: string): string {

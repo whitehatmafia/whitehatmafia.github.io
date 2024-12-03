@@ -1,8 +1,11 @@
 :root {
-    --terminal-bg: #1F1F1F;  /* Kali Linux colors */
-    --terminal-text: #FFFFFF;
-    --terminal-green: #4AF626;  /* Kali Linux green */
-    --terminal-header: #2F2F2F;
+    --terminal-bg: #000000;  /* Pure black background */
+    --terminal-text: #F8F8F8;  /* Brighter white text */
+    --terminal-green: #00FF00;  /* Classic terminal green */
+    --terminal-red: #FF0000;
+    --terminal-yellow: #FFFF00;
+    --terminal-blue: #0000FF;
+    --terminal-cursor: #F8F8F8;
 }
 
 html, body {
@@ -210,11 +213,13 @@ body::before {
     border: none;
     color: var(--terminal-text);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 16px;
     width: 100%;
     outline: none;
-    caret-color: var(--terminal-green);
+    caret-color: var(--terminal-cursor);
     padding: 4px 0;
+    letter-spacing: 0.5px;
+    animation: blink 1s step-end infinite;
 }
 
 .input-field::after {
@@ -276,8 +281,8 @@ body::before {
 
 /* Custom Scrollbar */
 .terminal-content::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    background: #1a1a1a;
 }
 
 .terminal-content::-webkit-scrollbar-track {
@@ -286,7 +291,8 @@ body::before {
 }
 
 .terminal-content::-webkit-scrollbar-thumb {
-    background: rgba(158, 206, 106, 0.3);
+    background: #333;
+    border: 1px solid #444;
     border-radius: 4px;
     transition: all 0.3s ease;
 }
@@ -648,6 +654,9 @@ button {
     animation: fadeInSlide 0.3s ease-out;
     margin: 12px 0 !important;
     padding: 12px 15px !important;
+    opacity: 0.9;  /* Slight transparency for authenticity */
+    font-family: 'Courier New', monospace;  /* Fallback font */
+    letter-spacing: 0.5px;
 }
 
 .command-output pre {
@@ -902,4 +911,88 @@ button {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
+}
+
+/* Add these after existing styles */
+
+/* Output colors */
+.success { color: #9ece6a; }
+.info { color: #7dcfff; }
+.warning { color: #e0af68; }
+.bracket { color: #565f89; }
+
+/* Command output improvements */
+.command-output {
+    background: transparent !important;
+    border: none !important;
+    padding: 2px 0 !important;
+    margin: 4px 0 !important;
+    box-shadow: none !important;
+}
+
+/* Help command styling */
+.command-output pre {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--terminal-text);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Performance improvements */
+.terminal-content {
+    contain: content;
+    will-change: transform;
+}
+
+.input-line, .command-output {
+    contain: content;
+}
+
+/* Smooth scrolling only on user interaction */
+.terminal-content {
+    scroll-behavior: auto;
+}
+
+.terminal-content.user-scroll {
+    scroll-behavior: smooth;
+}
+
+/* Terminal scanlines effect */
+.terminal-content::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* Security tool output styling */
+.plus-symbol { color: #00ff00; }  /* Green + */
+.star-symbol { color: #00ffff; }  /* Cyan * */
+.minus-symbol { color: #ff0000; } /* Red - */
+.exclaim-symbol { color: #ffff00; } /* Yellow ! */
+.url { color: #729fcf; }         /* Blue URLs */
+
+.command-output {
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 1;
+    line-height: 1.5;
+}
+
+/* Keep output aligned */
+.command-output a {
+    display: inline-block;
+    padding-left: 4px;
 }
