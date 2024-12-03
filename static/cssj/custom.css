@@ -1026,3 +1026,35 @@ button {
     display: inline-block;
     padding-left: 4px;
 }
+
+/* Input cursor changes */
+.input-field {
+    caret-color: transparent !important;
+    position: relative;
+}
+
+.terminal-input-line {
+    position: relative;
+}
+
+.terminal-input-line::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 16px;
+    background-color: var(--terminal-text);
+    margin-left: 1px;
+    animation: none;
+}
+
+/* Remove all other cursor animations */
+.input-field::after,
+.cursor,
+.typing::after {
+    display: none !important;
+}
+
+/* Only show cursor animation when terminal is ready */
+.terminal-input-line.ready::after {
+    animation: blink 1s step-end infinite;
+}

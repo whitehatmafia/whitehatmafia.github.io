@@ -13,8 +13,8 @@ interface Article {
 class Terminal {
     private readonly asciiArt = `
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ���█╗  ██╗ █████╗ ████████╗
-[*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
+[*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ���█╗  ██╗ ██���██╗ ████████╗
+[*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔���═██╗╚══██╔══╝
 [*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
 [*] ██║███╗██║██╔══██║██║   ██║   ██╔══╝      ██╔══██║██╔══██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
@@ -140,8 +140,9 @@ class Terminal {
         // Initialize event listeners
         this.initializeEventListeners();
         
-        // Focus input
+        // Focus input and add ready class for cursor
         this.commandInput.focus();
+        document.querySelector('.terminal-input-line')?.classList.add('ready');
         
         // Start matrix effect
         this.startMatrixEffect();
