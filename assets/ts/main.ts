@@ -51,14 +51,13 @@ class Terminal {
                 {
                     name: "Article 1",
                     url: "https://medium.com/@whitehatmafia/article1",
-                    imageUrl: "/path/to/article1-thumbnail.jpg"
+                    imageUrl: "/images/article1.jpg" // Update with actual image paths
                 },
                 {
                     name: "Article 2",
                     url: "https://medium.com/@whitehatmafia/article2",
-                    imageUrl: "/path/to/article2-thumbnail.jpg"
+                    imageUrl: "/images/article2.jpg" // Update with actual image paths
                 }
-                // Add more articles as needed
             ];
             
             this.initWebGL();
@@ -96,6 +95,11 @@ class Terminal {
         this.commandInput = document.getElementById('command-input') as HTMLInputElement;
         this.commandHistory = document.getElementById('command-history') as HTMLElement;
         this.terminalContent = document.getElementById('terminal-content') as HTMLElement;
+
+        if (!this.commandInput || !this.commandHistory || !this.terminalContent) {
+            console.error('Required DOM elements not found');
+            return;
+        }
         
         if (this.terminalContent) {
             this.terminalContent.style.visibility = 'visible';
