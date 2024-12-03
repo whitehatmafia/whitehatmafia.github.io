@@ -156,12 +156,40 @@ class Terminal {
         outputDiv.className = isCommand ? 'input-line' : 'command-output';
         
         if (isCommand) {
-            outputDiv.innerHTML = `<span class="prompt">visitor@whitehat:~$</span> ${content}`;
+            outputDiv.innerHTML = `<span class="prompt">visitor@whitehat:~$</span> ${this.sanitizeHTML(content)}`;
         } else {
-            outputDiv.innerHTML = content; // Changed from textContent to innerHTML to support links
+            outputDiv.innerHTML = content; // Allow HTML in command output
         }
         
         return outputDiv;
+    }
+
+    private sanitizeHTML(text: string): string {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    private async typeWriter(element: HTMLElement, text: string, speed: number = 30): Promise<void> {
+        let i = 0;
+        element.innerHTML = '';
+        return new Promise(resolve => {
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    // For commands, we want to sanitize the input
+                    if (element.classList.contains('input-line')) {
+                        element.textContent += text.charAt(i);
+                    } else {
+                        // For command output, we build up the HTML string
+                        element.innerHTML += text.charAt(i);
+                    }
+                    i++;
+                } else {
+                    clearInterval(typing);
+                    resolve();
+                }
+            }, speed);
+        });
     }
 
     private navigateHistory(direction: 'up' | 'down'): void {
@@ -179,22 +207,6 @@ class Terminal {
             this.commandsHistory.push(command);
             this.historyIndex = -1;
         }
-    }
-
-    private async typeWriter(element: HTMLElement, text: string, speed: number = 30): Promise<void> {
-        let i = 0;
-        element.textContent = '';
-        return new Promise(resolve => {
-            const typing = setInterval(() => {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typing);
-                    resolve();
-                }
-            }, speed);
-        });
     }
 
     private async executeCommand(command: string): Promise<void> {
