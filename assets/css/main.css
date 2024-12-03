@@ -116,7 +116,11 @@
            whitespace-pre font-bold;
     white-space: pre !important;
     font-family: 'JetBrains Mono', monospace !important;
-    line-height: 1.2;
+    line-height: 1.2 !important;
+    display: block !important;
+    padding: 1rem !important;
+    letter-spacing: 0 !important;
+    tab-size: 1 !important;
   }
 }
 
