@@ -37,7 +37,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.120.4'
+          hugo-version: '0.121.0'  # Updated version
           extended: true
 
       - name: Build
@@ -46,7 +46,7 @@ jobs:
           HUGO_ENV: production
           NODE_ENV: production
         run: |
-          hugo --minify --baseURL "https://whitehatmafia.github.io/"
+          hugo --gc --minify --baseURL "https://whitehatmafia.github.io/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

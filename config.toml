@@ -48,6 +48,11 @@ theme = "terminal"
     name = "writes"
     description = "View security write-ups"
 
+  [params.terminal]
+    welcomeMessage = "Welcome to WhiteHat Mafia Terminal v1.0.0"
+    promptString = "visitor@whitehat:~$"
+    cursorStyle = "block"
+
 [build]
   writeStats = true
 
@@ -61,10 +66,16 @@ theme = "terminal"
 [build.processing.css]
   bundle = true
   minify = true
+  includePaths = ["assets/css"]
+  processor = ["postcss"]
+  output = "css/style.css"
 
 [build.processing.js]
   bundle = true
   minify = true
+  includePaths = ["assets/ts"]
+  processor = ["babel"]
+  output = "js/main.js"
 
 [module]
   [[module.mounts]]
@@ -245,7 +256,7 @@ theme = "terminal"
   [security.funcs]
     getenv = ['^HUGO_']
   [security.http]
-    methods = ['(?i)GET|POST']
+    methods = ['GET']
     urls = ['.*']
 
 [params.terminal]
@@ -256,33 +267,38 @@ theme = "terminal"
     commandFade = true
     startupDelay = 800
     commandDelay = 100
-    
-  # Terminal commands output
-  [params.terminal.commandOutput]
-    help = """
-    Available commands:
-      help      - Show this help message
-      projects  - View security projects
-      writes    - View security write-ups
-      clear     - Clear terminal screen
-    """
-    
-    projects = """
-    Security Projects:
-      1. Project Alpha - Penetration Testing Framework
-      2. Project Beta  - Vulnerability Scanner
-      3. Project Gamma - Security Analysis Tool
-    Type 'cd projects' for more details
-    """
-    
-    writes = """
-    Security Write-ups:
-      1. CVE-2024-XXXX Analysis
-      2. Zero-Day Discovery
-      3. Red Team Operation Reports
-    Type 'cd writes' for more details
-    """
-    
+
+  [params.terminal.commands]
+    [[params.terminal.commands.list]]
+      name = "help"
+      description = "Display this help message"
+      output = '''
+Available commands:
+  help      - Display this help message
+  projects  - View security projects
+  writes    - View security write-ups
+  clear     - Clear terminal screen'''
+
+    [[params.terminal.commands.list]]
+      name = "projects"
+      description = "View security projects"
+      output = '''
+Security Projects:
+  1. Project Alpha - Penetration Testing Framework
+  2. Project Beta  - Vulnerability Scanner
+  3. Project Gamma - Security Analysis Tool
+Type 'cd projects' for more details'''
+
+    [[params.terminal.commands.list]]
+      name = "writes"
+      description = "View security write-ups"
+      output = '''
+Security Write-ups:
+  1. CVE-2024-XXXX Analysis
+  2. Zero-Day Discovery
+  3. Red Team Operation Reports
+Type 'cd writes' for more details'''
+
   # Enhanced terminal features
   [params.terminal.keyboard]
     shortcuts = true
