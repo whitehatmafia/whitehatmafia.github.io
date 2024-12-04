@@ -220,6 +220,7 @@ body::before {
     padding: 4px 0;
     letter-spacing: 0.5px;
     animation: none !important;
+    caret-color: transparent !important;
 }
 
 .input-field::placeholder {
@@ -1088,6 +1089,9 @@ button {
     padding: 4px 0;
     margin: 0;
     caret-color: transparent !important;
+    color: var(--terminal-text) !important;
+    caret-color: var(--terminal-text) !important;
+    -webkit-text-fill-color: var(--terminal-text) !important;
 }
 
 /* Remove all other cursor animations */

@@ -13,7 +13,6 @@
                        class="input-field"
                        autocomplete="off" 
                        spellcheck="false">
-                <span class="terminal-cursor"></span>
             </div>
         </div>
     </div>
@@ -26,8 +25,7 @@
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
     margin: 40px auto;
     max-width: 800px;
-        font-family: 'JetBrains Mono', monospace;
-    }
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .terminal-header {
@@ -83,6 +81,7 @@
 .welcome-message {
     color: {{ .Site.Params.accentColor }};
     margin: 0 0 20px 0;
+}
 }
 
 .terminal-input-line {

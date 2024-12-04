@@ -20,9 +20,9 @@ class Terminal {
 [*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
     `;
 
-    private commandInput: HTMLInputElement;
-    private commandHistory: HTMLElement;
-    private terminalContent: HTMLElement;
+    private commandInput!: HTMLInputElement;
+    private commandHistory!: HTMLElement;
+    private terminalContent!: HTMLElement;
     private commandsHistory: string[] = [];
     private historyIndex: number = -1;
     private webglContext: WebGLRenderingContext | null = null;
@@ -116,15 +116,17 @@ class Terminal {
         this.terminalContent = elements.terminalContent as HTMLElement;
 
         // Show terminal and hide loading screen
-        elements.terminal.classList.add('loaded');
-        elements.loadingScreen.classList.add('fade-out');
+        elements.terminal?.classList.add('loaded');
+        elements.loadingScreen?.classList.add('fade-out');
 
         // Initialize terminal
         await this.startTerminal();
         
         // Remove loading screen
         setTimeout(() => {
-            elements.loadingScreen.style.display = 'none';
+            if (elements.loadingScreen) {
+                elements.loadingScreen.style.display = 'none';
+            }
         }, 300);
     }
 

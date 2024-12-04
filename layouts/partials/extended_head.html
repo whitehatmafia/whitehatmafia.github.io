@@ -59,7 +59,7 @@
 <!-- Preload critical resources -->
 <!-- Resources -->
 {{ $js := resources.Get "ts/main.ts" | js.Build }}
-{{ $mainCSS := resources.Get "css/main.css" | resources.PostCSS }}
+{{ $mainCSS := resources.Get "css/main.css" | css.PostCSS }}
 
 <!-- Preload -->
 <link rel="preload" href="{{ $js.RelPermalink }}" as="script">
