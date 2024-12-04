@@ -14,8 +14,8 @@ class Terminal {
     private readonly asciiArt = `
 [*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ██╗  ██╗ █████╗ ████████╗
 [*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
-[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║██████���║   ██║   
-[*] ██║███╗██║██╔══██║██║   ██║   ██╔��═╝      ██╔══██║██╔══██║   ██║   
+[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
+[*] ██║███╗██║██╔══██║██║   ██║   ██╔═══╝     ██╔══██║██╔═ ██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
 [*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
     `;
@@ -94,8 +94,8 @@ class Terminal {
     }
 
     private async initializeTerminal(): Promise<void> {
-        // Increase timeout for slower loading
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Increase timeout for much slower loading
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         const elements = {
             commandInput: document.getElementById('command-input'),
@@ -160,16 +160,15 @@ class Terminal {
     }
 
     private async showInitMessage(): Promise<void> {
-        // Increase delays between messages
         const initMessages = [
             { text: this.asciiArt, class: 'ascii-art', delay: 0 },
-            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation', delay: 500 },
-            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation', delay: 500 },
-            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation', delay: 500 },
-            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning', delay: 500 },
-            { text: "[+] Checking system access...", class: 'system-message startup-animation', delay: 500 },
-            { text: "[+] Loading security modules...", class: 'system-message startup-animation', delay: 500 },
-            { text: "[!] System ready.", class: 'system-message startup-animation success', delay: 500 }
+            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation', delay: 1000 },
+            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation', delay: 1000 },
+            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation', delay: 1000 },
+            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning', delay: 1000 },
+            { text: "[+] Checking system access...", class: 'system-message startup-animation', delay: 1000 },
+            { text: "[+] Loading security modules...", class: 'system-message startup-animation', delay: 1000 },
+            { text: "[!] System ready.", class: 'system-message startup-animation success', delay: 1000 }
         ];
 
         // Return promise that resolves when all messages are shown
@@ -337,7 +336,7 @@ class Terminal {
         return text
             .replace(/\[(\+|\*|\-|\!)\]/g, '<span class="$1-symbol">[$1]</span>')
             .replace(/https?:\/\/\S+/g, '<span class="url"><a href="$&" target="_blank">$&</a></span>')
-            .replace(/└─/g, '<span class="tree-symbol">���─</span>');
+            .replace(/└─/g, '<span class="tree-symbol">└─</span>');
     }
 
     private sanitizeHTML(text: string): string {

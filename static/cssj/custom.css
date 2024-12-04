@@ -107,6 +107,7 @@ body::before {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background: var(--terminal-bg) !important;
 }
 
 #terminal:hover {
@@ -178,6 +179,7 @@ body::before {
     padding: 20px;
     overflow-y: auto;
     background: var(--terminal-bg);
+    background: var(--terminal-bg) !important;
 }
 
 .input-line {
@@ -220,6 +222,18 @@ body::before {
     outline: none !important;
     box-shadow: none !important;
     caret-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--terminal-text) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 14px !important;
+    flex: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    caret-color: transparent !important;
+    -webkit-text-fill-color: var(--terminal-text) !important;
 }
 
 .input-field:focus {
@@ -861,6 +875,10 @@ button {
     margin-top: auto !important;
     padding: 15px 0 !important;
     border-top: 1px solid rgba(158, 206, 106, 0.1) !important;
+    margin-top: auto !important;
+    padding: 0 !important;
+    border-top: none !important;
+    background: transparent !important;
 }
 
 .terminal-input-line {
@@ -870,6 +888,14 @@ button {
     padding: 4px 0;
     background: transparent;
     position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 4px 0;
+    background: transparent !important;
+    position: relative;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .prompt-text {
@@ -877,11 +903,17 @@ button {
     margin-right: 8px;
     white-space: nowrap;
     user-select: none;
+    color: var(--terminal-text) !important;
+    background: transparent !important;
+    border: none !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+    user-select: none !important;
 }
 
 .input-field {
-    background: transparent;
-    border: none;
+    background: transparent !important;
+    border: none !important;
     color: var(--terminal-text);
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
@@ -891,6 +923,18 @@ button {
     box-shadow: none !important;
     margin-left: 8px;
     caret-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--terminal-text) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 14px !important;
+    flex: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    caret-color: transparent !important;
+    -webkit-text-fill-color: var(--terminal-text) !important;
 }
 
 .input-field:focus {
