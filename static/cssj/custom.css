@@ -209,18 +209,24 @@ body::before {
 }
 
 .input-field {
-    background: transparent;
-    border: none;
-    color: var(--terminal-text);
+    background: transparent !important;
+    border: none !important;
+    color: var(--terminal-text) !important;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
+    font-size: 14px;
     width: 100%;
-    outline: none;
-    caret-color: var(--terminal-cursor);
-    padding: 4px 0;
-    letter-spacing: 0.5px;
-    animation: none !important;
+    padding: 0;
+    margin: 0;
+    outline: none !important;
+    box-shadow: none !important;
     caret-color: transparent !important;
+}
+
+.input-field:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
 }
 
 .input-field::placeholder {

@@ -14,7 +14,7 @@ class Terminal {
     private readonly asciiArt = `
 [*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ██╗  ██╗ █████╗ ████████╗
 [*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
-[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║██████��║   ██║   
+[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║██████���║   ██║   
 [*] ██║███╗██║██╔══██║██║   ██║   ██╔��═╝      ██╔══██║██╔══██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
 [*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
@@ -94,8 +94,8 @@ class Terminal {
     }
 
     private async initializeTerminal(): Promise<void> {
-        // Reduce timeout for faster loading
-        await new Promise(resolve => setTimeout(resolve, 50));
+        // Increase timeout for slower loading
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
         const elements = {
             commandInput: document.getElementById('command-input'),
@@ -160,16 +160,16 @@ class Terminal {
     }
 
     private async showInitMessage(): Promise<void> {
-        // Reduce delays between messages
+        // Increase delays between messages
         const initMessages = [
             { text: this.asciiArt, class: 'ascii-art', delay: 0 },
-            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation', delay: 100 },
-            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation', delay: 100 },
-            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation', delay: 100 },
-            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning', delay: 100 },
-            { text: "[+] Checking system access...", class: 'system-message startup-animation', delay: 100 },
-            { text: "[+] Loading security modules...", class: 'system-message startup-animation', delay: 100 },
-            { text: "[!] System ready.", class: 'system-message startup-animation success', delay: 100 }
+            { text: "[*] WhiteHat Mafia Security Assessment Tool v1.0.0", class: 'system-message startup-animation', delay: 500 },
+            { text: "[*] Developer: WhiteHat Mafia", class: 'system-message startup-animation', delay: 500 },
+            { text: "[*] Github: https://github.com/whitehatmafia", class: 'system-message startup-animation', delay: 500 },
+            { text: "[!] Starting security assessment...", class: 'system-message startup-animation warning', delay: 500 },
+            { text: "[+] Checking system access...", class: 'system-message startup-animation', delay: 500 },
+            { text: "[+] Loading security modules...", class: 'system-message startup-animation', delay: 500 },
+            { text: "[!] System ready.", class: 'system-message startup-animation success', delay: 500 }
         ];
 
         // Return promise that resolves when all messages are shown
