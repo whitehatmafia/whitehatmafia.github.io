@@ -1,7 +1,27 @@
+baseURL: "https://whitehatmafia.github.io/"
+languageCode: "en-us"
+title: "WhiteHat Mafia"
+
+module:
+  hugoVersion:
+    extended: true
+    min: "0.135.0"
 
 build:
+  buildDrafts: false
+  buildFuture: false
+  buildExpired: false
   writeStats: true
-  
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  backgroundColor: "#1F1F1F"
+  accentColor: "#4AF626"
+
 assets:
   - source: assets/css
     target: assets/css
