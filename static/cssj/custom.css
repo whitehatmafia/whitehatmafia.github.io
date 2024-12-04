@@ -219,18 +219,7 @@ body::before {
     caret-color: var(--terminal-cursor);
     padding: 4px 0;
     letter-spacing: 0.5px;
-    animation: blink 1s step-end infinite;
-}
-
-.input-field::after {
-    content: '▋';
-    animation: blink 1s infinite;
-    color: var(--terminal-green);
-}
-
-.input-field:focus {
-    outline: none;
-    background: transparent;
+    animation: none !important;
 }
 
 .input-field::placeholder {
@@ -323,9 +312,7 @@ body::before {
 }
 
 .typing::after {
-    content: '█';
-    animation: blink 1s infinite;
-    color: var(--terminal-green);
+    display: none !important;
 }
 
 .typing-animation {
@@ -830,6 +817,7 @@ button {
     width: 100%;
     padding: 4px 0;
     background: transparent;
+    position: relative;
 }
 
 .prompt-text {
@@ -850,6 +838,7 @@ button {
     outline: none !important;
     box-shadow: none !important;
     margin-left: 8px;
+    caret-color: transparent !important;
 }
 
 .input-field:focus {
@@ -885,6 +874,7 @@ button {
     width: 100%;
     padding: 4px 0;
     background: transparent;
+    position: relative;
 }
 
 .prompt-text {
@@ -904,13 +894,18 @@ button {
     margin: 0;
     outline: none !important;
     box-shadow: none !important;
+    caret-color: transparent !important;
 }
 
-.input-field:focus {
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
+.terminal-cursor {
+    position: absolute;
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: var(--terminal-text);
+    animation: blink 1s step-end infinite;
+    margin-left: 1px;
+    transform: translateY(1px);
 }
 
 /* Add these after existing styles */
