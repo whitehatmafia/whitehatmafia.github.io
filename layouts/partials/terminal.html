@@ -7,12 +7,15 @@
         <div id="command-history"></div>
         <div class="terminal-input-wrapper">
             <div class="terminal-input-line">
-                <span class="prompt-text">root@kali:~$&nbsp;</span>
+                <span class="prompt-text" aria-hidden="true">root@kali:~$&nbsp;</span>
                 <input type="text" 
                        id="command-input" 
                        class="input-field"
                        autocomplete="off" 
-                       spellcheck="false">
+                       spellcheck="false"
+                       autocapitalize="off"
+                       inputmode="text"
+                       aria-label="Terminal input">
             </div>
         </div>
     </div>

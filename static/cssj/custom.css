@@ -497,6 +497,51 @@ body::before {
     .terminal-content {
         padding: 10px;
     }
+
+    .terminal-content {
+        padding: 10px !important;
+        font-size: 14px !important;
+    }
+
+    .terminal-input-line {
+        font-size: 16px !important; /* Better tap target */
+        padding: 8px 0 !important;
+    }
+
+    .prompt-text {
+        font-size: 14px !important;
+        padding-right: 8px !important;
+    }
+
+    .input-field {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+        height: 40px !important; /* Larger tap target */
+    }
+
+    .command-output {
+        margin: 8px 0 !important;
+        padding: 8px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* Better spacing for links on mobile */
+    .project-link, .writeup-link {
+        padding: 12px !important;
+        margin: 8px 0 !important;
+        font-size: 14px !important;
+    }
+
+    /* Make ASCII art scrollable on mobile */
+    .ascii-art {
+        overflow-x: auto;
+        white-space: pre;
+        font-size: 12px !important;
+    }
+
+    /* Better tap targets */
+    .terminal-input-wrapper {
+        padding: 12px 0 !important;
+    }
 }
 
 /* Dark mode support */
@@ -1099,4 +1144,82 @@ button {
 .cursor,
 .typing::after {
     display: none !important;
+}
+
+/* Better mobile experience */
+@media (max-width: 768px) {
+    .terminal-content {
+        padding: 10px !important;
+        font-size: 14px !important;
+    }
+
+    .terminal-input-line {
+        font-size: 16px !important; /* Better tap target */
+        padding: 8px 0 !important;
+    }
+
+    .prompt-text {
+        font-size: 14px !important;
+        padding-right: 8px !important;
+    }
+
+    .input-field {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+        height: 40px !important; /* Larger tap target */
+    }
+
+    .command-output {
+        margin: 8px 0 !important;
+        padding: 8px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* Better spacing for links on mobile */
+    .project-link, .writeup-link {
+        padding: 12px !important;
+        margin: 8px 0 !important;
+        font-size: 14px !important;
+    }
+
+    /* Make ASCII art scrollable on mobile */
+    .ascii-art {
+        overflow-x: auto;
+        white-space: pre;
+        font-size: 12px !important;
+    }
+
+    /* Better tap targets */
+    .terminal-input-wrapper {
+        padding: 12px 0 !important;
+    }
+}
+
+/* Add some polish */
+.terminal-input-line {
+    position: sticky;
+    bottom: 0;
+    background: var(--terminal-bg);
+    padding: 10px 0;
+    border-top: 1px solid rgba(158, 206, 106, 0.1);
+    z-index: 10;
+}
+
+/* Add a subtle glow effect */
+.terminal-content:focus-within {
+    box-shadow: inset 0 0 20px rgba(158, 206, 106, 0.05);
+}
+
+/* Better command highlighting */
+.command-output {
+    transition: all 0.2s ease;
+}
+
+.command-output:hover {
+    background: rgba(158, 206, 106, 0.05);
+}
+
+/* Add a typing indicator */
+.typing-indicator::after {
+    content: '█';
+    animation: blink 1s step-end infinite;
 }

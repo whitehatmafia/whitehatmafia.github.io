@@ -14,7 +14,7 @@ class Terminal {
     private readonly asciiArt = `
 [*] ██╗    ██╗██╗  ██╗██╗████████╗███████╗    ██╗  ██╗ █████╗ ████████╗
 [*] ██║    ██║██║  ██║██║╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗╚══██╔══╝
-[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║███████║   ██║   
+[*] ██║ █╗ ██║███████║██║   ██║   █████╗      ███████║██████��║   ██║   
 [*] ██║███╗██║██╔══██║██║   ██║   ██╔��═╝      ██╔══██║██╔══██║   ██║   
 [*] ╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║  ██║██║  ██║   ██║   
 [*]  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
@@ -232,6 +232,30 @@ class Terminal {
                 this.handleTabCompletion();
             }
         });
+
+        // Mobile-friendly focus handling
+        document.addEventListener('touchstart', () => {
+            this.commandInput.focus();
+        }, { passive: true });
+
+        // Prevent zoom on double tap
+        let lastTap = 0;
+        document.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 500 && tapLength > 0) {
+                e.preventDefault();
+            }
+            lastTap = currentTime;
+        });
+
+        // Handle mobile keyboard show/hide
+        window.addEventListener('resize', () => {
+            if (document.activeElement?.tagName === 'INPUT') {
+                window.scrollTo(0, 0);
+                document.body.scrollTop = 0;
+            }
+        });
     }
 
     private handleTabCompletion(): void {
@@ -313,7 +337,7 @@ class Terminal {
         return text
             .replace(/\[(\+|\*|\-|\!)\]/g, '<span class="$1-symbol">[$1]</span>')
             .replace(/https?:\/\/\S+/g, '<span class="url"><a href="$&" target="_blank">$&</a></span>')
-            .replace(/└─/g, '<span class="tree-symbol">└─</span>');
+            .replace(/└─/g, '<span class="tree-symbol">���─</span>');
     }
 
     private sanitizeHTML(text: string): string {
